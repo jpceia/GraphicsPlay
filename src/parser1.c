@@ -1,0 +1,102 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser1.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/09/08 04:07:35 by jceia             #+#    #+#             */
+/*   Updated: 2021/09/08 15:30:29 by jceia            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>  // O_RDONLY
+#include "libft.h"
+#include "miniRT.h"
+
+
+int	parse_scenario_item_from_line(t_scenario *scenario, char *line)
+{
+	if (ft_strwc(line, ' ') == 0)
+		return (0);
+	if (ft_strncmp(line, "A ", 2) == 0)
+		return (parse_ambient_from_line(scenario, line));
+	if (ft_strncmp(line, "C ", 2) == 0)
+		return(parse_camera_from_line(scenario, line));
+	if (ft_strncmp(line, "L ", 2) == 0)
+		return (parse_light_from_line(scenario, line));
+	return (parse_object_from_line(scenario, line));
+}
+
+void	scenario_init(t_scenario *scenario)
+{
+	scenario->cameras = NULL;
+	scenario->lights = NULL;
+	scenario->objects = NULL;
+}
+
+void    parse_scenario_from_file(t_scenario   *scenario, char *fname)
+{
+	int		fd;
+	int		status;
+	char	*line;
+
+	check_file_extension(fname, "rt");
+	fd = open(fname, O_RDONLY);
+	if (fd < 0)
+	{
+		ft_putendl_error("Error opening file");
+		exit(EXIT_FAILURE);
+	}
+	status = 0;
+	while (ft_get_next_line(fd, &line) > 0 && status >= 0)
+	{
+		status = parse_scenario_item_from_line(scenario, line);
+		free(line);
+	}
+	free(line);
+	close(fd);
+	if (status < 0)
+		exit(EXIT_FAILURE);
+}
+
+
+int     parse_color(t_color *color, char *s)
+{
+	int		N;
+	char	**s_split;
+
+	N = ft_strwc(s, ',');
+	if (N != 3)
+	{
+		ft_putendl_error("Incorrect color format");
+		return (-1);
+	}
+	s_split = ft_split(s, ',');
+	color->r = ft_atoi(s_split[0]);
+	color->g = ft_atoi(s_split[1]);
+	color->b = ft_atoi(s_split[2]);
+	ft_str_array_clear(s_split, N);
+	return (0);
+}
+
+int     parse_point3D(t_point3D	*p, char *s)
+{
+	int		N;
+	char	**s_split;
+
+	N = ft_strwc(s, ',');
+	if (N != 3)
+	{
+		ft_putendl_error("Incorrect coordinates format");
+		return (-1);
+	}
+	s_split = ft_split(s, ',');
+	p->x = ft_atoi(s_split[0]);
+	p->y = ft_atoi(s_split[1]);
+	p->z = ft_atoi(s_split[2]);
+	ft_str_array_clear(s_split, N);
+	return (0);
+}
