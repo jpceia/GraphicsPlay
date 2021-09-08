@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 14:47:48 by jceia             #+#    #+#             */
-/*   Updated: 2021/09/08 15:24:08 by jceia            ###   ########.fr       */
+/*   Updated: 2021/09/08 15:54:25 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	clear_object(void *obj)
 	obj = NULL;
 }
 
-void    clear_scenario(t_scenario *scenario)
+void	clear_scenario(t_scenario *scenario)
 {
-    ft_lstclear(&scenario->cameras, free);
-    ft_lstclear(&scenario->lights, free);
-    ft_lstclear(&scenario->objects, clear_object);
+	ft_lstclear(&scenario->cameras, free);
+	ft_lstclear(&scenario->lights, free);
+	ft_lstclear(&scenario->objects, clear_object);
 }

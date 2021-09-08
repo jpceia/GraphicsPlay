@@ -6,16 +6,15 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 04:07:35 by jceia             #+#    #+#             */
-/*   Updated: 2021/09/08 15:30:29 by jceia            ###   ########.fr       */
+/*   Updated: 2021/09/08 15:51:34 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <unistd.h>
-#include <fcntl.h>  // O_RDONLY
+#include <fcntl.h>
 #include "libft.h"
 #include "miniRT.h"
-
 
 int	parse_scenario_item_from_line(t_scenario *scenario, char *line)
 {
@@ -24,7 +23,7 @@ int	parse_scenario_item_from_line(t_scenario *scenario, char *line)
 	if (ft_strncmp(line, "A ", 2) == 0)
 		return (parse_ambient_from_line(scenario, line));
 	if (ft_strncmp(line, "C ", 2) == 0)
-		return(parse_camera_from_line(scenario, line));
+		return (parse_camera_from_line(scenario, line));
 	if (ft_strncmp(line, "L ", 2) == 0)
 		return (parse_light_from_line(scenario, line));
 	return (parse_object_from_line(scenario, line));
@@ -37,7 +36,7 @@ void	scenario_init(t_scenario *scenario)
 	scenario->objects = NULL;
 }
 
-void    parse_scenario_from_file(t_scenario   *scenario, char *fname)
+void	parse_scenario_from_file(t_scenario *scenario, char *fname)
 {
 	int		fd;
 	int		status;
@@ -47,6 +46,7 @@ void    parse_scenario_from_file(t_scenario   *scenario, char *fname)
 	fd = open(fname, O_RDONLY);
 	if (fd < 0)
 	{
+		ft_putendl_error("Error");
 		ft_putendl_error("Error opening file");
 		exit(EXIT_FAILURE);
 	}
@@ -62,8 +62,7 @@ void    parse_scenario_from_file(t_scenario   *scenario, char *fname)
 		exit(EXIT_FAILURE);
 }
 
-
-int     parse_color(t_color *color, char *s)
+int	parse_color(t_color *color, char *s)
 {
 	int		N;
 	char	**s_split;
@@ -71,6 +70,7 @@ int     parse_color(t_color *color, char *s)
 	N = ft_strwc(s, ',');
 	if (N != 3)
 	{
+		ft_putendl_error("Error");
 		ft_putendl_error("Incorrect color format");
 		return (-1);
 	}
@@ -82,7 +82,7 @@ int     parse_color(t_color *color, char *s)
 	return (0);
 }
 
-int     parse_point3D(t_point3D	*p, char *s)
+int	parse_point3D(t_point3D	*p, char *s)
 {
 	int		N;
 	char	**s_split;
@@ -90,6 +90,7 @@ int     parse_point3D(t_point3D	*p, char *s)
 	N = ft_strwc(s, ',');
 	if (N != 3)
 	{
+		ft_putendl_error("Error");
 		ft_putendl_error("Incorrect coordinates format");
 		return (-1);
 	}
