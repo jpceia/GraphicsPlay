@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_str_array_clear.c                               :+:      :+:    :+:   */
+/*   ft_isign.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/01 18:29:45 by jceia             #+#    #+#             */
-/*   Updated: 2021/09/09 02:54:50 by jceia            ###   ########.fr       */
+/*   Created: 2021/09/09 02:25:20 by jceia             #+#    #+#             */
+/*   Updated: 2021/09/09 02:54:59 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
-void	ft_str_array_clear(char **str_arr, int len)
+int	ft_isign(int x)
 {
-	int	index;
-
-	index = 0;
-	while (index < len)
-	{
-		free(str_arr[index]);
-		index++;
-	}
-	free(str_arr);
+	if (x < 0)
+		return (-1);
+	return (1);
 }
