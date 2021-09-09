@@ -3,7 +3,7 @@ NAME		= libft.a
 SRC_DIR		= src
 OBJ_DIR		= obj
 
-SRCS		= $(shell find $(SRC_DIR) -name *.c -type f)
+SRCS		:= $(shell find $(SRC_DIR) -name "*.c" -type f)
 OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 CC			= gcc

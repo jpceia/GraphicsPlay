@@ -6,14 +6,14 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 21:45:31 by jpceia            #+#    #+#             */
-/*   Updated: 2021/08/27 17:48:58 by jceia            ###   ########.fr       */
+/*   Updated: 2021/09/09 03:47:59 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_front(t_list **lst, t_list *new)
+void	ft_lstadd_front(t_list **lst, t_list *node)
 {
-	new->next = *lst;
-	*lst = new;
+	node->next = *lst;
+	*lst = node;
 }

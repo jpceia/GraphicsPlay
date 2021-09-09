@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   ft_lstpush_back.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/08 21:44:47 by jpceia            #+#    #+#             */
-/*   Updated: 2021/09/09 03:48:11 by jceia            ###   ########.fr       */
+/*   Created: 2021/09/09 03:44:30 by jceia             #+#    #+#             */
+/*   Updated: 2021/09/09 03:52:13 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *node)
+t_list	*ft_lstpush_back(t_list **lst, void *content)
 {
-	t_list	*l;
+	t_list	*node;
 
-	if (!*lst)
-	{
-		*lst = node;
-		return ;
-	}
-	l = *lst;
-	while (l->next)
-		l = l->next;
-	l->next = node;
+	node = ft_lstnew(content);
+	if (!node)
+		return (NULL);
+	ft_lstadd_back(lst, node);
+	return (*lst);
 }
