@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 12:29:55 by jceia             #+#    #+#             */
-/*   Updated: 2021/09/08 15:50:20 by jceia            ###   ########.fr       */
+/*   Updated: 2021/09/12 13:13:48 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include <unistd.h>
 #include <fcntl.h>  // O_RDONLY
 #include "libft.h"
-#include "color.h"
 #include "miniRT.h"
 #include <stdio.h>
 
@@ -30,7 +29,7 @@ int	parse_ambient_from_line(t_scenario *scenario, char *line)
 	s_split = ft_split(line, ' ');
 	if (!s_split)
 		return (-1);
-	scenario->ambient.ratio = ft_atoi(s_split[1]);
+	scenario->ambient.ratio = ft_atof(s_split[1]);
 	status = parse_color(&scenario->ambient.color, s_split[2]);
 	ft_str_array_clear(s_split, N);
 	if (status < 0)
@@ -54,13 +53,13 @@ int	parse_camera_from_line(t_scenario *scenario, char *line)
 	s_split = ft_split(line, ' ');
 	if (!s_split)
 		return (-1);
-	status = parse_point3D(&camera->orig, s_split[1]);
-	status += parse_point3D(&camera->direction, s_split[2]);
-	camera->fov = ft_atoi(s_split[3]);
+	status = parse_vec3D(&camera->origin, s_split[1]);
+	status += parse_vec3D(&camera->direction, s_split[2]);
+	camera->fov = ft_atof(s_split[3]);
 	ft_str_array_clear(s_split, N);
 	if (status < 0)
 		return (exit_free(camera));
-	ft_lstadd_front(&scenario->cameras, ft_lstnew(camera));
+	ft_lstpush_front(&scenario->cameras, camera);
 	return (0);
 }
 
@@ -80,15 +79,15 @@ int	parse_light_from_line(t_scenario *scenario, char *line)
 	s_split = ft_split(line, ' ');
 	if (!s_split)
 		return (-1);
-	status = parse_point3D(&light->orig, s_split[1]);
-	light->ratio = ft_atoi(s_split[2]);
+	status = parse_vec3D(&light->origin, s_split[1]);
+	light->ratio = ft_atof(s_split[2]);
 	if (N == 4)
 		status += parse_color(&light->color, s_split[3]);
 	else
-		light->color = color_create(1, 1, 1, 1);
+		light->color = vec3D_create(1.0, 1.0, 1.0);
 	ft_str_array_clear(s_split, N);
 	if (status < 0)
 		return (exit_free(light));
-	ft_lstadd_front(&scenario->lights, ft_lstnew(light));
+	ft_lstpush_front(&scenario->lights, light);
 	return (0);
 }

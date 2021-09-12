@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 04:07:35 by jceia             #+#    #+#             */
-/*   Updated: 2021/09/08 15:51:34 by jceia            ###   ########.fr       */
+/*   Updated: 2021/09/12 12:46:46 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	parse_scenario_from_file(t_scenario *scenario, char *fname)
 		exit(EXIT_FAILURE);
 }
 
-int	parse_color(t_color *color, char *s)
+int	parse_color(t_rgb *color, char *s)
 {
 	int		N;
 	char	**s_split;
@@ -75,14 +75,14 @@ int	parse_color(t_color *color, char *s)
 		return (-1);
 	}
 	s_split = ft_split(s, ',');
-	color->r = ft_atoi(s_split[0]);
-	color->g = ft_atoi(s_split[1]);
-	color->b = ft_atoi(s_split[2]);
+	color->x = (float)ft_atoi(s_split[0]) / 255;
+	color->y = (float)ft_atoi(s_split[1]) / 255;
+	color->z = (float)ft_atoi(s_split[2]) / 255;
 	ft_str_array_clear(s_split, N);
 	return (0);
 }
 
-int	parse_point3D(t_point3D	*p, char *s)
+int	parse_vec3D(t_vec3D *p, char *s)
 {
 	int		N;
 	char	**s_split;
@@ -95,9 +95,9 @@ int	parse_point3D(t_point3D	*p, char *s)
 		return (-1);
 	}
 	s_split = ft_split(s, ',');
-	p->x = ft_atoi(s_split[0]);
-	p->y = ft_atoi(s_split[1]);
-	p->z = ft_atoi(s_split[2]);
+	p->x = ft_atof(s_split[0]);
+	p->y = ft_atof(s_split[1]);
+	p->z = ft_atof(s_split[2]);
 	ft_str_array_clear(s_split, N);
 	return (0);
 }

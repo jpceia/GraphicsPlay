@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 12:26:46 by jceia             #+#    #+#             */
-/*   Updated: 2021/09/08 15:49:50 by jceia            ###   ########.fr       */
+/*   Updated: 2021/09/12 13:13:35 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	parse_object_from_line(t_scenario *scenario, char *line)
 		status = -1;
 	if (status < 0)
 		return (exit_free(obj));
-	ft_lstadd_front(&scenario->objects, ft_lstnew(obj));
+	ft_lstpush_front(&scenario->objects, obj);
 	return (0);
 }
 
@@ -55,8 +55,8 @@ int	parse_sphere_from_line(t_object *obj, char *line)
 	s_split = ft_split(line, ' ');
 	if (!s_split)
 		return (-1);
-	status = parse_point3D(&sphere->center, s_split[1]);
-	sphere->radius = ft_atoi(s_split[2]) / 2;
+	status = parse_vec3D(&sphere->center, s_split[1]);
+	sphere->radius = ft_atof(s_split[2]) / 2;
 	status += parse_color(&sphere->color, s_split[3]);
 	ft_str_array_clear(s_split, N);
 	if (status < 0)
@@ -82,8 +82,8 @@ int	parse_plane_from_line(t_object *obj, char *line)
 	s_split = ft_split(line, ' ');
 	if (!s_split)
 		return (-1);
-	status = parse_point3D(&plane->p, s_split[1]);
-	status += parse_point3D(&plane->n, s_split[2]);
+	status = parse_vec3D(&plane->p, s_split[1]);
+	status += parse_vec3D(&plane->n, s_split[2]);
 	status += parse_color(&plane->color, s_split[3]);
 	ft_str_array_clear(s_split, N);
 	if (status < 0)
@@ -109,10 +109,10 @@ int	parse_cyclinder_from_line(t_object *obj, char *line)
 	s_split = ft_split(line, ' ');
 	if (!s_split)
 		return (-1);
-	status = parse_point3D(&cylinder->p, s_split[1]);
-	status += parse_point3D(&cylinder->n, s_split[2]);
-	cylinder->radius = ft_atoi(s_split[3]) / 2;
-	cylinder->height = ft_atoi(s_split[4]);
+	status = parse_vec3D(&cylinder->p, s_split[1]);
+	status += parse_vec3D(&cylinder->n, s_split[2]);
+	cylinder->radius = ft_atof(s_split[3]) / 2;
+	cylinder->height = ft_atof(s_split[4]);
 	status += parse_color(&cylinder->color, s_split[5]);
 	ft_str_array_clear(s_split, N);
 	if (status < 0)
