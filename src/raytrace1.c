@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 15:00:21 by jceia             #+#    #+#             */
-/*   Updated: 2021/09/12 15:08:51 by jceia            ###   ########.fr       */
+/*   Updated: 2021/09/12 15:50:52 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,25 @@ void	raytrace_scenario(const t_scenario *scenario, t_rgb *buf)
 					)
 				)
 			);
-			buf[i * cam->pixels_width + j] = raytrace_single_ray(&ray, scenario);
+			buf[i * cam->pixels_width + j] = raytrace_single(&ray, scenario);
 			j++;
 		}
 		i++;
 	}
 }
 
-t_rgb	raytrace_single_ray(const t_ray3D *ray, const t_scenario *scenario)
+void	hit_record_copy(t_hit_record *hr1, t_hit_record *hr2)
+{
+	hr1->base_color = hr2->base_color;
+	hr1->n = hr2->n;
+	hr1->obj = hr2->obj;
+	hr1->p = hr2->p;
+	hr1->t = hr2->t;
+}
+
+t_bool	raytrace_hit(const t_ray3D *ray, const t_scenario *scenario, t_hit_record *record)
 {
 	t_bool			hit_anything;
-	t_hit_record	closest_hit_rec;
 	t_hit_record	hit_rec;
 	t_list			*objs;
 
@@ -64,13 +72,21 @@ t_rgb	raytrace_single_ray(const t_ray3D *ray, const t_scenario *scenario)
 	{
 		if (hit_object(ray, objs->content, &hit_rec))
 		{
-			if (!hit_anything || closest_hit_rec.t > hit_rec.t)
-				closest_hit_rec = hit_rec;
+			if (!hit_anything || record->t > hit_rec.t)
+				hit_record_copy(record, &hit_rec);
 			hit_anything = true;
 		}
 		objs = objs->next;
 	}
-	if (hit_anything)
-		return (hit_color(&closest_hit_rec, scenario));
+	return (hit_anything);
+}
+
+
+t_rgb	raytrace_single(const t_ray3D *ray, const t_scenario *scenario)
+{
+	t_hit_record	hit_record;
+
+	if (raytrace_hit(ray, scenario, &hit_record))
+		return (hit_color(&hit_record, scenario));
 	return (scenario->ambient.color);
 }

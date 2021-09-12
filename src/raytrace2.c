@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 15:02:28 by jceia             #+#    #+#             */
-/*   Updated: 2021/09/12 15:13:19 by jceia            ###   ########.fr       */
+/*   Updated: 2021/09/12 16:09:29 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,30 @@
 
 t_rgb	hit_color(const t_hit_record *hit_record, const t_scenario *scenario)
 {
-	(void)scenario;
+	/*
+	t_light			*light;
+	t_vec3D			direction_to_light;
+	float			distance_to_light;
+	t_hit_record	hit_before_light;
+	t_ray3D			ray_to_light;
+	t_bool			shadow;
+
+	light = (t_light *)(scenario->lights->content);
+	direction_to_light = vec3D_subtract(light->origin, hit_record->p);
+	distance_to_light = vec3D_norm(direction_to_light);
+	ray_to_light = ray3D_from_two_points(hit_record->p, light->origin);
+	shadow = false;
+	if (raytrace_hit(&ray_to_light, scenario, &hit_before_light))
+		if (hit_before_light.t < distance_to_light)
+			shadow = true;
+	float a;
+	if (shadow)
+		a = 1 - light->ratio;
+	else
+		a = 1 - (1 - vec3D_dot_product(ray_to_light.direction, hit_record->n)) * light->ratio ;
+		return (hit_record->base_color);
+	return (vec3D_scalar_mul(hit_record->base_color, a));
+	*/
 	return (hit_record->base_color);
 }
 
