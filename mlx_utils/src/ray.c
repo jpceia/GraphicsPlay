@@ -1,33 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   color.h                                            :+:      :+:    :+:   */
+/*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/01 23:28:12 by jceia             #+#    #+#             */
-/*   Updated: 2021/09/08 14:39:36 by jceia            ###   ########.fr       */
+/*   Created: 2021/09/12 12:35:16 by jceia             #+#    #+#             */
+/*   Updated: 2021/09/12 13:10:36 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COLOR_H
-# define COLOR_H
+#include "mlx_utils.h"
 
-typedef struct s_color
+t_ray3D	ray3D_from_two_points(t_vec3D p, t_vec3D q)
 {
-	float	t;
-	float	r;
-	float	g;
-	float	b;
-}	t_color;
+	t_ray3D	r;
 
-int		create_trgb(t_color color);
-int		get_t(int trgb);
-int		get_r(int trgb);
-int		get_g(int trgb);
-int		get_b(int trgb);
+	r.origin = p;
+	r.direction = vec3D_normalize(vec3D_subtract(q, p));
+	return (r);
+}
 
-t_color color_interp(t_color c1, t_color c2, float t);
-t_color color_create(float t, float r, float g, float b);
-
-#endif
+t_vec3D	ray3D_at(const t_ray3D *ray, float t)
+{
+	return (vec3D_add(ray->origin, vec3D_scalar_mul(ray->direction, t)));
+}

@@ -12,7 +12,6 @@
 
 #include "mlx_utils.h"
 #include "libft.h"
-#include <stdio.h>
 
 /*
  * TODO
@@ -22,16 +21,16 @@
  * color completely dark. 0.5 will dim it halfway, and .25 a quarter way.
  * You get the point.
  */
-void	plot_pixel(t_data *data, t_point2D p, t_color color)
+void	plot_pixel(t_data *data, float x, float y, t_rgb color)
 {
-	int		x;
-	int		y;
+	int		i;
+	int		j;
 	char	*dst;
 
-	x = (int)(p.x + 0.5);
-	y = (int)(p.y + 0.5);
-	if (x < 0 || x > data->width || y < 0 || y > data->height)
+	i = (int)(x + 0.5);
+	j = (int)(y + 0.5);
+	if (i < 0 || i > data->width || j < 0 || j > data->height)
 		return;
-	dst = data->addr + (y*data->line_length + x*(data->bits_per_pixel / 8));
+	dst = data->addr + (j*data->line_length + i*(data->bits_per_pixel / 8));
 	*(unsigned int *)dst += create_trgb(color);
 }

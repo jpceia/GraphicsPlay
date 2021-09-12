@@ -1,52 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector2D.c                                         :+:      :+:    :+:   */
+/*   vec3D_3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/07 06:48:02 by jceia             #+#    #+#             */
-/*   Updated: 2021/09/08 05:18:24 by jceia            ###   ########.fr       */
+/*   Created: 2021/09/12 12:31:52 by jceia             #+#    #+#             */
+/*   Updated: 2021/09/12 12:32:22 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx_utils.h"
 #include <math.h>
 #include "libft.h"
+#include "mlx_utils.h"
 
-t_vector2D	point2D_scalar_mul(t_vector2D v, float l)
+float	vec3D_norm_squared(t_vec3D v)
 {
-	v.x *= l;
-	v.y *= l;
-	return (v);
+	return (v.x * v.x + v.y * v.y + v.z * v.z);
 }
 
-t_vector2D	vector2D_unit_vector(t_vector2D v)
+float	vec3D_norm(t_vec3D v)
 {
-	return (vector2D_scalar_mul(v, 1 / vector2D_norm(v)));
+	return sqrtf(vec3D_norm_squared(v));
 }
 
-float	vector2D_dot_product(t_vector2D u, t_vector2D v)
-{
-	return (u.x * v.x + u.y+ v.y);
-}
-
-float	vector2D_norm(t_vector2D v)
-{
-	return sqrtf(v.x * v.x + v.y * v.y);
-}
-
-float	vector2D_angle(t_vector2D u, t_vector2D v)
+float	vec3D_angle(t_vec3D u, t_vec3D v)
 {
 	float	norm_u;
 	float	norm_v;
 	float	dot_uv;
 
-	dot_uv = vector2D_dot_product(u, v);
+	dot_uv = vec3D_dot_product(u, v);
 	if (dot_uv == 0)
 		return (0);
-	norm_u = vector2D_norm(u);
-	norm_v = vector2D_norm(v);
+	norm_u = vec3D_norm(u);
+	norm_v = vec3D_norm(v);
 	if (norm_u == 0 || norm_v == 0)
 	{
 		ft_putstr_error("Impossible to calculate angle between two vectors");

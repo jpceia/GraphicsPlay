@@ -1,39 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   point3D.c                                          :+:      :+:    :+:   */
+/*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/01 22:32:05 by jceia             #+#    #+#             */
-/*   Updated: 2021/09/08 05:29:59 by jceia            ###   ########.fr       */
+/*   Created: 2021/09/02 02:53:52 by jceia             #+#    #+#             */
+/*   Updated: 2021/09/12 13:22:46 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mlx_utils.h"
 
-t_point3D	point3D_create(float x, float y, float z)
+int	create_trgb(t_rgb v)
 {
-	t_point3D	p;
-
-	p.x = x;
-	p.y = y;
-	p.z = z;
-	return (p);
+	return (
+		(0) << 24
+		| ((int)(255 * v.x)) << 16
+		| ((int)(255 * v.y)) << 8
+		| ((int)(255 * v.z)));
 }
 
-t_vector3D	point3D_subtract(t_point3D p, t_point3D q)
+int	get_t(int trgb)
 {
-	p.x -= q.x;
-	p.y -= q.y;
-	p.z -= q.z;
-	return (p);
+	return (trgb & (0xFF << 24));
 }
 
-t_point3D	point3D_add(t_point3D p, t_vector3D v)
+int	get_r(int trgb)
 {
-	p.x += v.x;
-	p.y += v.y;
-	p.z += v.z;
-	return (p);
+	return (trgb & (0xFF << 16));
+}
+
+int	get_g(int trgb)
+{
+	return (trgb & (0xFF << 8));
+}
+
+int	get_b(int trgb)
+{
+	return (trgb & 0xFF);
 }
