@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 12:31:52 by jceia             #+#    #+#             */
-/*   Updated: 2021/09/12 12:32:22 by jceia            ###   ########.fr       */
+/*   Updated: 2021/09/12 15:27:02 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ float	vec3D_norm_squared(t_vec3D v)
 
 float	vec3D_norm(t_vec3D v)
 {
-	return sqrtf(vec3D_norm_squared(v));
+	return (sqrtf(vec3D_norm_squared(v)));
 }
 
 float	vec3D_angle(t_vec3D u, t_vec3D v)

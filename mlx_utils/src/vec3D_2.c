@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 12:27:22 by jceia             #+#    #+#             */
-/*   Updated: 2021/09/12 12:34:41 by jceia            ###   ########.fr       */
+/*   Updated: 2021/09/12 15:37:57 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_vec3D	vec3D_normalize(t_vec3D v)
 
 float	vec3D_dot_product(t_vec3D u, t_vec3D v)
 {
-	return (u.x * v.x + u.y+ v.y + u.z * v.z);
+	return (u.x * v.x + u.y + v.y + u.z * v.z);
 }
 
 t_vec3D	vec3D_cross_product(t_vec3D u, t_vec3D v)

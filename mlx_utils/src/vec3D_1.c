@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 12:27:30 by jceia             #+#    #+#             */
-/*   Updated: 2021/09/12 12:39:11 by jceia            ###   ########.fr       */
+/*   Updated: 2021/09/12 15:26:40 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,12 @@ t_vec3D	vec3D_add(t_vec3D p, t_vec3D v)
 
 float	vec3D_coord(t_vec3D p, t_coord coord)
 {
-	switch (coord)
-	{
-	case COORD_X:
+	if (coord == COORD_X)
 		return (p.x);
-	case COORD_Y:
+	if (coord == COORD_Y)
 		return (p.y);
-	case COORD_Z:
+	if (coord == COORD_Z)
 		return (p.z);
-	}
 	ft_putendl_error("Invalid coordinate");
 	return (0.0);
 }

@@ -6,14 +6,14 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/01 20:59:41 by jceia             #+#    #+#             */
-/*   Updated: 2021/09/12 15:12:08 by jceia            ###   ########.fr       */
+/*   Updated: 2021/09/12 15:38:35 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MLX_UTILS_H
 # define MLX_UTILS_H
 
-typedef	enum e_coord
+typedef enum e_coord
 {
 	COORD_X,
 	COORD_Y,
@@ -27,20 +27,19 @@ typedef struct s_vec3D
 	float	z;
 }	t_vec3D;
 
-typedef t_vec3D t_rgb;
+typedef t_vec3D	t_rgb;
 
-typedef enum
+typedef enum e_projection
 {
 	PROJ,
 	PARALLEL
 }	t_projection;
 
-typedef	struct s_mouse
+typedef struct s_mouse
 {
 	float	x;
 	float	y;
 }	t_mouse;
-
 
 typedef struct s_data
 {
@@ -56,11 +55,6 @@ typedef struct s_data
 	int			endian;
 	t_mouse		*mouse;
 }	t_data;
-
-
-typedef struct s_vars {
-
-}	t_vars;
 
 /*
  * MLX
