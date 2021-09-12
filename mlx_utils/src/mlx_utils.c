@@ -34,3 +34,21 @@ void	plot_pixel(t_data *data, float x, float y, t_rgb color)
 	dst = data->addr + (j*data->line_length + i*(data->bits_per_pixel / 8));
 	*(unsigned int *)dst += create_trgb(color);
 }
+
+void    image_from_matrix(t_data *data, t_rgb *buf)
+{
+    int i;
+    int j;
+
+	i = 0;
+	while (i < data->width)
+	{
+		j = 0;
+		while (j < data->height)
+		{
+			plot_pixel(data, i, j, buf[i * data->width + j]);
+			j++;
+		}
+		i++;
+	}
+}
