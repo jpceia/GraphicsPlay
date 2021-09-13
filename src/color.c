@@ -1,27 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ray.c                                              :+:      :+:    :+:   */
+/*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/12 12:35:16 by jceia             #+#    #+#             */
-/*   Updated: 2021/09/12 15:37:52 by jceia            ###   ########.fr       */
+/*   Created: 2021/09/02 02:53:52 by jceia             #+#    #+#             */
+/*   Updated: 2021/09/13 20:08:29 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx_utils.h"
+#include "miniRT.h"
 
-t_ray3D	ray3D_from_two_points(t_vec3D p, t_vec3D q)
+int	create_trgb(t_rgb v)
 {
-	t_ray3D	r;
-
-	r.origin = p;
-	r.direction = vec3D_normalize(vec3D_subtract(q, p));
-	return (r);
+	return (
+		(0) << 24
+		| ((int)(255 * v.x)) << 16
+		| ((int)(255 * v.y)) << 8
+		| ((int)(255 * v.z)));
 }
 
-t_vec3D	ray3D_at(const t_ray3D *ray, float t)
+int	get_t(int trgb)
 {
-	return (vec3D_add(ray->origin, vec3D_scalar_mul(ray->direction, t)));
+	return (trgb & (0xFF << 24));
+}
+
+int	get_r(int trgb)
+{
+	return (trgb & (0xFF << 16));
+}
+
+int	get_g(int trgb)
+{
+	return (trgb & (0xFF << 8));
+}
+
+int	get_b(int trgb)
+{
+	return (trgb & 0xFF);
 }

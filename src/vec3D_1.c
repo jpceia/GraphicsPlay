@@ -6,11 +6,11 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 12:27:30 by jceia             #+#    #+#             */
-/*   Updated: 2021/09/12 15:26:40 by jceia            ###   ########.fr       */
+/*   Updated: 2021/09/13 20:07:25 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx_utils.h"
+#include "miniRT.h"
 #include "libft.h"
 
 t_vec3D	vec3D_create(float x, float y, float z)
