@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 04:07:35 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/08 04:47:48 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/08 04:56:33 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ t_scenario	*parse_scenario_from_file(t_scenario **scenario, char *fname)
 
 int	parse_color(t_rgb *color, char *s)
 {
-	int		N;
+	int		n;
 	char	**s_split;
 
-	N = ft_strwc(s, ',');
-	if (N != 3)
+	n = ft_strwc(s, ',');
+	if (n != 3)
 	{
 		ft_putendl_error("Error");
 		ft_putendl_error("Incorrect color format");
@@ -73,17 +73,17 @@ int	parse_color(t_rgb *color, char *s)
 	color->x = (float)ft_atoi(s_split[0]) / 255;
 	color->y = (float)ft_atoi(s_split[1]) / 255;
 	color->z = (float)ft_atoi(s_split[2]) / 255;
-	ft_str_array_clear(s_split, N);
+	ft_str_array_clear(s_split, n);
 	return (0);
 }
 
 int	parse_vec3d(t_vec3d *p, char *s)
 {
-	int		N;
+	int		n;
 	char	**s_split;
 
-	N = ft_strwc(s, ',');
-	if (N != 3)
+	n = ft_strwc(s, ',');
+	if (n != 3)
 	{
 		ft_putendl_error("Error");
 		ft_putendl_error("Incorrect coordinates format");
@@ -93,6 +93,6 @@ int	parse_vec3d(t_vec3d *p, char *s)
 	p->x = ft_atof(s_split[0]);
 	p->y = ft_atof(s_split[1]);
 	p->z = ft_atof(s_split[2]);
-	ft_str_array_clear(s_split, N);
+	ft_str_array_clear(s_split, n);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 15:00:21 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/08 02:25:00 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/08 04:54:53 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,7 @@ void	raytrace_scenario(const t_scenario *scenario, t_rgb *buf)
 				cam->direction,
 				vec3d_scalar_mul(
 					cam->basis_y,
-					cam->view_height * ((i + 0.5) / cam->pixels_height - 0.5)
-				)
-		);
+					cam->view_height * ((i + 0.5) / cam->pixels_height - 0.5)));
 		j = 0;
 		while (j < cam->pixels_height)
 		{
@@ -41,9 +39,7 @@ void	raytrace_scenario(const t_scenario *scenario, t_rgb *buf)
 					vec3d_scalar_mul(
 						cam->basis_x,
 						cam->view_width * ((j + 0.5) / cam->pixels_width - 0.5)
-					)
-				)
-			);
+						)));
 			buf[i * cam->pixels_width + j] = raytrace_single(&ray, scenario);
 			j++;
 		}
@@ -60,7 +56,8 @@ void	hit_record_copy(t_hit_record *hr1, t_hit_record *hr2)
 	hr1->t = hr2->t;
 }
 
-t_bool	raytrace_hit(const t_ray3d *ray, const t_scenario *scenario, t_hit_record *record)
+t_bool	raytrace_hit(const t_ray3d *ray, const t_scenario *scenario,
+		t_hit_record *record)
 {
 	t_bool			hit_anything;
 	t_hit_record	hit_rec;
@@ -80,7 +77,6 @@ t_bool	raytrace_hit(const t_ray3d *ray, const t_scenario *scenario, t_hit_record
 	}
 	return (hit_anything);
 }
-
 
 t_rgb	raytrace_single(const t_ray3d *ray, const t_scenario *scenario)
 {

@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 04:07:55 by jceia             #+#    #+#             */
-/*   Updated: 2021/09/08 15:54:03 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/08 02:40:23 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,25 @@
 int	check_file_extension(char *fname, char *ext)
 {
 	char	**s_split;
-	int		N;
+	int		n;
 
-	N = ft_strwc(fname, '.');
-	if (N < 1)
+	n = ft_strwc(fname, '.');
+	if (n < 1)
 	{
 		ft_putendl_error("Error");
 		ft_putendl_error("File has no extension");
 		return (-1);
 	}
 	s_split = ft_split(fname, '.');
-	if (ft_strcmp(s_split[N - 1], ext) != 0)
+	if (ft_strcmp(s_split[n - 1], ext) != 0)
 	{
-		ft_str_array_clear(s_split, N);
+		ft_str_array_clear(s_split, n);
 		ft_putendl_error("Error");
 		ft_putstr_error("File extension needs to be .");
 		ft_putendl_error(ext);
 		return (-1);
 	}
-	ft_str_array_clear(s_split, N);
+	ft_str_array_clear(s_split, n);
 	return (0);
 }
 

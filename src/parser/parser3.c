@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 12:26:46 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/08 02:25:23 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/08 04:57:16 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ int	parse_sphere_from_line(t_object *obj, char *line)
 	t_sphere	*sphere;
 	char		**s_split;
 	int			status;
-	int			N;
+	int			n;
 
 	obj->obj_type = SPHERE;
-	N = ft_strwc(line, ' ');
-	if (N != 4)
+	n = ft_strwc(line, ' ');
+	if (n != 4)
 		return (exit_invalid_line(line));
 	sphere = (t_sphere *)malloc(sizeof(*sphere));
 	if (!sphere)
@@ -58,7 +58,7 @@ int	parse_sphere_from_line(t_object *obj, char *line)
 	status = parse_vec3d(&sphere->center, s_split[1]);
 	sphere->radius = ft_atof(s_split[2]) / 2;
 	status += parse_color(&sphere->color, s_split[3]);
-	ft_str_array_clear(s_split, N);
+	ft_str_array_clear(s_split, n);
 	if (status < 0)
 		return (exit_free(sphere));
 	obj->data = sphere;
@@ -70,11 +70,11 @@ int	parse_plane_from_line(t_object *obj, char *line)
 	t_plane	*plane;
 	char	**s_split;
 	int		status;
-	int		N;
+	int		n;
 
 	obj->obj_type = PLANE;
-	N = ft_strwc(line, ' ');
-	if (N != 4)
+	n = ft_strwc(line, ' ');
+	if (n != 4)
 		return (exit_invalid_line(line));
 	plane = (t_plane *)malloc(sizeof(*plane));
 	if (!plane)
@@ -85,7 +85,7 @@ int	parse_plane_from_line(t_object *obj, char *line)
 	status = parse_vec3d(&plane->p, s_split[1]);
 	status += parse_vec3d(&plane->n, s_split[2]);
 	status += parse_color(&plane->color, s_split[3]);
-	ft_str_array_clear(s_split, N);
+	ft_str_array_clear(s_split, n);
 	if (status < 0)
 		return (exit_free(plane));
 	obj->data = plane;
@@ -97,11 +97,11 @@ int	parse_cyclinder_from_line(t_object *obj, char *line)
 	t_cylinder	*cylinder;
 	char		**s_split;
 	int			status;
-	int			N;
+	int			n;
 
 	obj->obj_type = CYLINDER;
-	N = ft_strwc(line, ' ');
-	if (N != 6)
+	n = ft_strwc(line, ' ');
+	if (n != 6)
 		return (exit_invalid_line(line));
 	cylinder = (t_cylinder *)malloc(sizeof(*cylinder));
 	if (!cylinder)
@@ -114,7 +114,7 @@ int	parse_cyclinder_from_line(t_object *obj, char *line)
 	cylinder->radius = ft_atof(s_split[3]) / 2;
 	cylinder->height = ft_atof(s_split[4]);
 	status += parse_color(&cylinder->color, s_split[5]);
-	ft_str_array_clear(s_split, N);
+	ft_str_array_clear(s_split, n);
 	if (status < 0)
 		return (exit_free(cylinder));
 	obj->data = cylinder;
