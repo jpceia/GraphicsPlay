@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 10:58:52 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/08 02:28:03 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/08 04:50:25 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,41 +19,22 @@
 # define WIN_WIDTH	480
 # define WIN_HEIGHT	480
 
+
 /*
- * MLX UTILS
+ * X11 Keys / Events / Masks
  */
 
-typedef	t_vec3d	t_rgb;
+# define K_LEFT_ARROW	65361
+# define K_RIGHT_ARROW	65363
+# define K_UP_ARROW		65362
+# define K_DOWN_ARROW	65364
+# define K_ESC			65307
 
-typedef enum e_projection
-{
-	PROJ,
-	PARALLEL
-}	t_projection;
+# define KEY_PRESS		02
+# define DESTROY_NOTIFY	17
 
-typedef struct s_mouse
-{
-	float	x;
-	float	y;
-}	t_mouse;
-
-typedef struct s_data
-{
-	void		*mlx;
-	void		*win;
-
-	void		*img;
-	char		*addr;
-	int			width;
-	int			height;
-	int			bits_per_pixel;
-	int			line_length;
-	int			endian;
-	t_mouse		*mouse;
-}	t_data;
-
-void	plot_pixel(t_data *data, float x, float y, t_rgb color);
-void	image_from_matrix(t_data *data, t_rgb *buf);
+# define M_NO_EVENT			0L
+# define M_KEY_PRESS		1L
 
 /*
  * 3D Ray
@@ -71,6 +52,8 @@ t_vec3d	ray3d_at(const t_ray3d *ray, float t);
 /*
  * Color
  */
+
+typedef	t_vec3d	t_rgb;
 
 int		create_trgb(t_rgb color);
 int		get_t(int trgb);
@@ -152,6 +135,34 @@ typedef struct s_scenario
 	t_list			*objects;
 }	t_scenario;
 
+
+typedef struct s_data
+{
+	void		*mlx;
+	void		*win;
+
+	void		*img;
+	char		*addr;
+	int			width;
+	int			height;
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
+	t_scenario	*scenario;
+	t_rgb		*buf;
+}	t_data;
+
+typedef struct s_args
+{
+	char	*fname;
+	char	*title;
+	int		width;
+	int		height;
+}	t_args;
+
+
+
+
 /*
  * Parser
  */
@@ -160,7 +171,7 @@ int		check_file_extension(char *fname, char const *ext);
 int		exit_invalid_line(char *line);
 int		exit_malloc_fail(void);
 int		exit_free(void *p);
-void	parse_scenario_from_file(t_scenario *scenario, char *fname);
+t_scenario	*parse_scenario_from_file(t_scenario **scenario, char *fname);
 int		parse_color(t_rgb *color, char *s);
 int		parse_vec3d(t_vec3d *p, char *s);
 int		parse_ambient_from_line(t_scenario *scenario, char *line);
@@ -171,11 +182,31 @@ int		parse_sphere_from_line(t_object *obj, char *line);
 int		parse_plane_from_line(t_object *obj, char *line);
 int		parse_cyclinder_from_line(t_object *obj, char *line);
 
+
+/*
+ * MLX UTILS
+ */
+
+typedef enum e_projection
+{
+	PROJ,
+	PARALLEL
+}	t_projection;
+
+void	plot_pixel(t_data *data, float x, float y, t_rgb color);
+void	update_image_from_buf(t_data *data);
+void	mlx_data_init(t_data **vars, const t_args *args);
+void	scenario_init(t_scenario *scenario);
+void	mlx_data_update_image(t_data *vars);
+int		key_press(int keycode, t_data *vars);
+int		exit_handle(t_data *vars);
+
+
 /*
  * Clear
  */
-void	scenario_init(t_scenario *scenario);
-void	clear_scenario(t_scenario *scenario);
+void	clean_scenario(t_scenario *scenario);
+void	clean_mlx_data(t_data *vars);
 
 /*
  * Camera

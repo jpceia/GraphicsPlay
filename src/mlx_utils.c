@@ -10,6 +10,7 @@
 /*																			*/
 /* ************************************************************************** */
 
+#include <mlx.h>
 #include "miniRT.h"
 #include "libft.h"
 
@@ -35,20 +36,53 @@ void	plot_pixel(t_data *data, float x, float y, t_rgb color)
 	*(unsigned int *)dst += create_trgb(color);
 }
 
-void	image_from_matrix(t_data *data, t_rgb *buf)
+void	update_image_from_buf(t_data *vars)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (i < data->height)
+	while (i < vars->height)
 	{
 		j = 0;
-		while (j < data->width)
+		while (j < vars->width)
 		{
-			plot_pixel(data, i, j, buf[i * data->width + j]);
+			plot_pixel(vars, i, j, vars->buf[i * vars->width + j]);
 			j++;
 		}
 		i++;
 	}
+}
+
+void	mlx_data_update_image(t_data *vars)
+{
+	calculate_camera_list_params(vars->scenario->cameras, vars->width, vars->height);
+	vars->img = mlx_new_image(vars->mlx, vars->width, vars->height);
+	vars->addr = mlx_get_data_addr(vars->img, &vars->bits_per_pixel,
+			&vars->line_length, &vars->endian);
+	raytrace_scenario(vars->scenario, vars->buf);
+	update_image_from_buf(vars);
+	mlx_put_image_to_window(vars->mlx, vars->win, vars->img, 0, 0);
+	mlx_destroy_image(vars->mlx, vars->img);
+}
+
+void	mlx_data_setup(t_data *vars, const t_args *args)
+{
+	parse_scenario_from_file(&vars->scenario, args->fname);
+	vars->buf = (t_rgb *)malloc(args->width * args->height * sizeof(*vars->buf));
+	vars->width = args->width;
+	vars->height = args->height;
+	vars->mlx = mlx_init();
+	vars->win = mlx_new_window(vars->mlx, args->width, args->height, args->title);
+}
+
+
+void	mlx_data_init(t_data **vars, const t_args *args)
+{
+	*vars = ft_calloc(1, sizeof(**vars));
+	if (!*vars)
+	{
+		exit(EXIT_FAILURE);
+	}
+	mlx_data_setup(*vars, args);
 }

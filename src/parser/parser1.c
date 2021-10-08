@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 04:07:35 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/08 02:21:10 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/08 04:47:48 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,7 @@ int	parse_scenario_item_from_line(t_scenario *scenario, char *line)
 	return (parse_object_from_line(scenario, line));
 }
 
-void	scenario_init(t_scenario *scenario)
-{
-	scenario->cameras = NULL;
-	scenario->lights = NULL;
-	scenario->objects = NULL;
-}
-
-void	parse_scenario_from_file(t_scenario *scenario, char *fname)
+t_scenario	*parse_scenario_from_file(t_scenario **scenario, char *fname)
 {
 	int		fd;
 	int		status;
@@ -50,16 +43,18 @@ void	parse_scenario_from_file(t_scenario *scenario, char *fname)
 		ft_putendl_error("Error opening file");
 		exit(EXIT_FAILURE);
 	}
+	*scenario = ft_calloc(1, sizeof(t_scenario));
 	status = 0;
 	while (ft_get_next_line(fd, &line) > 0 && status >= 0)
 	{
-		status = parse_scenario_item_from_line(scenario, line);
+		status = parse_scenario_item_from_line(*scenario, line);
 		free(line);
 	}
 	free(line);
 	close(fd);
 	if (status < 0)
 		exit(EXIT_FAILURE);
+	return (*scenario);
 }
 
 int	parse_color(t_rgb *color, char *s)
