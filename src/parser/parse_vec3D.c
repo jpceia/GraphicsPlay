@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hooks.c                                            :+:      :+:    :+:   */
+/*   parse_vec3D.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/08 04:00:14 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/08 08:28:20 by jceia            ###   ########.fr       */
+/*   Created: 2021/10/08 08:05:16 by jceia             #+#    #+#             */
+/*   Updated: 2021/10/08 08:28:49 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-int	key_press(int keycode, t_data *vars)
+t_vec3d	*parse_vec3d(t_vec3d *p, char *s)
 {
-	if (keycode == K_ESC)
-		exit_handle(vars);
-	return (0);
-}
+	int		n;
+	char	**s_split;
 
-int	exit_handle(t_data *vars)
-{
-	mlx_data_clean(vars);
-	exit(EXIT_SUCCESS);
+	n = ft_strwc(s, ',');
+	if (n != 3)
+		return (clean_exit(NULL, "Incorrect coordinates format", NULL, 0));
+	s_split = ft_split(s, ',');
+	if (!s_split)
+		return (clean_exit(NULL, "Error spliting string", NULL, 0));
+	p->x = ft_atof(s_split[0]);
+	p->y = ft_atof(s_split[1]);
+	p->z = ft_atof(s_split[2]);
+	ft_str_array_clear(s_split, n);
+	return (p);
 }

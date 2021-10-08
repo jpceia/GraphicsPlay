@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser3.c                                          :+:      :+:    :+:   */
+/*   parse_objects.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 12:26:46 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/08 07:54:36 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/08 08:19:34 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_data	*parse_object_from_line(t_data *vars, char *line)
 	}
 	else if (strncmp(line, "pl ", 3) == 0)
 	{
-		if (parse_plane_from_line(obj, line))
+		if (!parse_plane_from_line(obj, line))
 			return (clean_exit(obj, "Unable to parse plane object", free, 0));
 	}
 	else if (strncmp(line, "cy ", 3) == 0)

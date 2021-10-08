@@ -57,33 +57,29 @@ void	update_image_from_buf(t_data *vars)
 void	mlx_data_update_image(t_data *vars)
 {
 	calculate_camera_list_params(
-		vars->scenario->cameras, vars->width, vars->height);
+		vars->cameras, vars->width, vars->height);
 	vars->img = mlx_new_image(vars->mlx, vars->width, vars->height);
 	vars->addr = mlx_get_data_addr(vars->img, &vars->bits_per_pixel,
 			&vars->line_length, &vars->endian);
-	raytrace_scenario(vars->scenario, vars->buf);
+	raytrace_scenario(vars);
 	update_image_from_buf(vars);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->img, 0, 0);
 	mlx_destroy_image(vars->mlx, vars->img);
-}
-
-void	mlx_data_setup(t_data *vars, const t_args *args)
-{
-	parse_scenario_from_file(&vars->scenario, args->fname);
-	vars->buf = ft_calloc(args->width * args->height, sizeof(*vars->buf));
-	vars->width = args->width;
-	vars->height = args->height;
-	vars->mlx = mlx_init();
-	vars->win = mlx_new_window(
-			vars->mlx, args->width, args->height, args->title);
 }
 
 void	mlx_data_init(t_data **vars, const t_args *args)
 {
 	*vars = ft_calloc(1, sizeof(**vars));
 	if (!*vars)
-	{
-		exit(EXIT_FAILURE);
-	}
-	mlx_data_setup(*vars, args);
+		clean_exit(NULL, "Error allocating memory", NULL, 1);
+	if (!parse_data_from_file(vars, args->fname))
+		clean_exit(vars, "Error parsing data from file", mlx_data_clean, 1);
+	(*vars)->buf = ft_calloc(args->width * args->height, sizeof(*(*vars)->buf));
+	if (!(*vars)->buf)
+		clean_exit(vars, "Error allocating memory to buffer", mlx_data_clean, 1);
+	(*vars)->width = args->width;
+	(*vars)->height = args->height;
+	(*vars)->mlx = mlx_init();
+	(*vars)->win = mlx_new_window(
+			(*vars)->mlx, args->width, args->height, args->title);
 }

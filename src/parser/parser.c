@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser1.c                                          :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 04:07:35 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/08 07:55:53 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/08 08:21:18 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 #include "libft.h"
 #include "miniRT.h"
 
-// OK
 int	check_file_extension(char *fname, const char *ext)
 {
 	char	**s_split;
@@ -40,7 +39,6 @@ int	check_file_extension(char *fname, const char *ext)
 	return (0);
 }
 
-// OK
 t_data	*parse_data_item_from_line(t_data *vars, char *line)
 {
 	if (ft_strwc(line, ' ') == 0)
@@ -54,27 +52,15 @@ t_data	*parse_data_item_from_line(t_data *vars, char *line)
 	return (parse_object_from_line(vars, line));
 }
 
-t_data	*parse_data_from_file(t_data **vars, char *fname)
+t_data	*parse_data_from_fd(t_data **vars, int fd)
 {
-	int		fd;
 	int		status;
 	char	*line;
 	char	*err_msg;
 
-	if (check_file_extension(fname, "rt") < 0)
-		return (NULL);
-	fd = open(fname, O_RDONLY);
-	if (fd < 0)
-	{
-		perror("Error opening file");
-		return (NULL);
-	}
 	*vars = ft_calloc(1, sizeof(t_data));
 	if (!*vars)
-	{
-		perror("Error allocating memory");
-		return (NULL);
-	}
+		return (clean_exit(NULL, "Error allocating memory", NULL, 0));
 	status = 1;
 	err_msg = NULL;
 	while ((status > 0) && !err_msg)
@@ -83,55 +69,27 @@ t_data	*parse_data_from_file(t_data **vars, char *fname)
 		if (status == -1)
 			err_msg = "Error reading the file";
 		if (status == 1)
-		{
 			if (!parse_data_item_from_line(*vars, line))
-				err_msg = "Error parsing line"; 
-		}
+				err_msg = "Error parsing line";
 		free(line);
 	}
-	close(fd);
 	if (err_msg)
-	{
-		perror(err_msg);
-		return (NULL);
-	}
+		return (clean_exit(*vars, err_msg, mlx_data_clean, 0));
 	return (*vars);
 }
 
-t_rgb	*parse_color(t_rgb *color, char *s)
+t_data	*parse_data_from_file(t_data **vars, char *fname)
 {
-	int		n;
-	char	**s_split;
+	int		fd;
 
-	n = ft_strwc(s, ',');
-	if (n != 3)
-	{
-		perror("Incorrect color format");
+	if (check_file_extension(fname, "rt") < 0)
 		return (NULL);
-	}
-	s_split = ft_split(s, ',');
-	color->x = (float)ft_atoi(s_split[0]) / 255;
-	color->y = (float)ft_atoi(s_split[1]) / 255;
-	color->z = (float)ft_atoi(s_split[2]) / 255;
-	ft_str_array_clear(s_split, n);
-	return (color);
-}
-
-t_vec3d	*parse_vec3d(t_vec3d *p, char *s)
-{
-	int		n;
-	char	**s_split;
-
-	n = ft_strwc(s, ',');
-	if (n != 3)
-	{
-		perror("Incorrect coordinates format");
-		return (NULL);
-	}
-	s_split = ft_split(s, ',');
-	p->x = ft_atof(s_split[0]);
-	p->y = ft_atof(s_split[1]);
-	p->z = ft_atof(s_split[2]);
-	ft_str_array_clear(s_split, n);
-	return (p);
+	fd = open(fname, O_RDONLY);
+	if (fd < 0)
+		return (clean_exit(NULL, "Error opening file", NULL, 0));
+	if (!parse_data_from_fd(vars, fd))
+		return (clean_exit(*vars, "Error parsing file", mlx_data_clean, 0));
+	if (close(fd) < 0)
+		perror("Error closing file");
+	return (*vars);
 }

@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 10:58:52 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/08 07:37:44 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/08 08:21:18 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,7 @@ int			exit_handle(t_data *vars);
 /*
  * Clear
  */
-void		clean_mlx_data(void *vars);
+void		mlx_data_clean(void *vars);
 void		*clean_exit(void *ptr, char *msg, void (*del)(void *), int do_exit);
 
 /*

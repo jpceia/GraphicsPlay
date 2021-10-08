@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 14:47:48 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/08 07:54:52 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/08 08:26:43 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include "miniRT.h"
 
-void	clean_object(void *obj)
+void	object_clean(void *obj)
 {
 	if (!obj)
 		return ;
@@ -22,7 +22,7 @@ void	clean_object(void *obj)
 	free(obj);
 }
 
-void	clean_mlx_data(void *ptr)
+void	mlx_data_clean(void *ptr)
 {
 	t_data	*vars;
 
@@ -38,10 +38,10 @@ void	clean_mlx_data(void *ptr)
 	}
 	ft_lstclear(&vars->cameras, free);
 	ft_lstclear(&vars->lights, free);
-	ft_lstclear(&vars->objects, clean_object);
+	ft_lstclear(&vars->objects, object_clean);
 	if (vars->buf)
 		free(vars->buf);
-	free(vars);
+	free(ptr);
 }
 
 void	*clean_exit(void *ptr, char *msg, void (*del)(void *), int do_exit)
