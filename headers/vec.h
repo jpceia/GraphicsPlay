@@ -25,6 +25,32 @@ typedef enum e_coord
 }	t_coord;
 
 /*
+ * vec2d
+ */
+typedef struct s_vec2d
+{
+	float	x;
+	float	y;
+}	t_vec2d;
+
+t_vec2d	vec2d_create(float x, float y);
+t_vec2d	vec2d_origin(void);
+t_vec2d	vec2d_subtract(t_vec2d q, t_vec2d p);
+t_vec2d	vec2d_add(t_vec2d p, t_vec2d v);
+float	vec2d_coord(t_vec2d p, t_coord coord);
+
+t_vec2d	vec2d_scalar_mul(t_vec2d v, float l);
+t_vec2d	vec2d_normalize(t_vec2d v);
+float	vec2d_cross_product(t_vec2d u, t_vec2d v);
+t_vec2d	vec2d_elementwise_product(t_vec2d u, t_vec2d v);
+t_vec2d	vec2d_interpolate(t_vec2d p, t_vec2d q, float t);
+
+float	vec2d_dot_product(t_vec2d u, t_vec2d v);
+float	vec2d_norm_squared(t_vec2d v);
+float	vec2d_norm(t_vec2d v);
+float	vec2d_angle(t_vec2d u, t_vec2d v);
+t_vec2d	vec2d_clip(t_vec2d v, float a, float b);
+/*
  * vec3d
  */
 
