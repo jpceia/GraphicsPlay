@@ -22,7 +22,7 @@
  * color completely dark. 0.5 will dim it halfway, and .25 a quarter way.
  * You get the point.
  */
-void	plot_pixel(t_data *data, float x, float y, t_rgb color)
+void	plot_pixel(t_data *vars, float x, float y, t_rgb color)
 {
 	int		i;
 	int		j;
@@ -30,9 +30,9 @@ void	plot_pixel(t_data *data, float x, float y, t_rgb color)
 
 	i = (int)(x + 0.5);
 	j = (int)(y + 0.5);
-	if (i < 0 || i > data->width || j < 0 || j > data->height)
+	if (i < 0 || i >= vars->width || j < 0 || j >= vars->height)
 		return ;
-	dst = data->addr + (j * data->line_length + i * (data->bits_per_pixel / 8));
+	dst = vars->addr + (j * vars->line_length + i * (vars->bits_per_pixel / 8));
 	*(unsigned int *)dst += create_trgb(color);
 }
 
