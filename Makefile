@@ -1,7 +1,6 @@
 NAME		= miniRT
 
 LIBFT_DIR	= ./libft
-LIBFT		= $(LIBFT_DIR)/libft.a
 
 INC_DIR		= headers
 
@@ -14,22 +13,43 @@ OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 CC			= gcc
 RM			= rm -f
 
-CFLAGS		= -Wall -Wextra -I$(INC_DIR) -I$(LIBFT_DIR) -I/usr/local/include -Imlx_linux -g
-LFLAGS		= -L/usr/local/lib -Lmlx_Linux -lmlx_Linux -Imlx_linux -lXext -lX11 -lm -lz -g
+OS			= $(shell uname)
+
+ifeq ($(OS), Linux)
+	MLX_INC_DIR	= /usr/local/include
+	MLX_DIR		= /usr/local/lib
+	FLAG_OS		= -D OS_Linux
+	FLAGS_MLX	= -Lmlx_Linux -lmlx_Linux -Imlx_linux -lXext -lX11 -lz
+else
+	MLX_INC_DIR	= ./minilibx_opengl_20191021
+	MLX_DIR		= ./minilibx_opengl_20191021
+	FLAGS_MLX	= -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
+endif
+FLAGS_WARN	= -Wall -Wextra -Werror
+FLAGS_INC	= -I$(INC_DIR) -I$(LIBFT_DIR) -I$(MLX_INC_DIR)
+FLAGS_DEBUG	= -g
+FLAGS_OPT	= -O3
+FLAGS_LIBFT = -L$(LIBFT_DIR) -lft
+CFLAGS		= $(FLAGS_WARN) $(FLAGS_INC) $(FLAGS_OPT) $(FLAG_OS)
+LDFLAGS		= $(FLAGS_LIBFT) $(FLAGS_MLX) $(FLAGS_OPT) -lm
 
 $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAME): $(OBJS) $(LIBFT)
-	$(CC) $^ -o $@ $(LFLAGS)
+$(NAME): $(OBJS)
+ifneq ($(OS), Linux)
+	$(MAKE) -C $(MLX_DIR)
+endif
+	$(MAKE) -C $(LIBFT_DIR)
+	$(CC) $(LDFLAGS) $^ -o $@
 
 all: $(NAME)
 
-$(LIBFT):
-	$(MAKE) -C $(LIBFT_DIR)
-
 clean:
+ifneq ($(OS), Linux)
+	$(MAKE) -C $(MLX_DIR) clean
+endif
 	$(MAKE) -C $(LIBFT_DIR) clean
 	$(RM) -rf $(OBJ_DIR)
 
@@ -38,5 +58,11 @@ fclean: clean
 	$(RM) $(NAME)
 
 re:	fclean all
+
+# Debugging functions
+
+debug:		CFLAGS += $(FLAGS_DEBUG)
+debug:		LDFLAGS += $(FLAGS_DEBUG)
+debug:		re
 
 .PHONY:		all clean fclean re

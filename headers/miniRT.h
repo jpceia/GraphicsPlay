@@ -16,23 +16,51 @@
 # include "libft.h"
 # include "vec.h"
 
-# define WIN_WIDTH	480
-# define WIN_HEIGHT	480
+# define WIN_WIDTH		1080
+# define WIN_HEIGHT		720
+
+# ifdef OS_Linux
+#  define K_LEFT_ARROW	65361
+#  define K_RIGHT_ARROW	65363
+#  define K_UP_ARROW	65362
+#  define K_DOWN_ARROW	65364
+#  define K_ESC			65307
+#  define K_A			97
+#  define K_D			100
+#  define K_W			119
+#  define K_S			115
+# else
+#  define K_LEFT_ARROW	123
+#  define K_RIGHT_ARROW	124
+#  define K_UP_ARROW	126
+#  define K_DOWN_ARROW	125
+#  define K_ESC			53
+#  define K_A			0
+#  define K_D			2
+#  define K_W			13
+#  define K_S			1
+# endif
 
 /*
- * X11 Keys / Events / Masks
+ * X11 Events
  */
-# define K_LEFT_ARROW	65361
-# define K_RIGHT_ARROW	65363
-# define K_UP_ARROW		65362
-# define K_DOWN_ARROW	65364
-# define K_ESC			65307
 
 # define KEY_PRESS		02
+# define KEY_RELEASE	03
+# define BUTTON_PRESS	04
+# define BUTTON_RELEASE 05
+# define MOTION_NOTIFY	06
 # define DESTROY_NOTIFY	17
 
-# define M_NO_EVENT		0L
-# define M_KEY_PRESS	1L
+/*
+ * X11 Masks
+ */
+# define M_NO_EVENT			0L
+# define M_KEY_PRESS		1L
+# define M_KEY_RELEASE		2L
+# define M_BUTTON_PRESS 	4L
+# define M_BUTTON_RELEASE	8L
+# define M_POINTER_MOTION	64L
 
 /*
  * 3D Ray
