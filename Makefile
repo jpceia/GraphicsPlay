@@ -3,7 +3,7 @@ NAME		= miniRT
 LIBFT_DIR	= ./libft
 LIBFT		= $(LIBFT_DIR)/libft.a
 
-INC_DIR		= .
+INC_DIR		= headers
 
 SRC_DIR		= src
 OBJ_DIR		= obj
