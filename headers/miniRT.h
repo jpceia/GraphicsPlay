@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 10:58:52 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/08 08:21:18 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/08 08:56:44 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ typedef struct s_args
  * Parser
  */
 int			check_file_extension(char *fname, char const *ext);
-t_data		*parse_data_from_file(t_data **vars, char *fname);
+t_data		*parse_data_from_file(t_data *vars, char *fname);
 t_rgb		*parse_color(t_rgb *color, char *s);
 t_vec3d		*parse_vec3d(t_vec3d *p, char *s);
 t_data		*parse_ambient_from_line(t_data *vars, char *line);
@@ -174,7 +174,7 @@ typedef enum e_projection
 
 void		plot_pixel(t_data *data, float x, float y, t_rgb color);
 void		update_image_from_buf(t_data *data);
-void		mlx_data_init(t_data **vars, const t_args *args);
+void		mlx_data_init(t_data *vars, const t_args *args);
 void		mlx_data_update_image(t_data *vars);
 int			key_press(int keycode, t_data *vars);
 int			exit_handle(t_data *vars);

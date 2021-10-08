@@ -30,18 +30,25 @@ void	mlx_data_clean(void *ptr)
 		return ;
 	vars = (t_data *)ptr;
 	if (vars->win)
+	{
 		mlx_destroy_window(vars->mlx, vars->win);
+		vars->win = NULL;
+	}
 	if (vars->mlx)
 	{
 		mlx_destroy_display(vars->mlx);
 		free(vars->mlx);
+		vars->mlx = NULL;
 	}
 	ft_lstclear(&vars->cameras, free);
 	ft_lstclear(&vars->lights, free);
 	ft_lstclear(&vars->objects, object_clean);
 	if (vars->buf)
+	{
 		free(vars->buf);
-	free(ptr);
+		vars->buf = NULL;
+	}
+	free(vars);
 }
 
 void	*clean_exit(void *ptr, char *msg, void (*del)(void *), int do_exit)

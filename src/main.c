@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 04:07:55 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/08 04:48:39 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/08 08:57:35 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ int	main(int argc, char **argv)
 	args.height = WIN_HEIGHT;
 	args.title = "42 - MiniRT";
 	args.fname = argv[1];
-	mlx_data_init(&vars, &args);
+	vars = ft_calloc(1, sizeof(t_data));
+	if (!vars)
+		clean_exit(NULL, "Error allocating memory", NULL, 1);
+	mlx_data_init(vars, &args);
 	mlx_data_update_image(vars);
 	mlx_hook(vars->win, KEY_PRESS, M_KEY_PRESS, key_press, vars);
 	mlx_hook(vars->win, DESTROY_NOTIFY, M_NO_EVENT, exit_handle, vars);
