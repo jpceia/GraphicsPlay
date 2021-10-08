@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 15:00:21 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/08 04:54:53 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/08 05:58:24 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,15 @@ void	raytrace_scenario(const t_data *vars)
 					cam->basis_y,
 					cam->view_height * ((i + 0.5) / cam->pixels_height - 0.5)));
 		j = 0;
-		while (j < cam->pixels_height)
+		while (j < cam->pixels_width)
 		{
 			ray = ray3d_from_two_points(
-				cam->origin,
-				vec3d_add(
-					v_yz,
-					vec3d_scalar_mul(
-						cam->basis_x,
-						cam->view_width * ((j + 0.5) / cam->pixels_width - 0.5)
+					cam->origin,
+					vec3d_add(
+						v_yz,
+						vec3d_scalar_mul(
+							cam->basis_x,
+							cam->view_width * ((j + 0.5) / cam->pixels_width - 0.5)
 						)));
 			vars->buf[i * cam->pixels_width + j] = raytrace_single(&ray, vars);
 			j++;
