@@ -5,16 +5,16 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/12 12:27:22 by jceia             #+#    #+#             */
-/*   Updated: 2021/09/13 20:07:54 by jceia            ###   ########.fr       */
+/*   Created: 2021/09/07 06:48:02 by jceia             #+#    #+#             */
+/*   Updated: 2021/10/08 01:08:46 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <math.h>
 #include "libft.h"
-#include "miniRT.h"
+#include "vec.h"
 
-t_vec3D	vec3D_scalar_mul(t_vec3D v, float l)
+t_vec3d	vec3d_scalar_mul(t_vec3d v, float l)
 {
 	v.x *= l;
 	v.y *= l;
@@ -22,29 +22,29 @@ t_vec3D	vec3D_scalar_mul(t_vec3D v, float l)
 	return (v);
 }
 
-t_vec3D	vec3D_normalize(t_vec3D v)
+t_vec3d	vec3d_normalize(t_vec3d v)
 {
-	return (vec3D_scalar_mul(v, 1 / vec3D_norm(v)));
+	return (vec3d_scalar_mul(v, 1 / vec3d_norm(v)));
 }
 
-float	vec3D_dot_product(t_vec3D u, t_vec3D v)
+float	vec3d_dot_product(t_vec3d u, t_vec3d v)
 {
 	return (u.x * v.x + u.y + v.y + u.z * v.z);
 }
 
-t_vec3D	vec3D_cross_product(t_vec3D u, t_vec3D v)
+t_vec3d	vec3d_cross_product(t_vec3d u, t_vec3d v)
 {
-	t_vec3D	w;
+	t_vec3d	w;
 
 	w.x = u.y * v.z - u.z * v.y;
 	w.y = u.z * v.x - u.x * v.z;
-	w.z = u.x * v.y - u.y * v.z;
+	w.z = u.x * v.y - u.y * v.x;
 	return (w);
 }
 
-t_vec3D	vec3D_interpolate(t_vec3D p, t_vec3D q, float t)
+t_vec3d	vec3d_interpolate(t_vec3d p, t_vec3d q, float t)
 {
-	t_vec3D	r;
+	t_vec3d	r;
 
 	r.x = t * q.x + (1 - t) * p.x;
 	r.y = t * q.y + (1 - t) * p.y;

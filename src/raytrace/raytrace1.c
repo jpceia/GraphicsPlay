@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 15:00:21 by jceia             #+#    #+#             */
-/*   Updated: 2021/09/12 15:50:52 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/08 02:25:00 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	raytrace_scenario(const t_scenario *scenario, t_rgb *buf)
 {
 	t_camera	*cam;
-	t_vec3D		v_yz;
-	t_ray3D		ray;
+	t_vec3d		v_yz;
+	t_ray3d		ray;
 	int			i;
 	int			j;
 
@@ -24,9 +24,9 @@ void	raytrace_scenario(const t_scenario *scenario, t_rgb *buf)
 	i = 0;
 	while (i < cam->pixels_height)
 	{
-		v_yz = vec3D_add(
+		v_yz = vec3d_add(
 				cam->direction,
-				vec3D_scalar_mul(
+				vec3d_scalar_mul(
 					cam->basis_y,
 					cam->view_height * ((i + 0.5) / cam->pixels_height - 0.5)
 				)
@@ -34,11 +34,11 @@ void	raytrace_scenario(const t_scenario *scenario, t_rgb *buf)
 		j = 0;
 		while (j < cam->pixels_height)
 		{
-			ray = ray3D_from_two_points(
+			ray = ray3d_from_two_points(
 				cam->origin,
-				vec3D_add(
+				vec3d_add(
 					v_yz,
-					vec3D_scalar_mul(
+					vec3d_scalar_mul(
 						cam->basis_x,
 						cam->view_width * ((j + 0.5) / cam->pixels_width - 0.5)
 					)
@@ -60,7 +60,7 @@ void	hit_record_copy(t_hit_record *hr1, t_hit_record *hr2)
 	hr1->t = hr2->t;
 }
 
-t_bool	raytrace_hit(const t_ray3D *ray, const t_scenario *scenario, t_hit_record *record)
+t_bool	raytrace_hit(const t_ray3d *ray, const t_scenario *scenario, t_hit_record *record)
 {
 	t_bool			hit_anything;
 	t_hit_record	hit_rec;
@@ -82,7 +82,7 @@ t_bool	raytrace_hit(const t_ray3D *ray, const t_scenario *scenario, t_hit_record
 }
 
 
-t_rgb	raytrace_single(const t_ray3D *ray, const t_scenario *scenario)
+t_rgb	raytrace_single(const t_ray3d *ray, const t_scenario *scenario)
 {
 	t_hit_record	hit_record;
 

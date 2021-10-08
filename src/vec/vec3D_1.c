@@ -5,17 +5,18 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/12 12:27:30 by jceia             #+#    #+#             */
-/*   Updated: 2021/09/13 20:07:25 by jceia            ###   ########.fr       */
+/*   Created: 2021/09/01 22:32:05 by jceia             #+#    #+#             */
+/*   Updated: 2021/10/08 01:08:46 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include <stdio.h>
+#include "vec.h"
 #include "libft.h"
 
-t_vec3D	vec3D_create(float x, float y, float z)
+t_vec3d	vec3d_create(float x, float y, float z)
 {
-	t_vec3D	p;
+	t_vec3d	p;
 
 	p.x = x;
 	p.y = y;
@@ -23,12 +24,12 @@ t_vec3D	vec3D_create(float x, float y, float z)
 	return (p);
 }
 
-t_vec3D	vec3D_origin(void)
+t_vec3d	vec3d_origin(void)
 {
-	return (vec3D_create(0.0, 0.0, 0.0));
+	return (vec3d_create(0.0, 0.0, 0.0));
 }
 
-t_vec3D	vec3D_subtract(t_vec3D q, t_vec3D p)
+t_vec3d	vec3d_subtract(t_vec3d q, t_vec3d p)
 {
 	q.x -= p.x;
 	q.y -= p.y;
@@ -36,7 +37,7 @@ t_vec3D	vec3D_subtract(t_vec3D q, t_vec3D p)
 	return (q);
 }
 
-t_vec3D	vec3D_add(t_vec3D p, t_vec3D v)
+t_vec3d	vec3d_add(t_vec3d p, t_vec3d v)
 {
 	p.x += v.x;
 	p.y += v.y;
@@ -44,7 +45,7 @@ t_vec3D	vec3D_add(t_vec3D p, t_vec3D v)
 	return (p);
 }
 
-float	vec3D_coord(t_vec3D p, t_coord coord)
+float	vec3d_coord(t_vec3d p, t_coord coord)
 {
 	if (coord == COORD_X)
 		return (p.x);
@@ -52,6 +53,6 @@ float	vec3D_coord(t_vec3D p, t_coord coord)
 		return (p.y);
 	if (coord == COORD_Z)
 		return (p.z);
-	ft_putendl_error("Invalid coordinate");
+	perror("Invalid coordinate");
 	return (0.0);
 }

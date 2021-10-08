@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 12:29:55 by jceia             #+#    #+#             */
-/*   Updated: 2021/09/12 13:13:48 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/08 02:21:18 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ int	parse_camera_from_line(t_scenario *scenario, char *line)
 	s_split = ft_split(line, ' ');
 	if (!s_split)
 		return (-1);
-	status = parse_vec3D(&camera->origin, s_split[1]);
-	status += parse_vec3D(&camera->direction, s_split[2]);
+	status = parse_vec3d(&camera->origin, s_split[1]);
+	status += parse_vec3d(&camera->direction, s_split[2]);
 	camera->fov = ft_atof(s_split[3]);
 	ft_str_array_clear(s_split, N);
 	if (status < 0)
@@ -79,12 +79,12 @@ int	parse_light_from_line(t_scenario *scenario, char *line)
 	s_split = ft_split(line, ' ');
 	if (!s_split)
 		return (-1);
-	status = parse_vec3D(&light->origin, s_split[1]);
+	status = parse_vec3d(&light->origin, s_split[1]);
 	light->ratio = ft_atof(s_split[2]);
 	if (N == 4)
 		status += parse_color(&light->color, s_split[3]);
 	else
-		light->color = vec3D_create(1.0, 1.0, 1.0);
+		light->color = vec3d_create(1.0, 1.0, 1.0);
 	ft_str_array_clear(s_split, N);
 	if (status < 0)
 		return (exit_free(light));

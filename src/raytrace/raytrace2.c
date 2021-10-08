@@ -56,18 +56,18 @@ t_rgb	hit_color(const t_hit_record *hit_record, const t_scenario *scenario)
  * t = (-b +- sqrt(b*b-4*a*c) / (2 * a)) = -h +- sqrt(h*h - c)
  * disc = h * h - c
  */
-t_bool	hit_sphere(const t_ray3D *ray, const t_sphere *sphere,
+t_bool	hit_sphere(const t_ray3d *ray, const t_sphere *sphere,
 		t_hit_record *record)
 {
 	float	h;
 	float	c;
-	t_vec3D	v;
+	t_vec3d	v;
 	float	disc;
 
 	record->base_color = sphere->color;
-	v = vec3D_subtract(ray->origin, sphere->center);
-	h = vec3D_dot_product(v, ray->direction);
-	c = vec3D_norm_squared(v) - sphere->radius * sphere->radius;
+	v = vec3d_subtract(ray->origin, sphere->center);
+	h = vec3d_dot_product(v, ray->direction);
+	c = vec3d_norm_squared(v) - sphere->radius * sphere->radius;
 	disc = h * h - c;
 	if (disc < 0)
 		return (false);
@@ -77,30 +77,30 @@ t_bool	hit_sphere(const t_ray3D *ray, const t_sphere *sphere,
 		record->t = -h + sqrtf(disc);
 	else
 		record->t = -h - sqrtf(disc);
-	record->p = ray3D_at(ray, record->t);
-	record->n = vec3D_normalize(vec3D_subtract(record->p, sphere->center));
+	record->p = ray3d_at(ray, record->t);
+	record->n = vec3d_normalize(vec3d_subtract(record->p, sphere->center));
 	return (true);
 }
 
-t_bool	hit_plane(const t_ray3D *ray, const t_plane *plane, t_hit_record *record)
+t_bool	hit_plane(const t_ray3d *ray, const t_plane *plane, t_hit_record *record)
 {
-	t_vec3D	v;
+	t_vec3d	v;
 	float	dot_prod;
 
 	record->base_color = plane->color;
 	record->n = plane->n;
-	dot_prod = vec3D_dot_product(plane->n, ray->direction);
+	dot_prod = vec3d_dot_product(plane->n, ray->direction);
 	if (dot_prod == 0)
 		return (false);
-	v = vec3D_subtract(ray->origin, plane->p);
-	record->t = vec3D_dot_product(v, plane->n) / dot_prod; // check signal
+	v = vec3d_subtract(ray->origin, plane->p);
+	record->t = -vec3d_dot_product(v, plane->n) / dot_prod; // check signal
 	if (record->t < 0)
 		return (false);
-	record->p = ray3D_at(ray, record->t);
+	record->p = ray3d_at(ray, record->t);
 	return (true);
 }
 
-t_bool	hit_cylinder(const t_ray3D *ray, const t_cylinder *cylinder,
+t_bool	hit_cylinder(const t_ray3d *ray, const t_cylinder *cylinder,
 		t_hit_record *record)
 {
 	(void)ray;
@@ -109,7 +109,7 @@ t_bool	hit_cylinder(const t_ray3D *ray, const t_cylinder *cylinder,
 	return (false);
 }
 
-t_bool	hit_object(const t_ray3D *ray, t_object *obj, t_hit_record *record)
+t_bool	hit_object(const t_ray3d *ray, t_object *obj, t_hit_record *record)
 {
 	record->obj = obj;
 	if (obj->obj_type == SPHERE)

@@ -5,46 +5,46 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/12 12:31:52 by jceia             #+#    #+#             */
-/*   Updated: 2021/09/13 20:07:14 by jceia            ###   ########.fr       */
+/*   Created: 2021/09/17 09:39:38 by jceia             #+#    #+#             */
+/*   Updated: 2021/10/08 01:16:28 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <math.h>
+#include <stdio.h>
 #include "libft.h"
-#include "miniRT.h"
+#include "vec.h"
 
-float	vec3D_norm_squared(t_vec3D v)
+float	vec3d_norm_squared(t_vec3d v)
 {
 	return (v.x * v.x + v.y * v.y + v.z * v.z);
 }
 
-float	vec3D_norm(t_vec3D v)
+float	vec3d_norm(t_vec3d v)
 {
-	return (sqrtf(vec3D_norm_squared(v)));
+	return (sqrtf(vec3d_norm_squared(v)));
 }
 
-float	vec3D_angle(t_vec3D u, t_vec3D v)
+float	vec3d_angle(t_vec3d u, t_vec3d v)
 {
 	float	norm_u;
 	float	norm_v;
 	float	dot_uv;
 
-	dot_uv = vec3D_dot_product(u, v);
+	dot_uv = vec3d_dot_product(u, v);
 	if (dot_uv == 0)
 		return (0);
-	norm_u = vec3D_norm(u);
-	norm_v = vec3D_norm(v);
+	norm_u = vec3d_norm(u);
+	norm_v = vec3d_norm(v);
 	if (norm_u == 0 || norm_v == 0)
 	{
-		ft_putstr_error("Impossible to calculate angle between two vectors");
-		ft_putendl_error("where one of them has zero lenght");
+		perror("Vector with zero length");
 		return (-1);
 	}
 	return (dot_uv / norm_u / norm_v);
 }
 
-t_vec3D	vec3D_elementwise_product(t_vec3D u, t_vec3D v)
+t_vec3d	vec3d_elementwise_product(t_vec3d u, t_vec3d v)
 {
 	u.x *= v.x;
 	u.y *= v.y;
@@ -52,19 +52,10 @@ t_vec3D	vec3D_elementwise_product(t_vec3D u, t_vec3D v)
 	return (u);
 }
 
-static float	fclip(float x, float a, float b)
+t_vec3d	vec3d_clip(t_vec3d v, float a, float b)
 {
-	if (x < a)
-		return (a);
-	if (x > b)
-		return (b);
-	return (x);
-}
-
-t_vec3D	vec3D_clip(t_vec3D v, float a, float b)
-{
-	v.x = fclip(v.x, a, b);
-	v.y = fclip(v.y, a, b);
-	v.z = fclip(v.z, a, b);
+	v.x = fminf(fmaxf(v.x, a), b);
+	v.y = fminf(fmaxf(v.y, a), b);
+	v.z = fminf(fmaxf(v.z, a), b);
 	return (v);
 }

@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 04:07:35 by jceia             #+#    #+#             */
-/*   Updated: 2021/09/12 12:46:46 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/08 02:21:10 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	parse_color(t_rgb *color, char *s)
 	return (0);
 }
 
-int	parse_vec3D(t_vec3D *p, char *s)
+int	parse_vec3d(t_vec3d *p, char *s)
 {
 	int		N;
 	char	**s_split;
