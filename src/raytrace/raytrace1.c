@@ -12,7 +12,7 @@
 
 #include "miniRT.h"
 
-void	raytrace_scenario(const t_scenario *scenario, t_rgb *buf)
+void	raytrace_scenario(const t_data *vars)
 {
 	t_camera	*cam;
 	t_vec3d		v_yz;
@@ -20,7 +20,7 @@ void	raytrace_scenario(const t_scenario *scenario, t_rgb *buf)
 	int			i;
 	int			j;
 
-	cam = (t_camera *)(scenario->cameras->content);
+	cam = (t_camera *)(vars->cameras->content);
 	i = 0;
 	while (i < cam->pixels_height)
 	{
@@ -40,7 +40,7 @@ void	raytrace_scenario(const t_scenario *scenario, t_rgb *buf)
 						cam->basis_x,
 						cam->view_width * ((j + 0.5) / cam->pixels_width - 0.5)
 						)));
-			buf[i * cam->pixels_width + j] = raytrace_single(&ray, scenario);
+			vars->buf[i * cam->pixels_width + j] = raytrace_single(&ray, vars);
 			j++;
 		}
 		i++;
@@ -56,14 +56,14 @@ void	hit_record_copy(t_hit_record *hr1, t_hit_record *hr2)
 	hr1->t = hr2->t;
 }
 
-t_bool	raytrace_hit(const t_ray3d *ray, const t_scenario *scenario,
+t_bool	raytrace_hit(const t_ray3d *ray, const t_data *vars,
 		t_hit_record *record)
 {
 	t_bool			hit_anything;
 	t_hit_record	hit_rec;
 	t_list			*objs;
 
-	objs = scenario->objects;
+	objs = vars->objects;
 	hit_anything = false;
 	while (objs)
 	{
@@ -78,11 +78,11 @@ t_bool	raytrace_hit(const t_ray3d *ray, const t_scenario *scenario,
 	return (hit_anything);
 }
 
-t_rgb	raytrace_single(const t_ray3d *ray, const t_scenario *scenario)
+t_rgb	raytrace_single(const t_ray3d *ray, const t_data *vars)
 {
 	t_hit_record	hit_record;
 
-	if (raytrace_hit(ray, scenario, &hit_record))
-		return (hit_color(&hit_record, scenario));
-	return (scenario->ambient.color);
+	if (raytrace_hit(ray, vars, &hit_record))
+		return (hit_color(&hit_record, vars));
+	return (vars->ambient.color);
 }

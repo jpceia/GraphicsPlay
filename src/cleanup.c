@@ -6,24 +6,29 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 14:47:48 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/08 04:44:56 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/08 07:54:52 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <mlx.h>
+#include <stdio.h>
 #include "miniRT.h"
 
 void	clean_object(void *obj)
 {
+	if (!obj)
+		return ;
 	free(((t_object *)obj)->data);
 	free(obj);
-	obj = NULL;
 }
 
-void	clean_mlx_data(t_data *vars)
+void	clean_mlx_data(void *ptr)
 {
-	if (!vars)
+	t_data	*vars;
+
+	if (!ptr)
 		return ;
+	vars = (t_data *)ptr;
 	if (vars->win)
 		mlx_destroy_window(vars->mlx, vars->win);
 	if (vars->mlx)
@@ -31,19 +36,20 @@ void	clean_mlx_data(t_data *vars)
 		mlx_destroy_display(vars->mlx);
 		free(vars->mlx);
 	}
-	if (vars->scenario)
-		clean_scenario(vars->scenario);
+	ft_lstclear(&vars->cameras, free);
+	ft_lstclear(&vars->lights, free);
+	ft_lstclear(&vars->objects, clean_object);
 	if (vars->buf)
 		free(vars->buf);
 	free(vars);
 }
 
-void	clean_scenario(t_scenario *scenario)
+void	*clean_exit(void *ptr, char *msg, void (*del)(void *), int do_exit)
 {
-	if (!scenario)
-		return ;
-	ft_lstclear(&scenario->cameras, free);
-	ft_lstclear(&scenario->lights, free);
-	ft_lstclear(&scenario->objects, clean_object);
-	free(scenario);
+	perror(msg);
+	if (del)
+		del(ptr);
+	if (do_exit)
+		exit(EXIT_FAILURE);
+	return (NULL);
 }

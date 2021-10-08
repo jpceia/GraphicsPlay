@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 12:29:55 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/08 04:58:28 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/08 07:48:07 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,77 +17,72 @@
 #include "miniRT.h"
 #include <stdio.h>
 
-int	parse_ambient_from_line(t_scenario *scenario, char *line)
+t_data	*parse_ambient_from_line(t_data *vars, char *line)
 {
 	int		n;
-	int		status;
 	char	**s_split;
 
 	n = ft_strwc(line, ' ');
 	if (n != 3)
-		exit_invalid_line(line);
+		return (clean_exit(NULL, "Line with incorrect format", NULL, 0));
 	s_split = ft_split(line, ' ');
 	if (!s_split)
-		return (-1);
-	scenario->ambient.ratio = ft_atof(s_split[1]);
-	status = parse_color(&scenario->ambient.color, s_split[2]);
+		return (clean_exit(NULL, "Error spliting line", NULL, 0));
+	vars->ambient.ratio = ft_atof(s_split[1]);
+	if (!parse_color(&vars->ambient.color, s_split[2]))
+		return (clean_exit(NULL, "Error parsing rgb color", NULL, 0));
 	ft_str_array_clear(s_split, n);
-	if (status < 0)
-		return (-1);
-	return (0);
+	return (vars);
 }
 
-int	parse_camera_from_line(t_scenario *scenario, char *line)
+t_data	*parse_camera_from_line(t_data *vars, char *line)
 {
 	t_camera	*camera;
 	char		**s_split;
-	int			status;
 	int			n;
 
 	n = ft_strwc(line, ' ');
 	if (n != 4)
-		return (exit_invalid_line(line));
+		return (clean_exit(NULL, "Line with incorrect format", NULL, 0));
 	camera = (t_camera *)malloc(sizeof(*camera));
 	if (!camera)
-		return (exit_malloc_fail());
+		return (clean_exit(NULL, "Error allocating memory", NULL, 0));
 	s_split = ft_split(line, ' ');
 	if (!s_split)
-		return (-1);
-	status = parse_vec3d(&camera->origin, s_split[1]);
-	status += parse_vec3d(&camera->direction, s_split[2]);
+		return (clean_exit(camera, "Error spliting line", free, 0));
+	if (!parse_vec3d(&camera->origin, s_split[1]))
+		return (clean_exit(camera, "Error parsing vector", free, 0));
+	if (!parse_vec3d(&camera->direction, s_split[2]))
+		return (clean_exit(camera, "Error parsing vector", free, 0));
 	camera->fov = ft_atof(s_split[3]);
 	ft_str_array_clear(s_split, n);
-	if (status < 0)
-		return (exit_free(camera));
-	ft_lstpush_front(&scenario->cameras, camera);
-	return (0);
+	ft_lstpush_front(&vars->cameras, camera);
+	return (vars);
 }
 
-int	parse_light_from_line(t_scenario *scenario, char *line)
+t_data	*parse_light_from_line(t_data *vars, char *line)
 {
 	t_light	*light;
 	char	**s_split;
-	int		status;
 	int		n;
 
 	n = ft_strwc(line, ' ');
 	if (n < 3 || n > 4)
-		exit_invalid_line(line);
+		return (clean_exit(NULL, "Line with incorrect format", NULL, 0));
 	light = (t_light *)malloc(sizeof(*light));
 	if (!light)
-		return (exit_malloc_fail());
+		return (clean_exit(NULL, "Error allocating memory", NULL, 0));
 	s_split = ft_split(line, ' ');
 	if (!s_split)
-		return (-1);
-	status = parse_vec3d(&light->origin, s_split[1]);
+		return (clean_exit(light, "Error spliting line", free, 0));
+	if (!parse_vec3d(&light->origin, s_split[1]))
+		return (clean_exit(light, "Error parsing vector", free, 0));
 	light->ratio = ft_atof(s_split[2]);
+	light->color = vec3d_create(1.0, 1.0, 1.0);
 	if (n == 4)
-		status += parse_color(&light->color, s_split[3]);
-	else
-		light->color = vec3d_create(1.0, 1.0, 1.0);
+		if (!parse_color(&light->color, s_split[3]))
+			return (clean_exit(light, "Error parsing rgb color", free, 0));
 	ft_str_array_clear(s_split, n);
-	if (status < 0)
-		return (exit_free(light));
-	ft_lstpush_front(&scenario->lights, light);
-	return (0);
+	ft_lstpush_front(&vars->lights, light);
+	return (vars);
 }

@@ -13,7 +13,8 @@
 #include "miniRT.h"
 #include <math.h>
 
-t_rgb	hit_color(const t_hit_record *hit_record, const t_scenario *scenario)
+t_rgb	hit_light_contribution(const t_hit_record *hit_record,
+		const t_light *light, const t_data *vars)
 {
 	/*
 	t_light			*light;
@@ -82,7 +83,8 @@ t_bool	hit_sphere(const t_ray3d *ray, const t_sphere *sphere,
 	return (true);
 }
 
-t_bool	hit_plane(const t_ray3d *ray, const t_plane *plane, t_hit_record *record)
+t_bool	hit_plane(const t_ray3d *ray, const t_plane *plane,
+		t_hit_record *record)
 {
 	t_vec3d	v;
 	float	dot_prod;

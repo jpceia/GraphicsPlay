@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 10:58:52 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/08 05:04:03 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/08 07:37:44 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@
 # define KEY_PRESS		02
 # define DESTROY_NOTIFY	17
 
-# define M_NO_EVENT			0L
-# define M_KEY_PRESS		1L
+# define M_NO_EVENT		0L
+# define M_KEY_PRESS	1L
 
 /*
  * 3D Ray
@@ -121,28 +121,23 @@ typedef struct s_object
 	void			*data;
 }	t_object;
 
-typedef struct s_scenario
-{
-	t_ambient_light	ambient;
-	t_list			*cameras;
-	t_list			*lights;
-	t_list			*objects;
-}	t_scenario;
-
 typedef struct s_data
 {
-	void		*mlx;
-	void		*win;
-
-	void		*img;
-	char		*addr;
-	int			width;
-	int			height;
-	int			bits_per_pixel;
-	int			line_length;
-	int			endian;
-	t_scenario	*scenario;
-	t_rgb		*buf;
+	void	*mlx;
+	void	*win;
+	void	*img;
+	char	*addr;
+	int		width;
+	int		height;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	t_ambient_light
+			ambient;
+	t_list	*cameras;
+	t_list	*lights;
+	t_list	*objects;
+	t_rgb	*buf;
 }	t_data;
 
 typedef struct s_args
@@ -157,19 +152,16 @@ typedef struct s_args
  * Parser
  */
 int			check_file_extension(char *fname, char const *ext);
-int			exit_invalid_line(char *line);
-int			exit_malloc_fail(void);
-int			exit_free(void *p);
-t_scenario	*parse_scenario_from_file(t_scenario **scenario, char *fname);
-int			parse_color(t_rgb *color, char *s);
-int			parse_vec3d(t_vec3d *p, char *s);
-int			parse_ambient_from_line(t_scenario *scenario, char *line);
-int			parse_camera_from_line(t_scenario *scenario, char *line);
-int			parse_light_from_line(t_scenario *scenario, char *line);
-int			parse_object_from_line(t_scenario *scenario, char *line);
-int			parse_sphere_from_line(t_object *obj, char *line);
-int			parse_plane_from_line(t_object *obj, char *line);
-int			parse_cyclinder_from_line(t_object *obj, char *line);
+t_data		*parse_data_from_file(t_data **vars, char *fname);
+t_rgb		*parse_color(t_rgb *color, char *s);
+t_vec3d		*parse_vec3d(t_vec3d *p, char *s);
+t_data		*parse_ambient_from_line(t_data *vars, char *line);
+t_data		*parse_camera_from_line(t_data *vars, char *line);
+t_data		*parse_light_from_line(t_data *vars, char *line);
+t_data		*parse_object_from_line(t_data *vars, char *line);
+t_object	*parse_sphere_from_line(t_object *obj, char *line);
+t_object	*parse_plane_from_line(t_object *obj, char *line);
+t_object	*parse_cyclinder_from_line(t_object *obj, char *line);
 
 /*
  * MLX UTILS
@@ -183,7 +175,6 @@ typedef enum e_projection
 void		plot_pixel(t_data *data, float x, float y, t_rgb color);
 void		update_image_from_buf(t_data *data);
 void		mlx_data_init(t_data **vars, const t_args *args);
-void		scenario_init(t_scenario *scenario);
 void		mlx_data_update_image(t_data *vars);
 int			key_press(int keycode, t_data *vars);
 int			exit_handle(t_data *vars);
@@ -191,8 +182,8 @@ int			exit_handle(t_data *vars);
 /*
  * Clear
  */
-void		clean_scenario(t_scenario *scenario);
-void		clean_mlx_data(t_data *vars);
+void		clean_mlx_data(void *vars);
+void		*clean_exit(void *ptr, char *msg, void (*del)(void *), int do_exit);
 
 /*
  * Camera
@@ -215,11 +206,11 @@ typedef struct s_hit_record
 }	t_hit_record;
 
 t_rgb		hit_color(const t_hit_record *hit_record,
-				const t_scenario *scenario);
+				const t_data *vars);
 t_bool		hit_object(const t_ray3d *ray, t_object *obj, t_hit_record *record);
-void		raytrace_scenario(const t_scenario *scenario, t_rgb *buf);
-t_rgb		raytrace_single(const t_ray3d *ray, const t_scenario *scenario);
-t_bool		raytrace_hit(const t_ray3d *ray, const t_scenario *scenario,
+void		raytrace_scenario(const t_data *vars);
+t_rgb		raytrace_single(const t_ray3d *ray, const t_data *vars);
+t_bool		raytrace_hit(const t_ray3d *ray, const t_data *vars,
 				t_hit_record *record);
 
 #endif
