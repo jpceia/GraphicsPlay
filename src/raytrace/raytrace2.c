@@ -180,5 +180,5 @@ t_bool	hit_object(const t_ray3d *ray, t_object *obj, t_hit_record *record)
 		return (hit_plane(ray, obj->data, record));
 	if (obj->obj_type == CYLINDER)
 		return (hit_cylinder(ray, obj->data, record));
-	exit (EXIT_FAILURE);
+	return (false);
 }
