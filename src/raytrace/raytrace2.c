@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 15:02:28 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/13 20:21:39 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/13 20:28:36 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_rgb	hit_light_contribution(const t_hit_record *hit_record,
 	direction_to_light = vec3d_subtract(light->origin, hit_record->p);
 	distance_to_light = vec3d_norm(direction_to_light);
 	ray_to_light = ray3d_from_two_points(hit_record->p, light->origin);
-	if (raytrace_hit(&ray_to_light, vars, &hit_before_light))
+	if (raytrace_hit(&ray_to_light, vars, 1e-3, &hit_before_light))
 		if (hit_before_light.t < distance_to_light)
 			return (vec3d_origin());
 	light_intensity = vec3d_dot_product(
@@ -52,14 +52,15 @@ t_rgb	hit_color(const t_hit_record *hit_record, const t_data *vars)
 	return (vec3d_elementwise_product(hit_record->base_color, color_shadow));
 }
 
-t_bool	hit_object(const t_ray3d *ray, t_object *obj, t_hit_record *record)
+t_bool	hit_object(const t_ray3d *ray, t_object *obj,
+		float t_min, t_hit_record *record)
 {
 	record->obj = obj;
 	if (obj->obj_type == SPHERE)
-		return (hit_sphere(ray, obj->data, record));
+		return (hit_sphere(ray, obj->data, t_min, record));
 	if (obj->obj_type == PLANE)
-		return (hit_plane(ray, obj->data, record));
+		return (hit_plane(ray, obj->data, t_min, record));
 	if (obj->obj_type == CYLINDER)
-		return (hit_cylinder(ray, obj->data, record));
+		return (hit_cylinder(ray, obj->data, t_min, record));
 	return (false);
 }

@@ -36,7 +36,7 @@
  * with v = r0 - p0
  */
 t_bool	hit_cylinder(const t_ray3d *ray, const t_cylinder *cylinder,
-		t_hit_record *record)
+		float t_min, t_hit_record *record)
 {
 	/*
 	float	a;
@@ -79,6 +79,7 @@ t_bool	hit_cylinder(const t_ray3d *ray, const t_cylinder *cylinder,
 	*/
 	(void)ray;
 	(void)cylinder;
+	(void)t_min;
 	(void)record;
 	return (false);
 }

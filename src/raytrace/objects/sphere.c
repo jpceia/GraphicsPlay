@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 06:43:03 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/13 10:23:14 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/13 20:24:10 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,26 +29,26 @@
  * disc = h * h - c
  */
 t_bool	hit_sphere(const t_ray3d *ray, const t_sphere *sphere,
-		t_hit_record *record)
+		float t_min, t_hit_record *record)
 {
-	float	h;
+	float	half_b;
 	float	c;
 	t_vec3d	v;
-	float	disc;
+	float	discriminant;
 
 	record->base_color = sphere->color;
 	v = vec3d_subtract(ray->origin, sphere->center);
-	h = vec3d_dot_product(v, ray->direction);
+	half_b = vec3d_dot_product(v, ray->direction);
 	c = vec3d_norm_squared(v) - sphere->radius * sphere->radius;
-	disc = h * h - c;
-	if (disc < 0)
+	discriminant = half_b * half_b - c;
+	if (discriminant < 0)
 		return (false);
-	if (-h + sqrtf(disc) < 0)
+	if (-half_b + sqrtf(discriminant) < t_min)
 		return (false);
-	if (-h - sqrtf(disc) < 0)
-		record->t = -h + sqrtf(disc);
+	if (-half_b - sqrtf(discriminant) < t_min)
+		record->t = -half_b + sqrtf(discriminant);
 	else
-		record->t = -h - sqrtf(disc);
+		record->t = -half_b - sqrtf(discriminant);
 	record->p = ray3d_at(ray, record->t);
 	record->n = vec3d_normalize(vec3d_subtract(record->p, sphere->center));
 	return (true);
