@@ -15,16 +15,17 @@
 
 /*
  * Checks if a ray hits a sphere
- * Sphere equation: || x - p_0 || = R
- * Ray equation: x = p + t * v, t > 0
+ * Sphere equation: || p - p0 || = R
+ * Ray equation: r(t) = r0 + t * d, t > 0
  * 
  * Hence we have a 2nd degree equation
- * <v,v> t^2 + 2 <p-p0, v> t + <p-p0,p-p0> - R^2 = 0
+ * <d,d> t^2 + 2 <r0 - p0, d> t + <r0 - p0, r0 - p0> - R^2 = 0
  * 
  * In this case
- * a = <v,v> = 1 (direction in ray is unit vector)
- * h = <p-p0, v>
- * t = (-b +- sqrt(b*b-4*a*c) / (2 * a)) = -h +- sqrt(h*h - c)
+ * a = <d,d> = 1 (direction in ray is an unit vector)
+ * v = r0 - p0
+ * h = <v, d>
+ * t = (-b +- sqrt(b*b-4*a*c) / (2 * a)) = -h +- sqrt(disc)
  * disc = h * h - c
  */
 t_bool	hit_sphere(const t_ray3d *ray, const t_sphere *sphere,

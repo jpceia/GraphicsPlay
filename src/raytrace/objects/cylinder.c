@@ -17,11 +17,23 @@
  * The equation of a cylinder is:
  * 	|(p - p0) x n)| = R
  * 	<p - p0, n> \in [0, height]
- * Substituting p by our ray r(t) = p + t * v
- * We have
- * (p - p0 + t * v) x n = (p - p0) x n + (v x n) * t with norm R
- * to calculate the norm we need to use the inner product
- * |(p - p0) x n|^2 + 2 * <(p-p0) x n, v x n> t + |v x n|^2 * t^2 = R ^2
+ * Substituting p by our ray r(t) = r0 + t * d
+ * We have a 2nd degree equation
+ * R^2 = |(r0 - p0 + t * d) x n|^2 = |(r0 - p0) x n + (d x n) * t|^2
+ *     = |d x n|^2 t^2 + 2 * t * <d x n, v x n> + |v x n|^2 
+ * with v = r0 - p0
+ * 
+ * the coeficients of "a * t^2 + b * t + c = 0" are
+ * a = |d x n|^2
+ * b = 2 * <d x n, v x n>
+ * c = |v x n|^2 - R^2
+ * 
+ * The solution is t = -h +- sqrt(h^2 - c)
+ * with h = b / (2 * a)
+ * 
+ * Regarding the height of the cylinder, we still have
+ * <r(t) - p0, n> = <d * t + v, n> = t * <d,n> + <v, n> between 0 and H
+ * with v = r0 - p0
  */
 t_bool	hit_cylinder(const t_ray3d *ray, const t_cylinder *cylinder,
 		t_hit_record *record)

@@ -12,6 +12,17 @@
 
 #include "miniRT.h"
 
+/*
+ * Checks if a ray hits a plane
+ * Plane equation: < p - p0 , n > = 0
+ * Ray equation: r(t) = r0 + t * d, t > 0
+ * 
+ * Merging the two we get the following equation
+ *   <t * d + r0 - p0, n > = 0
+ * Equiv. to:
+ *   t = - <v,n> / <d,n>
+ * with v = r0 - p0
+ */
 t_bool	hit_plane(const t_ray3d *ray, const t_plane *plane,
 		t_hit_record *record)
 {
