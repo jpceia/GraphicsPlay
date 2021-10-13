@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 15:00:21 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/13 13:03:03 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/13 19:58:33 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	raytrace_scenario(t_data *vars)
 			ray.origin = cam->origin;
 			v = vec3d_create(
 				convert_scale(j, cam->view_width, cam->pixels_width),
-				convert_scale(i, cam->view_height, cam->pixels_height),
+				-convert_scale(i, cam->view_height, cam->pixels_height),
 				1
 			);
 			ray.direction = matrix_mul_vec3d(cam->basis, &v);
