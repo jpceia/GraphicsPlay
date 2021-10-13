@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 10:58:52 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/08 08:56:44 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/13 10:26:23 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,9 +236,16 @@ typedef struct s_hit_record
 t_rgb		hit_color(const t_hit_record *hit_record,
 				const t_data *vars);
 t_bool		hit_object(const t_ray3d *ray, t_object *obj, t_hit_record *record);
-void		raytrace_scenario(const t_data *vars);
+void		raytrace_scenario(t_data *vars);
 t_rgb		raytrace_single(const t_ray3d *ray, const t_data *vars);
 t_bool		raytrace_hit(const t_ray3d *ray, const t_data *vars,
+				t_hit_record *record);
+
+t_bool		hit_sphere(const t_ray3d *ray, const t_sphere *sphere,
+				t_hit_record *record);
+t_bool		hit_plane(const t_ray3d *ray, const t_plane *plane,
+				t_hit_record *record);
+t_bool		hit_cylinder(const t_ray3d *ray, const t_cylinder *cyclinder,
 				t_hit_record *record);
 
 #endif
