@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 15:00:21 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/13 19:58:33 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/13 20:05:09 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ float	convert_scale(int i, float view_size, float screen_size)
 void	raytrace_scenario(t_data *vars)
 {
 	t_camera	*cam;
-	t_vec3d		v;
 	t_ray3d		ray;
 	int			i;
 	int			j;
@@ -32,13 +31,10 @@ void	raytrace_scenario(t_data *vars)
 		j = 0;
 		while (j < cam->pixels_width)
 		{
-			ray.origin = cam->origin;
-			v = vec3d_create(
-				convert_scale(j, cam->view_width, cam->pixels_width),
-				-convert_scale(i, cam->view_height, cam->pixels_height),
-				1
-			);
-			ray.direction = matrix_mul_vec3d(cam->basis, &v);
+			ray = ray3d_create(cam->origin, vec3d_create(
+						convert_scale(j, cam->view_width, cam->pixels_width),
+						-convert_scale(i, cam->view_height, cam->pixels_height),
+						1));
 			vars->buf[i * cam->pixels_width + j] = raytrace_single(&ray, vars);
 			j++;
 		}
