@@ -6,11 +6,12 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 06:43:03 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/09 06:43:09 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/13 10:23:14 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+#include <math.h>
 
 /*
  * Checks if a ray hits a sphere
