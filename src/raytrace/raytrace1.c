@@ -6,16 +6,21 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 15:00:21 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/08 05:58:24 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/13 13:03:03 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void	raytrace_scenario(const t_data *vars)
+float	convert_scale(int i, float view_size, float screen_size)
+{
+	return (view_size * ((i + 0.5) / screen_size - 0.5));
+}
+
+void	raytrace_scenario(t_data *vars)
 {
 	t_camera	*cam;
-	t_vec3d		v_yz;
+	t_vec3d		v;
 	t_ray3d		ray;
 	int			i;
 	int			j;
@@ -24,22 +29,16 @@ void	raytrace_scenario(const t_data *vars)
 	i = 0;
 	while (i < cam->pixels_height)
 	{
-		v_yz = vec3d_add(
-				cam->direction,
-				vec3d_scalar_mul(
-					cam->basis_y,
-					cam->view_height * ((i + 0.5) / cam->pixels_height - 0.5)));
 		j = 0;
 		while (j < cam->pixels_width)
 		{
-			ray = ray3d_from_two_points(
-					cam->origin,
-					vec3d_add(
-						v_yz,
-						vec3d_scalar_mul(
-							cam->basis_x,
-							cam->view_width * ((j + 0.5) / cam->pixels_width - 0.5)
-						)));
+			ray.origin = cam->origin;
+			v = vec3d_create(
+				convert_scale(j, cam->view_width, cam->pixels_width),
+				convert_scale(i, cam->view_height, cam->pixels_height),
+				1
+			);
+			ray.direction = matrix_mul_vec3d(cam->basis, &v);
 			vars->buf[i * cam->pixels_width + j] = raytrace_single(&ray, vars);
 			j++;
 		}

@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 15:23:30 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/13 10:22:32 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/13 12:58:06 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,6 @@ t_matrix	*matrix3x3_rotation_z(float theta);
 t_matrix	*matrix3x3_rotation_xyz(const t_vec3d *angles);
 
 t_matrix	*matrix_scaling3d(const t_vec3d *s);
-t_vec3d		*matrix_mul_vec3d(t_matrix *m, const t_vec3d *p);
+t_vec3d		matrix_mul_vec3d(t_matrix *m, const t_vec3d *p);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 10:58:52 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/13 10:26:23 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/13 13:02:07 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "libft.h"
 # include "vec.h"
+# include "matrix.h"
 
 # define WIN_WIDTH		1080
 # define WIN_HEIGHT		720
@@ -102,15 +103,14 @@ typedef struct s_ambient_light
 
 typedef struct s_camera
 {
-	t_vec3d	origin;
-	t_vec3d	direction;
-	float	fov;
-	t_vec3d	basis_x;
-	t_vec3d	basis_y;
-	int		pixels_width;
-	int		pixels_height;
-	float	view_width;
-	float	view_height;
+	t_vec3d		origin;
+	t_vec3d		direction;
+	float		fov;
+	t_matrix	*basis;
+	int			pixels_width;
+	int			pixels_height;
+	float		view_width;
+	float		view_height;
 }	t_camera;
 
 typedef struct s_light
@@ -220,6 +220,7 @@ void		calculate_camera_params(t_camera *cam,
 				int win_width, int win_height);
 void		calculate_camera_list_params(t_list *cam_list,
 				int win_width, int win_height);
+void		camera_clean(void *ptr);
 
 /*
  * Raytracer (Core)
