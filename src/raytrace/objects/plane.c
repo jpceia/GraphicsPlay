@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 06:42:25 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/09 07:02:33 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/13 20:07:03 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_bool	hit_plane(const t_ray3d *ray, const t_plane *plane,
 	if (dot_prod == 0)
 		return (false);
 	v = vec3d_subtract(ray->origin, plane->p);
-	record->t = vec3d_dot_product(v, plane->n) / dot_prod; // check signal
+	record->t = -vec3d_dot_product(v, plane->n) / dot_prod;
 	if (record->t < 0)
 		return (false);
 	record->p = ray3d_at(ray, record->t);
