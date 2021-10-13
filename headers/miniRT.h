@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 10:58:52 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/13 13:02:07 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/13 20:02:23 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_ray3d
 	t_vec3d	direction;
 }	t_ray3d;
 
+t_ray3d		ray3d_create(t_vec3d origin, t_vec3d direction);
 t_ray3d		ray3d_from_two_points(t_vec3d p, t_vec3d q);
 t_vec3d		ray3d_at(const t_ray3d *ray, float t);
 
