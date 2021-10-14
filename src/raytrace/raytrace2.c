@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 15:02:28 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/13 20:28:36 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/13 22:08:15 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,7 @@ t_bool	hit_object(const t_ray3d *ray, t_object *obj,
 		return (hit_cylinder(ray, obj->data, t_min, record));
 	if (obj->obj_type == TRIANGLE)
 		return (hit_triangle(ray, obj->data, t_min, record));
+	if (obj->obj_type == DISK)
+		return (hit_disk(ray, obj->data, t_min, record));
 	return (false);
 }

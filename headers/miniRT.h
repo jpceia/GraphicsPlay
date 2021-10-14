@@ -93,6 +93,7 @@ int			get_b(int trgb);
 typedef enum e_object_type {
 	PLANE,
 	TRIANGLE,
+	DISK,
 	SPHERE,
 	CYLINDER,
 }	t_object_type;
@@ -151,6 +152,14 @@ typedef struct s_triangle
 	t_rgb	color;
 }	t_triangle;
 
+typedef struct s_disk
+{
+	t_vec3d	center;
+	t_vec3d	n;
+	float	radius;
+	t_rgb	color;
+}	t_disk;
+
 typedef struct s_cylinder
 {
 	t_vec3d	p;
@@ -208,6 +217,7 @@ t_object	*parse_sphere_from_line(t_object *obj, char *line);
 t_object	*parse_plane_from_line(t_object *obj, char *line);
 t_object	*parse_cylinder_from_line(t_object *obj, char *line);
 t_object	*parse_triangle_from_line(t_object *obj, char *line);
+t_object	*parse_disk_from_line(t_object *obj, char *line);
 
 /*
  * MLX UTILS
@@ -265,6 +275,8 @@ t_bool		hit_plane(const t_ray3d *ray, const t_plane *plane,
 t_bool		hit_cylinder(const t_ray3d *ray, const t_cylinder *cyclinder,
 				float t_min, t_hit_record *record);
 t_bool		hit_triangle(const t_ray3d *ray, const t_triangle *triangle,
+				float t_min, t_hit_record *record);
+t_bool		hit_disk(const t_ray3d *ray, const t_disk *disk,
 				float t_min, t_hit_record *record);
 
 #endif

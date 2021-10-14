@@ -43,6 +43,11 @@ t_data	*parse_object_from_line(t_data *vars, char *line)
 		if (!parse_triangle_from_line(obj, line))
 			return (clean_exit(obj, "Unable to parse triangle obj", free, 0));
 	}
+	else if (strncmp(line, "di ", 3) == 0)
+	{
+		if (!parse_disk_from_line(obj, line))
+			return (clean_exit(obj, "Unable to parse disk obj", free, 0));
+	}
 	else
 		return (clean_exit(obj, "Unrecognized object type", free, 0));
 	ft_lstpush_front(&vars->objects, obj);
