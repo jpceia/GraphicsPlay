@@ -62,5 +62,7 @@ t_bool	hit_object(const t_ray3d *ray, t_object *obj,
 		return (hit_plane(ray, obj->data, t_min, record));
 	if (obj->obj_type == CYLINDER)
 		return (hit_cylinder(ray, obj->data, t_min, record));
+	if (obj->obj_type == TRIANGLE)
+		return (hit_triangle(ray, obj->data, t_min, record));
 	return (false);
 }

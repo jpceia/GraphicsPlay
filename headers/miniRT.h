@@ -91,9 +91,10 @@ int			get_b(int trgb);
  * 3D Objects
  */
 typedef enum e_object_type {
-	SPHERE,
 	PLANE,
-	CYLINDER
+	TRIANGLE,
+	SPHERE,
+	CYLINDER,
 }	t_object_type;
 
 typedef struct s_ambient_light
@@ -134,6 +135,14 @@ typedef struct s_plane
 	t_vec3d	n;
 	t_rgb	color;
 }	t_plane;
+
+typedef struct s_triangle
+{
+	t_vec3d	p1;
+	t_vec3d	p2;
+	t_vec3d	p3;
+	t_rgb	color;
+}	t_triangle;
 
 typedef struct s_cylinder
 {
@@ -190,7 +199,7 @@ t_data		*parse_light_from_line(t_data *vars, char *line);
 t_data		*parse_object_from_line(t_data *vars, char *line);
 t_object	*parse_sphere_from_line(t_object *obj, char *line);
 t_object	*parse_plane_from_line(t_object *obj, char *line);
-t_object	*parse_cyclinder_from_line(t_object *obj, char *line);
+t_object	*parse_triangle_from_line(t_object *obj, char *line);
 
 /*
  * MLX UTILS
@@ -251,6 +260,8 @@ t_bool		hit_sphere(const t_ray3d *ray, const t_sphere *sphere,
 t_bool		hit_plane(const t_ray3d *ray, const t_plane *plane,
 				float t_min, t_hit_record *record);
 t_bool		hit_cylinder(const t_ray3d *ray, const t_cylinder *cyclinder,
+				float t_min, t_hit_record *record);
+t_bool		hit_triangle(const t_ray3d *ray, const t_triangle *triangle,
 				float t_min, t_hit_record *record);
 
 #endif
