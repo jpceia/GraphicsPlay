@@ -6,11 +6,12 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 06:42:00 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/09 07:05:49 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/13 21:28:59 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+#include <math.h>
 
 /*
  * Checks if a ray hits a cylinder
@@ -38,48 +39,28 @@
 t_bool	hit_cylinder(const t_ray3d *ray, const t_cylinder *cylinder,
 		float t_min, t_hit_record *record)
 {
-	/*
-	float	a;
-	float	h;
-	float	c;
-	float	t1, t2;
+	float	half_b;
+	float	discriminant;
+	t_vec3d	u;
 	t_vec3d	v;
-	t_vec3d	v_n;
-	t_vec3d d_n;
+	t_vec3d	w;
 
 	record->base_color = cylinder->color;
-	v = vec3d_subtract(ray->origin, cylinder->p);
-	v_n = vec3d_cross_product(v, cylinder->n);
-	d_n = vec3d_cross_product(ray->direction, cylinder->n);
-	a = vec3d_norm_squared(d_n);
-	h = vec3d_dot_product(v_n, d_n);
-	c = vec3d_norm_squared(v_n);
-	if (h * h - a * c < 0)
+	u = vec3d_cross_product(ray->direction, cylinder->direction);
+	v = vec3d_subtract(cylinder->p, ray->origin);
+	w = vec3d_cross_product(v, cylinder->direction);
+	half_b = vec3d_dot_product(u, w) / vec3d_norm_squared(u);
+	discriminant = half_b * half_b;
+	discriminant -= vec3d_norm_squared(w) - cylinder->radius * cylinder->radius;
+	if (discriminant < 0)
 		return (false);
-	t1 = (-h + sqrtf(h * h - a * c)) / a;
-	t2 = (-h - sqrtf(h * h - a * c)) / a;
-	//if(hit_cylinder_check_t(ray, cylinder, t));
-	{
-		shadow = false;
-
-	}
+	if (-half_b + sqrtf(discriminant) < t_min)
+		return (false);
+	if (-half_b - sqrtf(discriminant) < t_min)
+		record->t = -half_b + sqrtf(discriminant);
 	else
-	{
-		t = ...
-		if (hit_color)
-			shadow = false
-	}
-	// what is the right ?
-	record->p = ray3d_at(ray, t1);
-	v = vec3d_subtract(record->p, cylinder->p);
-	v = vec3d_cross_product(v, cylinder->n);
-	v = vec3d_cross_product(v, cylinder->n);
-	record->n = vec3d_normalize(v);
+		record->t = -half_b - sqrtf(discriminant);
+	record->p = ray3d_at(ray, record->t);
+	record->n = vec3d_normalize(vec3d_subtract(record->p, cylinder->p));
 	return (true);
-	*/
-	(void)ray;
-	(void)cylinder;
-	(void)t_min;
-	(void)record;
-	return (false);
 }
