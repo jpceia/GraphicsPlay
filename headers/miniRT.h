@@ -75,6 +75,7 @@ typedef struct s_ray3d
 t_ray3d		ray3d_create(t_vec3d origin, t_vec3d direction);
 t_ray3d		ray3d_from_two_points(t_vec3d p, t_vec3d q);
 t_vec3d		ray3d_at(const t_ray3d *ray, float t);
+t_ray3d		ray3d_reflected(const t_ray3d *ray, t_vec3d normal);
 
 /*
  * Color
