@@ -21,6 +21,7 @@ void	raytrace_scenario(t_data *vars)
 {
 	t_camera	*cam;
 	t_ray3d		ray;
+	t_vec3d		v;
 	int			i;
 	int			j;
 
@@ -31,10 +32,11 @@ void	raytrace_scenario(t_data *vars)
 		j = 0;
 		while (j < cam->pixels_width)
 		{
-			ray = ray3d_create(cam->origin, vec3d_create(
+			v = vec3d_create(
 						convert_scale(j, cam->view_width, cam->pixels_width),
 						-convert_scale(i, cam->view_height, cam->pixels_height),
-						1));
+					1);
+			ray = ray3d_create(cam->origin,  matrix_mul_vec3d(cam->basis, &v));
 			vars->buf[i * cam->pixels_width + j] = raytrace_single(&ray, vars);
 			j++;
 		}
