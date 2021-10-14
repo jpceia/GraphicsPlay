@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 10:58:52 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/13 20:28:53 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/14 09:18:29 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ typedef struct s_triangle
 typedef struct s_cylinder
 {
 	t_vec3d	p;
-	t_vec3d	n;
+	t_vec3d	direction;
 	float	radius;
 	float	height;
 	t_rgb	color;
@@ -206,6 +206,7 @@ t_data		*parse_light_from_line(t_data *vars, char *line);
 t_data		*parse_object_from_line(t_data *vars, char *line);
 t_object	*parse_sphere_from_line(t_object *obj, char *line);
 t_object	*parse_plane_from_line(t_object *obj, char *line);
+t_object	*parse_cylinder_from_line(t_object *obj, char *line);
 t_object	*parse_triangle_from_line(t_object *obj, char *line);
 
 /*

@@ -35,7 +35,7 @@ t_data	*parse_object_from_line(t_data *vars, char *line)
 	}
 	else if (strncmp(line, "cy ", 3) == 0)
 	{
-		if (!parse_plane_from_line(obj, line))
+		if (!parse_cylinder_from_line(obj, line))
 			return (clean_exit(obj, "Unable to parse cylinder obj", free, 0));
 	}
 	else if (strncmp(line, "tr ", 3) == 0)
@@ -102,7 +102,7 @@ t_object	*parse_plane_from_line(t_object *obj, char *line)
 	return (obj);
 }
 
-t_object	*parse_cyclinder_from_line(t_object *obj, char *line)
+t_object	*parse_cylinder_from_line(t_object *obj, char *line)
 {
 	t_cylinder	*cylinder;
 	char		**s_split;
@@ -120,7 +120,7 @@ t_object	*parse_cyclinder_from_line(t_object *obj, char *line)
 		return (clean_exit(cylinder, "Error spliting line", free, 0));
 	if (!parse_vec3d(&cylinder->p, s_split[1]))
 		return (clean_exit(cylinder, "Error parsing vector", free, 0));
-	if (!parse_vec3d(&cylinder->n, s_split[2]))
+	if (!parse_vec3d(&cylinder->direction, s_split[2]))
 		return (clean_exit(cylinder, "Error parsing vector", free, 0));
 	cylinder->radius = ft_atof(s_split[3]) / 2;
 	cylinder->height = ft_atof(s_split[4]);
