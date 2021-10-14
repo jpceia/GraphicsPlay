@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 07:47:21 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/13 13:01:59 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/13 22:14:43 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	calculate_camera_params(t_camera *cam, int win_width, int win_height)
 	cam->pixels_height = win_height;
 	cam->view_width = 2 * tan(M_PI * cam->fov / 360);
 	cam->view_height = win_height * cam->view_width / win_width;
+	cam->proj_type = PROJ;
 }
 
 void	calculate_camera_list_params(t_list *cam_list,

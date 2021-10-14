@@ -97,6 +97,12 @@ typedef enum e_object_type {
 	CYLINDER,
 }	t_object_type;
 
+typedef enum e_proj
+{
+	PROJ,
+	PARALLEL
+}	t_proj;
+
 typedef struct s_ambient_light
 {
 	float	ratio;
@@ -113,6 +119,7 @@ typedef struct s_camera
 	int			pixels_height;
 	float		view_width;
 	float		view_height;
+	t_proj		proj_type;
 }	t_camera;
 
 typedef struct s_light
@@ -204,11 +211,6 @@ t_object	*parse_triangle_from_line(t_object *obj, char *line);
 /*
  * MLX UTILS
  */
-typedef enum e_projection
-{
-	PROJ,
-	PARALLEL
-}	t_projection;
 
 void		plot_pixel(t_data *data, float x, float y, t_rgb color);
 void		update_image_from_buf(t_data *data);
