@@ -6,36 +6,39 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 15:02:28 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/13 22:08:15 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/15 07:50:24 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 #include <math.h>
 
-t_rgb	hit_light_contribution(const t_hit_record *hit_record,
-		const t_light *light, const t_data *vars)
+t_rgb	hit_light_contribution(const t_ray3d *reflected_ray,
+		const t_hit_record *hit_record, const t_light *light,
+		const t_data *vars)
 {
 	t_vec3d			direction_to_light;
 	t_hit_record	hit_before_light;
 	t_ray3d			ray_to_light;
 	float			distance_to_light;
-	float			light_intensity;
+	float			diffuse_intensity;
 
+	(void)reflected_ray;
 	direction_to_light = vec3d_subtract(light->origin, hit_record->p);
 	distance_to_light = vec3d_norm(direction_to_light);
 	ray_to_light = ray3d_from_two_points(hit_record->p, light->origin);
 	if (raytrace_hit(&ray_to_light, vars, 1e-3, &hit_before_light))
 		if (hit_before_light.t < distance_to_light)
 			return (vec3d_origin());
-	light_intensity = vec3d_dot_product(
+	diffuse_intensity = vec3d_dot_product(
 			ray_to_light.direction, hit_record->n) * light->ratio;
-	if (light_intensity < 0)
-		light_intensity = 0;
-	return (vec3d_scalar_mul(light->color, light_intensity));
+	if (diffuse_intensity < 0)
+		diffuse_intensity = 0;
+	return (vec3d_scalar_mul(light->color, diffuse_intensity));
 }
 
-t_rgb	hit_color(const t_hit_record *hit_record, const t_data *vars)
+t_rgb	hit_color(const t_ray3d *reflected_ray,
+		const t_hit_record *hit_record, const t_data *vars)
 {
 	t_vec3d			color_shadow;
 	t_list			*lights;
@@ -46,7 +49,8 @@ t_rgb	hit_color(const t_hit_record *hit_record, const t_data *vars)
 	while (lights)
 	{
 		color_shadow = vec3d_add(color_shadow,
-				hit_light_contribution(hit_record, lights->content, vars));
+				hit_light_contribution(reflected_ray,
+					hit_record, lights->content, vars));
 		lights = lights->next;
 	}
 	return (vec3d_elementwise_product(hit_record->base_color, color_shadow));

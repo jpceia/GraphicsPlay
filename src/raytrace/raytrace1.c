@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 15:00:21 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/13 20:28:04 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/15 07:50:51 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ void	raytrace_scenario(t_data *vars)
 		while (j < cam->pixels_width)
 		{
 			v = vec3d_create(
-						convert_scale(j, cam->view_width, cam->pixels_width),
-						-convert_scale(i, cam->view_height, cam->pixels_height),
+					convert_scale(j, cam->view_width, cam->pixels_width),
+					-convert_scale(i, cam->view_height, cam->pixels_height),
 					1);
-			ray = ray3d_create(cam->origin,  matrix_mul_vec3d(cam->basis, &v));
+			ray = ray3d_create(cam->origin, matrix_mul_vec3d(cam->basis, &v));
 			vars->buf[i * cam->pixels_width + j] = raytrace_single(&ray, vars);
 			j++;
 		}
@@ -75,11 +75,11 @@ t_bool	raytrace_hit(const t_ray3d *ray, const t_data *vars,
 	return (hit_anything);
 }
 
-t_rgb	raytrace_single(const t_ray3d *ray, const t_data *vars)
+t_rgb	raytrace_single(const t_ray3d *primary_ray, const t_data *vars)
 {
 	t_hit_record	hit_record;
 
-	if (raytrace_hit(ray, vars, 0, &hit_record))
-		return (hit_color(&hit_record, vars));
+	if (raytrace_hit(primary_ray, vars, 0, &hit_record))
+		return (hit_color(NULL, &hit_record, vars));
 	return (vars->ambient.color);
 }
