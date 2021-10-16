@@ -44,15 +44,6 @@ void	raytrace_scenario(t_data *vars)
 	}
 }
 
-void	hit_record_copy(t_hit_record *hr1, t_hit_record *hr2)
-{
-	hr1->base_color = hr2->base_color;
-	hr1->n = hr2->n;
-	hr1->obj = hr2->obj;
-	hr1->p = hr2->p;
-	hr1->t = hr2->t;
-}
-
 t_bool	raytrace_hit(const t_ray3d *ray, const t_data *vars,
 		float t_min, t_hit_record *record)
 {
@@ -67,7 +58,7 @@ t_bool	raytrace_hit(const t_ray3d *ray, const t_data *vars,
 		if (hit_object(ray, objs->content, t_min, &hit_rec))
 		{
 			if (!hit_anything || record->t > hit_rec.t)
-				hit_record_copy(record, &hit_rec);
+				ft_memcpy(record, &hit_rec, sizeof(t_hit_record));
 			hit_anything = true;
 		}
 		objs = objs->next;
