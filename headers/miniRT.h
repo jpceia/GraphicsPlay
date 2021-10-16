@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 10:58:52 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/14 09:18:29 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/15 10:14:57 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 # include "vec.h"
 # include "matrix.h"
 
-# define WIN_WIDTH		1080
-# define WIN_HEIGHT		720
+# define WIN_WIDTH		1920
+# define WIN_HEIGHT		1080
 
 # ifdef OS_Linux
 #  define K_LEFT_ARROW	65361
@@ -97,6 +97,7 @@ typedef enum e_object_type {
 	DISK,
 	SPHERE,
 	CYLINDER,
+	CONE
 }	t_object_type;
 
 typedef enum e_proj
@@ -258,7 +259,9 @@ typedef struct s_hit_record
 	float		t;
 }	t_hit_record;
 
-t_rgb		hit_color(const t_hit_record *hit_record,
+t_rgb		hit_color(
+				const t_ray3d *reflected_ray,
+				const t_hit_record *hit_record,
 				const t_data *vars);
 void		raytrace_scenario(t_data *vars);
 t_rgb		raytrace_single(const t_ray3d *ray, const t_data *vars);
