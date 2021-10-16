@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 06:43:03 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/13 21:12:31 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/14 21:18:44 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ t_bool	hit_sphere(const t_ray3d *ray, const t_sphere *sphere,
 {
 	float	half_b;
 	float	discriminant;
+	float	sqrt_disc;
 	t_vec3d	v;
 	
 	record->base_color = sphere->color;
@@ -42,12 +43,13 @@ t_bool	hit_sphere(const t_ray3d *ray, const t_sphere *sphere,
 	discriminant -= vec3d_norm_squared(v) - sphere->radius * sphere->radius;
 	if (discriminant < 0)
 		return (false);
-	if (-half_b + sqrtf(discriminant) < t_min)
+	sqrt_disc = sqrtf(discriminant);
+	if (-half_b + sqrt_disc < t_min)
 		return (false);
-	if (-half_b - sqrtf(discriminant) < t_min)
-		record->t = -half_b + sqrtf(discriminant);
+	if (-half_b - sqrt_disc < t_min)
+		record->t = -half_b + sqrt_disc;
 	else
-		record->t = -half_b - sqrtf(discriminant);
+		record->t = -half_b - sqrt_disc;
 	record->p = ray3d_at(ray, record->t);
 	record->n = vec3d_normalize(vec3d_subtract(record->p, sphere->center));
 	return (true);
