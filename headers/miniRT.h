@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 10:58:52 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/15 10:14:57 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/16 22:27:02 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,8 @@ typedef struct s_data
 	int		endian;
 	t_ambient_light
 			ambient;
-	t_list	*cameras;
+	t_camera
+			*camera;
 	t_list	*lights;
 	t_list	*objects;
 	t_rgb	*buf;
@@ -242,8 +243,6 @@ void		*clean_exit(void *ptr, char *msg, void (*del)(void *), int do_exit);
  * Camera
  */
 void		calculate_camera_params(t_camera *cam,
-				int win_width, int win_height);
-void		calculate_camera_list_params(t_list *cam_list,
 				int win_width, int win_height);
 void		camera_clean(void *ptr);
 

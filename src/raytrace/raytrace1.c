@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 15:00:21 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/15 07:50:51 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/16 22:29:01 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	raytrace_scenario(t_data *vars)
 	int			i;
 	int			j;
 
-	cam = (t_camera *)(vars->cameras->content);
+	cam = vars->camera;
 	i = 0;
 	while (i < cam->pixels_height)
 	{
