@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 12:26:46 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/08 08:19:34 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/14 12:29:35 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ t_object	*parse_plane_from_line(t_object *obj, char *line)
 		return (clean_exit(plane, "Error parsing vector", free, 0));
 	if (!parse_color(&plane->color, s_split[3]))
 		return (clean_exit(plane, "Error parsing rgb color", free, 0));
+	plane->n = vec3d_normalize(plane->n);
 	ft_str_array_clear(s_split, n);
 	obj->data = plane;
 	return (obj);
