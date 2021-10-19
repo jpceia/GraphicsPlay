@@ -63,6 +63,11 @@ t_bool	raytrace_hit(const t_ray3d *ray, const t_data *vars,
 		}
 		objs = objs->next;
 	}
+	if (hit_anything)
+	{
+		if (vec3d_dot_product(ray->direction, record->n) > 0)
+			record->n = vec3d_scalar_mul(record->n, -1);
+	}
 	return (hit_anything);
 }
 
