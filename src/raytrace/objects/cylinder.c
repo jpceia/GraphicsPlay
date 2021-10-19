@@ -71,7 +71,9 @@ t_bool	hit_cylinder(const t_ray3d *ray, const t_cylinder *cylinder,
 	else // extra check
 		record->t = -(half_b + sqrt_disc) / a;
 	record->p = ray3d_at(ray, record->t);
-	record->n = vec3d_normalize(vec3d_add(v_cross_n,
-			vec3d_scalar_mul(d_cross_n, record->t)));
+	record->n = vec3d_subtract(record->p, cylinder->p);
+	record->n = vec3d_subtract(record->n, vec3d_scalar_mul(cylinder->direction,
+			vec3d_dot_product(record->n, cylinder->direction)));
+	record->n = vec3d_normalize(record->n);
 	return (true);
 }
