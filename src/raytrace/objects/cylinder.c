@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 06:42:00 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/15 19:44:30 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/19 02:20:03 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,37 +39,48 @@
 t_bool	hit_cylinder(const t_ray3d *ray, const t_cylinder *cylinder,
 		float t_min, t_hit_record *record)
 {
+	float	t;
 	float	a;
 	float	half_b;
 	float	c;
 	float	discriminant;
 	float	sqrt_disc;
+	float	h;
 	t_vec3d v;
 	t_vec3d	d_cross_n;
 	t_vec3d	v_cross_n;
-	//float	v_dot_n;
-	//float	d_dot_n;
-	//float	t;
+	float	v_dot_n;
+	float	d_dot_n;
 
 	record->base_color = cylinder->color;
-	v = vec3d_subtract(cylinder->p, ray->origin);
+	v = vec3d_subtract(ray->origin, cylinder->p);
 	d_cross_n = vec3d_cross_product(ray->direction, cylinder->direction);
 	v_cross_n = vec3d_cross_product(v, cylinder->direction);
-	//v_dot_n = vec3d_dot_product(v, cylinder->direction);
-	//d_dot_n = vec3d_dot_product(ray->direction, cylinder->direction);
 	a = vec3d_norm_squared(d_cross_n);
-	half_b = -vec3d_dot_product(d_cross_n, v_cross_n);
+	half_b = vec3d_dot_product(d_cross_n, v_cross_n);
 	c = vec3d_norm_squared(v_cross_n) - cylinder->radius * cylinder->radius;
 	discriminant = half_b * half_b - a * c;
 	if (discriminant < 0)
 		return (false);
 	sqrt_disc = sqrtf(discriminant);
-	if ((-half_b + sqrt_disc) / a < t_min)
+	record->t = (-half_b + sqrt_disc) / a;
+	if (record->t < t_min)
 		return (false);
-	if (-(half_b + sqrt_disc) / a < t_min)
-		record->t = -(half_b - sqrt_disc) / a;
-	else // extra check
-		record->t = -(half_b + sqrt_disc) / a;
+	t = (-half_b - sqrt_disc) / a;
+	v_dot_n = vec3d_dot_product(v, cylinder->direction);
+	d_dot_n = vec3d_dot_product(ray->direction, cylinder->direction);
+	if (t >= t_min)
+	{
+		h = v_dot_n + t * d_dot_n;
+		if (h >= 0 && h <= cylinder->height)
+			record->t = t;
+	}
+	if (record->t != t)
+	{
+		h = v_dot_n + record->t * d_dot_n;
+		if (h < 0 || h > cylinder->height)
+			return (false);
+	}
 	record->p = ray3d_at(ray, record->t);
 	record->n = vec3d_subtract(record->p, cylinder->p);
 	record->n = vec3d_subtract(record->n, vec3d_scalar_mul(cylinder->direction,
