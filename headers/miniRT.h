@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 10:58:52 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/16 22:27:02 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/19 10:25:41 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,6 +245,25 @@ void		*clean_exit(void *ptr, char *msg, void (*del)(void *), int do_exit);
 void		calculate_camera_params(t_camera *cam,
 				int win_width, int win_height);
 void		camera_clean(void *ptr);
+
+/*
+ * 2nd degree equations
+ */
+
+typedef struct s_float_pair
+{
+	float		min;
+	float		max;
+}	t_float_pair;
+
+typedef struct s_deg2_eq_coefs
+{
+	float	a;
+	float	b;
+	float	c;
+}	t_deg2_eq_coefs;
+
+t_bool		deg2_eq_solutions(const t_deg2_eq_coefs *params, t_float_pair *t);
 
 /*
  * Raytracer (Core)
