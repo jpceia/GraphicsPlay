@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 15:02:28 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/15 07:50:24 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/19 01:36:38 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,15 @@ t_rgb	hit_light_contribution(const t_ray3d *reflected_ray,
 		const t_hit_record *hit_record, const t_light *light,
 		const t_data *vars)
 {
-	t_vec3d			direction_to_light;
 	t_hit_record	hit_before_light;
 	t_ray3d			ray_to_light;
-	float			distance_to_light;
 	float			diffuse_intensity;
 
 	(void)reflected_ray;
-	direction_to_light = vec3d_subtract(light->origin, hit_record->p);
-	distance_to_light = vec3d_norm(direction_to_light);
 	ray_to_light = ray3d_from_two_points(hit_record->p, light->origin);
 	if (raytrace_hit(&ray_to_light, vars, 1e-3, &hit_before_light))
-		if (hit_before_light.t < distance_to_light)
+		if (hit_before_light.t < vec3d_norm(
+				vec3d_subtract(light->origin, hit_record->p)))
 			return (vec3d_origin());
 	diffuse_intensity = vec3d_dot_product(
 			ray_to_light.direction, hit_record->n) * light->ratio;
