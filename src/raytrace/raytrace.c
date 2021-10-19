@@ -79,3 +79,21 @@ t_rgb	raytrace_single(const t_ray3d *primary_ray, const t_data *vars)
 		return (hit_color(NULL, &hit_record, vars));
 	return (vars->ambient.color);
 }
+
+
+t_bool	hit_object(const t_ray3d *ray, t_object *obj,
+		float t_min, t_hit_record *record)
+{
+	record->obj = obj;
+	if (obj->obj_type == SPHERE)
+		return (hit_sphere(ray, obj->data, t_min, record));
+	if (obj->obj_type == PLANE)
+		return (hit_plane(ray, obj->data, t_min, record));
+	if (obj->obj_type == CYLINDER)
+		return (hit_cylinder(ray, obj->data, t_min, record));
+	if (obj->obj_type == TRIANGLE)
+		return (hit_triangle(ray, obj->data, t_min, record));
+	if (obj->obj_type == DISK)
+		return (hit_disk(ray, obj->data, t_min, record));
+	return (false);
+}

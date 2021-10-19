@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raytrace2.c                                        :+:      :+:    :+:   */
+/*   raytrace_light.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 15:02:28 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/19 01:36:38 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/19 02:25:13 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,21 +51,4 @@ t_rgb	hit_color(const t_ray3d *reflected_ray,
 		lights = lights->next;
 	}
 	return (vec3d_elementwise_product(hit_record->base_color, color_shadow));
-}
-
-t_bool	hit_object(const t_ray3d *ray, t_object *obj,
-		float t_min, t_hit_record *record)
-{
-	record->obj = obj;
-	if (obj->obj_type == SPHERE)
-		return (hit_sphere(ray, obj->data, t_min, record));
-	if (obj->obj_type == PLANE)
-		return (hit_plane(ray, obj->data, t_min, record));
-	if (obj->obj_type == CYLINDER)
-		return (hit_cylinder(ray, obj->data, t_min, record));
-	if (obj->obj_type == TRIANGLE)
-		return (hit_triangle(ray, obj->data, t_min, record));
-	if (obj->obj_type == DISK)
-		return (hit_disk(ray, obj->data, t_min, record));
-	return (false);
 }
