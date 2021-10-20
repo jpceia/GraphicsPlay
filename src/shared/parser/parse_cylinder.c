@@ -6,19 +6,18 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 16:05:28 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/20 16:05:47 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/20 18:36:06 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-t_object	*parse_cylinder_from_line(t_object *obj, char *line)
+t_cylinder	*parse_cylinder_from_line_aux(char *line)
 {
 	t_cylinder	*cylinder;
 	char		**s_split;
 	int			n;
 
-	obj->obj_type = CYLINDER;
 	n = ft_strwc(line, ' ');
 	if (n != 6)
 		return (clean_exit(NULL, "Line with incorrect format", NULL, 0));
@@ -38,6 +37,14 @@ t_object	*parse_cylinder_from_line(t_object *obj, char *line)
 	if (!parse_color(&cylinder->color, s_split[5]))
 		return (clean_exit(cylinder, "Error parsing rgb color", free, 0));
 	ft_str_array_clear(s_split, n);
-	obj->data = cylinder;
+	return (cylinder);
+}
+
+t_object	*parse_cylinder_from_line(t_object *obj, char *line)
+{
+	obj->obj_type = CYLINDER;
+	obj->data = parse_cylinder_from_line_aux(line);
+	if (!obj->data)
+		return (NULL);
 	return (obj);
 }
