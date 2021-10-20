@@ -6,11 +6,11 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 22:02:22 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/19 17:46:02 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/20 16:45:34 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "miniRT_bonus.h"
 
 t_bool	hit_disk(const t_ray3d *ray, const t_disk *disk,
 		float t_min, t_hit_record *record)

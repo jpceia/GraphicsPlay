@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 10:58:52 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/19 12:43:34 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/20 16:41:05 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,22 +146,6 @@ typedef struct s_plane
 	t_rgb	color;
 }	t_plane;
 
-typedef struct s_triangle
-{
-	t_vec3d	p1;
-	t_vec3d	p2;
-	t_vec3d	p3;
-	t_rgb	color;
-}	t_triangle;
-
-typedef struct s_disk
-{
-	t_vec3d	center;
-	t_vec3d	n;
-	float	radius;
-	t_rgb	color;
-}	t_disk;
-
 typedef struct s_cylinder
 {
 	t_vec3d	p;
@@ -170,15 +154,6 @@ typedef struct s_cylinder
 	float	height;
 	t_rgb	color;
 }	t_cylinder;
-
-typedef struct s_cone
-{
-	t_vec3d	p;
-	t_vec3d	direction;
-	float	radius;
-	float	height;
-	t_rgb	color;
-}	t_cone;
 
 typedef struct s_object
 {
@@ -228,9 +203,6 @@ t_data		*parse_object_from_line(t_data *vars, char *line);
 t_object	*parse_sphere_from_line(t_object *obj, char *line);
 t_object	*parse_plane_from_line(t_object *obj, char *line);
 t_object	*parse_cylinder_from_line(t_object *obj, char *line);
-t_object	*parse_triangle_from_line(t_object *obj, char *line);
-t_object	*parse_disk_from_line(t_object *obj, char *line);
-t_object	*parse_cone_from_line(t_object *obj, char *line);
 
 /*
  * MLX UTILS
@@ -305,12 +277,6 @@ t_bool		hit_sphere(const t_ray3d *ray, const t_sphere *sphere,
 t_bool		hit_plane(const t_ray3d *ray, const t_plane *plane,
 				float t_min, t_hit_record *record);
 t_bool		hit_cylinder(const t_ray3d *ray, const t_cylinder *cyclinder,
-				float t_min, t_hit_record *record);
-t_bool		hit_triangle(const t_ray3d *ray, const t_triangle *triangle,
-				float t_min, t_hit_record *record);
-t_bool		hit_disk(const t_ray3d *ray, const t_disk *disk,
-				float t_min, t_hit_record *record);
-t_bool		hit_cone(const t_ray3d *ray, const t_cone *cone,
 				float t_min, t_hit_record *record);
 
 #endif

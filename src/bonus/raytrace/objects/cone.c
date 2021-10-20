@@ -6,11 +6,11 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 06:42:00 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/19 17:48:24 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/20 16:45:31 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "miniRT_bonus.h"
 #include <math.h>
 
 float	hit_cone_dist(const t_ray3d *ray, const t_cone *cone,

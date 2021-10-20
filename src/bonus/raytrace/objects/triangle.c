@@ -6,11 +6,11 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 17:42:53 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/19 17:44:02 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/20 16:45:39 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "miniRT_bonus.h"
 
 t_bool	hit_triangle(const t_ray3d *ray, const t_triangle *triangle,
 		float t_min, t_hit_record *record)

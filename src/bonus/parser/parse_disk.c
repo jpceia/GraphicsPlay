@@ -6,11 +6,11 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 09:27:20 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/20 15:52:44 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/20 16:46:03 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "miniRT_bonus.h"
 
 t_object	*parse_disk_from_line(t_object *obj, char *line)
 {
