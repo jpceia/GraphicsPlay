@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 10:58:52 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/19 10:25:41 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/19 12:43:34 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,15 @@ typedef struct s_cylinder
 	t_rgb	color;
 }	t_cylinder;
 
+typedef struct s_cone
+{
+	t_vec3d	p;
+	t_vec3d	direction;
+	float	radius;
+	float	height;
+	t_rgb	color;
+}	t_cone;
+
 typedef struct s_object
 {
 	t_object_type	obj_type;
@@ -221,6 +230,7 @@ t_object	*parse_plane_from_line(t_object *obj, char *line);
 t_object	*parse_cylinder_from_line(t_object *obj, char *line);
 t_object	*parse_triangle_from_line(t_object *obj, char *line);
 t_object	*parse_disk_from_line(t_object *obj, char *line);
+t_object	*parse_cone_from_line(t_object *obj, char *line);
 
 /*
  * MLX UTILS
@@ -299,6 +309,8 @@ t_bool		hit_cylinder(const t_ray3d *ray, const t_cylinder *cyclinder,
 t_bool		hit_triangle(const t_ray3d *ray, const t_triangle *triangle,
 				float t_min, t_hit_record *record);
 t_bool		hit_disk(const t_ray3d *ray, const t_disk *disk,
+				float t_min, t_hit_record *record);
+t_bool		hit_cone(const t_ray3d *ray, const t_cone *cone,
 				float t_min, t_hit_record *record);
 
 #endif

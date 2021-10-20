@@ -95,5 +95,7 @@ t_bool	hit_object(const t_ray3d *ray, t_object *obj,
 		return (hit_triangle(ray, obj->data, t_min, record));
 	if (obj->obj_type == DISK)
 		return (hit_disk(ray, obj->data, t_min, record));
+	if (obj->obj_type == CONE)
+		return (hit_cone(ray, obj->data, t_min, record));
 	return (false);
 }

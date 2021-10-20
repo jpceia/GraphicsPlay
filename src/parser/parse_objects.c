@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 12:26:46 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/19 01:44:38 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/19 10:49:43 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,11 @@ t_data	*parse_object_from_line(t_data *vars, char *line)
 	{
 		if (!parse_disk_from_line(obj, line))
 			return (clean_exit(obj, "Unable to parse disk obj", free, 0));
+	}
+	else if (strncmp(line, "co ", 3) == 0)
+	{
+		if (!parse_cone_from_line(obj, line))
+			return (clean_exit(obj, "Unable to parse cone obj", free, 0));
 	}
 	else
 		return (clean_exit(obj, "Unrecognized object type", free, 0));
