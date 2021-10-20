@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 22:08:52 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/20 16:46:50 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/20 22:07:50 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_object	*parse_triangle_from_line(t_object *obj, char *line)
 
 	obj->obj_type = TRIANGLE;
 	n = ft_strwc(line, ' ');
-	if (n != 5)
+	if (n < 5)
 		return (clean_exit(NULL, "Line with incorrect format", NULL, 0));
 	triangle = (t_triangle *)malloc(sizeof(*triangle));
 	if (!triangle)
@@ -34,8 +34,8 @@ t_object	*parse_triangle_from_line(t_object *obj, char *line)
 		return (clean_exit(triangle, "Error parsing vector", free, 0));
 	if (!parse_vec3d(&triangle->p3, s_split[3]))
 		return (clean_exit(triangle, "Error parsing vector", free, 0));
-	if (!parse_color(&triangle->color, s_split[4]))
-		return (clean_exit(triangle, "Error parsing rgb color", free, 0));
+	if (!parse_color(obj, s_split + 4, n - 4))
+		return (clean_exit(triangle, "Error parsing color", free, 0));
 	ft_str_array_clear(s_split, n);
 	obj->data = triangle;
 	return (obj);

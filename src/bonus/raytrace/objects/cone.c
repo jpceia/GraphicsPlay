@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 06:42:00 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/20 16:45:31 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/20 20:45:43 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	hit_cone_fill_record(const t_ray3d *ray, const t_cone *cone,
 {
 	t_vec3d	v;
 
-	record->base_color = cone->color;
 	record->p = ray3d_at(ray, record->t);
 	v = vec3d_subtract(record->p, cone->p);
 	record->n = vec3d_add(v, vec3d_scalar_mul(cone->direction,

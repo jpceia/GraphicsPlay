@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 06:42:00 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/19 10:23:59 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/20 20:57:45 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ float	hit_cylinder_dist(const t_ray3d *ray, const t_cylinder *cylinder,
 void	hit_cylinder_fill_record(const t_ray3d *ray, const t_cylinder *cylinder,
 		t_hit_record *record)
 {
-	record->base_color = cylinder->color;
 	record->p = ray3d_at(ray, record->t);
 	record->n = vec3d_subtract(record->p, cylinder->p);
 	record->n = vec3d_subtract(record->n, vec3d_scalar_mul(cylinder->direction,

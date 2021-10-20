@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 16:43:51 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/20 17:07:09 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/20 23:37:52 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ t_bool	hit_object(const t_ray3d *ray, t_object *obj,
 		float t_min, t_hit_record *record)
 {
 	record->obj = obj;
+	record->color = obj->color;
+	record->surf = obj->surf;
 	if (obj->obj_type == SPHERE)
 		return (hit_sphere(ray, obj->data, t_min, record));
 	if (obj->obj_type == PLANE)

@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 17:42:53 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/20 16:45:39 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/20 20:59:46 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ t_bool	hit_triangle(const t_ray3d *ray, const t_triangle *triangle,
 	float	coord[2];
 	float	dot_prod;
 
-	record->base_color = triangle->color;
 	u = vec3d_subtract(triangle->p2, triangle->p1);
 	v = vec3d_subtract(triangle->p3, triangle->p1);
 	record->n = vec3d_normalize(vec3d_cross_product(v, u));

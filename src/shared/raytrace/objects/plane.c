@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 06:42:25 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/13 20:24:38 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/20 20:48:00 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ t_bool	hit_plane(const t_ray3d *ray, const t_plane *plane,
 	t_vec3d	v;
 	float	dot_prod;
 
-	record->base_color = plane->color;
 	record->n = plane->n;
 	dot_prod = vec3d_dot_product(plane->n, ray->direction);
 	if (dot_prod == 0)

@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 10:58:52 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/20 16:46:28 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/20 21:34:00 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ typedef struct s_cone
 /*
  * Parser
  */
+t_object	*parse_color(t_object *obj, char **s_split, int n);
+
 t_object	*parse_triangle_from_line(t_object *obj, char *line);
 t_object	*parse_disk_from_line(t_object *obj, char *line);
 t_object	*parse_cone_from_line(t_object *obj, char *line);

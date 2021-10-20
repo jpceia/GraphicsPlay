@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 16:05:57 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/20 16:06:05 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/20 20:24:38 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_object	*parse_sphere_from_line(t_object *obj, char *line)
 	if (!parse_vec3d(&sphere->center, s_split[1]))
 		return (clean_exit(sphere, "Error parsing vector", free, 0));
 	sphere->radius = ft_atof(s_split[2]) / 2;
-	if (!parse_color(&sphere->color, s_split[3]))
+	if (!parse_rgb(&obj->color, s_split[3]))
 		return (clean_exit(sphere, "Error parsing rgb color", free, 0));
 	ft_str_array_clear(s_split, n);
 	obj->data = sphere;

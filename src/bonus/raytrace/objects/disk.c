@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 22:02:22 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/20 16:45:34 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/20 20:59:53 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ t_bool	hit_disk(const t_ray3d *ray, const t_disk *disk,
 	float	r2;
 	float	dot_prod;
 
-	record->base_color = disk->color;
 	record->n = disk->n;
 	dot_prod = vec3d_dot_product(disk->n, ray->direction);
 	if (dot_prod == 0)

@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 15:02:28 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/20 17:07:08 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/20 21:00:00 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,5 @@ t_rgb	hit_color(const t_ray3d *reflected_ray,
 					hit_record, lights->content, vars));
 		lights = lights->next;
 	}
-	return (vec3d_elementwise_product(hit_record->base_color, color_shadow));
+	return (vec3d_elementwise_product(hit_record->color, color_shadow));
 }

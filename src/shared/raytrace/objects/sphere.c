@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 06:43:03 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/20 15:54:24 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/20 20:58:20 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ t_bool	hit_sphere(const t_ray3d *ray, const t_sphere *sphere,
 	float	sqrt_disc;
 	t_vec3d	v;
 
-	record->base_color = sphere->color;
 	v = vec3d_subtract(ray->origin, sphere->center);
 	half_b = vec3d_dot_product(v, ray->direction);
 	discriminant = half_b * half_b;

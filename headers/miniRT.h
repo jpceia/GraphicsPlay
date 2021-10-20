@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 10:58:52 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/20 16:41:05 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/20 23:33:53 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,16 @@ t_ray3d		ray3d_reflected(const t_ray3d *ray, t_vec3d normal);
  */
 typedef t_vec3d	t_rgb;
 
+typedef struct s_surf_props
+{
+	float	shininess;
+	float	k_ambient;
+	float	k_diffusion;
+	float	k_specular;
+	float	k_mirror;
+	float	k_wrinkle;
+}	t_surf_props;
+
 int			create_trgb(t_rgb color);
 int			get_t(int trgb);
 int			get_r(int trgb);
@@ -98,7 +108,7 @@ typedef enum e_object_type {
 	SPHERE,
 	CYLINDER,
 	CONE
-}	t_object_type;
+}	t_obj_type;
 
 typedef enum e_proj
 {
@@ -136,14 +146,12 @@ typedef struct s_sphere
 {
 	t_vec3d	center;
 	float	radius;
-	t_rgb	color;
 }	t_sphere;
 
 typedef struct s_plane
 {
 	t_vec3d	p;
 	t_vec3d	n;
-	t_rgb	color;
 }	t_plane;
 
 typedef struct s_cylinder
@@ -152,13 +160,14 @@ typedef struct s_cylinder
 	t_vec3d	direction;
 	float	radius;
 	float	height;
-	t_rgb	color;
 }	t_cylinder;
 
 typedef struct s_object
 {
-	t_object_type	obj_type;
+	t_obj_type		obj_type;
 	void			*data;
+	t_rgb			color;
+	t_surf_props	surf;
 }	t_object;
 
 typedef struct s_data
@@ -194,7 +203,7 @@ typedef struct s_args
  */
 int			check_file_extension(char *fname, char const *ext);
 t_data		*parse_data_from_file(t_data *vars, char *fname);
-t_rgb		*parse_color(t_rgb *color, char *s);
+t_rgb		*parse_rgb(t_rgb *color, char *s);
 t_vec3d		*parse_vec3d(t_vec3d *p, char *s);
 t_data		*parse_ambient_from_line(t_data *vars, char *line);
 t_data		*parse_camera_from_line(t_data *vars, char *line);
@@ -252,11 +261,12 @@ t_bool		deg2_eq_solutions(const t_deg2_eq_coefs *params, t_float_pair *t);
  */
 typedef struct s_hit_record
 {
-	t_vec3d		p;
-	t_vec3d		n;
-	t_object	*obj;
-	t_rgb		base_color;
-	float		t;
+	t_vec3d			p;
+	t_vec3d			n;
+	t_object		*obj;
+	t_rgb			color;
+	t_surf_props	surf;
+	float			t;
 }	t_hit_record;
 
 t_rgb		hit_color(

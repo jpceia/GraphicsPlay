@@ -6,55 +6,49 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 12:26:46 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/20 18:24:36 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/20 23:48:04 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include "libft.h"
 #include "miniRT_bonus.h"
 
-t_data	*parse_object_from_line(t_data *vars, char *line)
+static t_object	*empty_object(void)
 {
 	t_object	*obj;
 
 	obj = (t_object *)malloc(sizeof(*obj));
 	if (!obj)
 		return (clean_exit(NULL, "Error allocating memory", NULL, 0));
+	ft_memset(obj, 0, sizeof(*obj));
+	obj->surf.k_ambient = 1;
+	obj->surf.k_diffusion = 1;
+	return (obj);
+}
+
+t_data	*parse_object_from_line(t_data *vars, char *line)
+{
+	t_object	*obj;
+	t_object	*res;
+
+	obj = empty_object();
+	if (!obj)
+		return (NULL);
 	if (strncmp(line, "sp ", 3) == 0)
-	{
-		if (!parse_sphere_from_line(obj, line))
-			return (clean_exit(obj, "Unable to parse sphere object", free, 0));
-	}
+		res = parse_sphere_from_line(obj, line);
 	else if (strncmp(line, "pl ", 3) == 0)
-	{
-		if (!parse_plane_from_line(obj, line))
-			return (clean_exit(obj, "Unable to parse plane object", free, 0));
-	}
+		res = parse_plane_from_line(obj, line);
 	else if (strncmp(line, "cy ", 3) == 0)
-	{
-		if (!parse_cylinder_from_line(obj, line))
-			return (clean_exit(obj, "Unable to parse cylinder obj", free, 0));
-	}
+		res = parse_cylinder_from_line(obj, line);
 	else if (strncmp(line, "tr ", 3) == 0)
-	{
-		if (!parse_triangle_from_line(obj, line))
-			return (clean_exit(obj, "Unable to parse triangle obj", free, 0));
-	}
+		res = parse_triangle_from_line(obj, line);
 	else if (strncmp(line, "di ", 3) == 0)
-	{
-		if (!parse_disk_from_line(obj, line))
-			return (clean_exit(obj, "Unable to parse disk obj", free, 0));
-	}
+		res = parse_disk_from_line(obj, line);
 	else if (strncmp(line, "co ", 3) == 0)
-	{
-		if (!parse_cone_from_line(obj, line))
-			return (clean_exit(obj, "Unable to parse cone obj", free, 0));
-	}
+		res = parse_cone_from_line(obj, line);
 	else
 		return (clean_exit(obj, "Unrecognized object type", free, 0));
+	if (!res)
+		return (clean_exit(obj, "Unable to parse object", free, 0));
 	ft_lstpush_front(&vars->objects, obj);
 	return (vars);
 }
