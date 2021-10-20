@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 09:27:20 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/14 09:30:12 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/20 15:52:44 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_object	*parse_disk_from_line(t_object *obj, char *line)
 {
 	t_disk	*disk;
-	char    **s_split;
+	char	**s_split;
 	int		n;
 
 	obj->obj_type = DISK;
@@ -28,7 +28,7 @@ t_object	*parse_disk_from_line(t_object *obj, char *line)
 	s_split = ft_split(line, ' ');
 	if (!s_split)
 		return (clean_exit(disk, "Error spliting line", free, 0));
-    if (!parse_vec3d(&disk->center, s_split[1]))
+	if (!parse_vec3d(&disk->center, s_split[1]))
 		return (clean_exit(disk, "Error parsing vector", free, 0));
 	if (!parse_vec3d(&disk->n, s_split[2]))
 		return (clean_exit(disk, "Error parsing vector", free, 0));

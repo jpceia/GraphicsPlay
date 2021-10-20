@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 10:48:30 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/19 10:49:01 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/20 15:55:15 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 t_object	*parse_cone_from_line(t_object *obj, char *line)
 {
 	t_cone	*cone;
-	char		**s_split;
-	int			n;
+	char	**s_split;
+	int		n;
 
 	obj->obj_type = CONE;
 	n = ft_strwc(line, ' ');

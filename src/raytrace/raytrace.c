@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raytrace1.c                                        :+:      :+:    :+:   */
+/*   raytrace.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 15:00:21 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/16 22:29:01 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/20 15:54:31 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ t_rgb	raytrace_single(const t_ray3d *primary_ray, const t_data *vars)
 		return (hit_color(NULL, &hit_record, vars));
 	return (vars->ambient.color);
 }
-
 
 t_bool	hit_object(const t_ray3d *ray, t_object *obj,
 		float t_min, t_hit_record *record)

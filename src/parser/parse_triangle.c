@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 22:08:52 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/14 09:13:51 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/20 15:52:42 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 t_object	*parse_triangle_from_line(t_object *obj, char *line)
 {
 	t_triangle	*triangle;
-	char    **s_split;
-	int		n;
+	char		**s_split;
+	int			n;
 
 	obj->obj_type = TRIANGLE;
 	n = ft_strwc(line, ' ');
