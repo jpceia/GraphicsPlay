@@ -69,12 +69,15 @@ void	mlx_data_update_image(t_data *vars)
 
 void	mlx_data_init(t_data *vars, const t_args *args)
 {
+	ft_bzero(vars, sizeof(*vars));
 	if (!parse_data_from_file(vars, args->fname))
 		clean_exit(vars, "Error parsing data from file", mlx_data_clean, 1);
 	vars->buf = ft_calloc(args->width * args->height, sizeof(*vars->buf));
 	if (!vars->buf)
 		clean_exit(vars, "Error allocating memory to buffer",
 			mlx_data_clean, 1);
+	if (!vars->camera)
+		clean_exit(vars, "Undefined camera", mlx_data_clean, 1);
 	vars->width = args->width;
 	vars->height = args->height;
 	vars->mlx = mlx_init();

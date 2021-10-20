@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 04:07:35 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/08 08:56:28 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/20 17:00:05 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,10 @@ t_data	*parse_data_from_fd(t_data *vars, int fd)
 		free(line);
 	}
 	if (err_msg)
-		return (clean_exit(vars, err_msg, mlx_data_clean, 0));
+	{
+		ft_putendl_error(err_msg);
+		return (NULL);
+	}
 	return (vars);
 }
 
@@ -83,10 +86,16 @@ t_data	*parse_data_from_file(t_data *vars, char *fname)
 		return (NULL);
 	fd = open(fname, O_RDONLY);
 	if (fd < 0)
-		return (clean_exit(NULL, "Error opening file", NULL, 0));
+	{
+		perror("Error opening file");
+		return (NULL);
+	}
 	if (!parse_data_from_fd(vars, fd))
-		return (clean_exit(vars, "Error parsing file", mlx_data_clean, 0));
+		return (NULL);
 	if (close(fd) < 0)
+	{
 		perror("Error closing file");
+		return (NULL);
+	}
 	return (vars);
 }
