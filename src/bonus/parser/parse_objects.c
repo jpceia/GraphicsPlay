@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 12:26:46 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/20 16:10:39 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/20 18:24:36 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include "libft.h"
-#include "miniRT.h"
+#include "miniRT_bonus.h"
 
 t_data	*parse_object_from_line(t_data *vars, char *line)
 {
