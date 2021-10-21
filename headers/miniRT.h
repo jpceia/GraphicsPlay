@@ -93,10 +93,6 @@ typedef struct s_surf_props
 }	t_surf_props;
 
 int			create_trgb(t_rgb color);
-int			get_t(int trgb);
-int			get_r(int trgb);
-int			get_g(int trgb);
-int			get_b(int trgb);
 
 /*
  * 3D Objects
