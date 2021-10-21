@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 17:42:53 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/20 20:59:46 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/21 00:46:04 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ t_bool	hit_triangle(const t_ray3d *ray, const t_triangle *triangle,
 
 	u = vec3d_subtract(triangle->p2, triangle->p1);
 	v = vec3d_subtract(triangle->p3, triangle->p1);
-	record->n = vec3d_normalize(vec3d_cross_product(v, u));
-	dot_prod = vec3d_dot_product(record->n, ray->direction);
+	record->normal = vec3d_normalize(vec3d_cross_product(v, u));
+	dot_prod = vec3d_dot_product(record->normal, ray->direction);
 	if (dot_prod == 0)
 		return (false);
 	w = vec3d_subtract(ray->origin, triangle->p1);
-	record->t = -vec3d_dot_product(w, record->n) / dot_prod;
+	record->t = -vec3d_dot_product(w, record->normal) / dot_prod;
 	if (record->t < t_min)
 		return (false);
 	record->p = ray3d_at(ray, record->t);

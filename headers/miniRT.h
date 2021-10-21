@@ -262,7 +262,7 @@ t_bool		deg2_eq_solutions(const t_deg2_eq_coefs *params, t_float_pair *t);
 typedef struct s_hit_record
 {
 	t_vec3d			p;
-	t_vec3d			n;
+	t_vec3d			normal;
 	t_object		*obj;
 	t_rgb			color;
 	t_surf_props	surf;

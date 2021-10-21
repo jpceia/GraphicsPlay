@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 06:43:03 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/20 20:58:20 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/21 00:39:54 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,6 @@ t_bool	hit_sphere(const t_ray3d *ray, const t_sphere *sphere,
 	else
 		record->t = -half_b - sqrt_disc;
 	record->p = ray3d_at(ray, record->t);
-	record->n = vec3d_normalize(vec3d_subtract(record->p, sphere->center));
+	record->normal = vec3d_normalize(vec3d_subtract(record->p, sphere->center));
 	return (true);
 }

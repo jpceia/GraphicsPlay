@@ -28,7 +28,7 @@ t_rgb	hit_light_contribution(const t_ray3d *reflected_ray,
 				vec3d_subtract(light->origin, hit_record->p)))
 			return (vec3d_origin());
 	diffuse_intensity = vec3d_dot_product(
-			ray_to_light.direction, hit_record->n) * light->ratio;
+			ray_to_light.direction, hit_record->normal) * light->ratio;
 	if (diffuse_intensity < 0)
 		diffuse_intensity = 0;
 	return (vec3d_scalar_mul(light->color, diffuse_intensity));
