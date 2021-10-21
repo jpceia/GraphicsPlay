@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 12:26:46 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/20 23:34:27 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/21 00:27:33 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_data	*parse_object_from_line(t_data *vars, char *line)
 	if (!obj)
 		return (clean_exit(NULL, "Error allocating memory", NULL, 0));
 	ft_memset(obj, 0, sizeof(*obj));
+	obj->surf.shininess = 1;
 	obj->surf.k_ambient = 1;
 	obj->surf.k_diffusion = 1;
 	if (strncmp(line, "sp ", 3) == 0)

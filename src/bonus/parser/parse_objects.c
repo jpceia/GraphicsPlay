@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 12:26:46 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/20 23:48:04 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/21 00:26:54 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static t_object	*empty_object(void)
 	if (!obj)
 		return (clean_exit(NULL, "Error allocating memory", NULL, 0));
 	ft_memset(obj, 0, sizeof(*obj));
+	obj->surf.shininess = 1;
 	obj->surf.k_ambient = 1;
 	obj->surf.k_diffusion = 1;
 	return (obj);
