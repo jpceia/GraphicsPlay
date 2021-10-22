@@ -19,24 +19,35 @@ float	get_diffuse_intensity(const t_vec3d v, const t_hit_record *record)
 			* record->surf.k_diffusion, 0));
 }
 
-t_rgb	hit_light_contribution(
-		const t_hit_record *hit_record,
+float	get_specular_intensity(const t_vec3d v, const t_hit_record *record)
+{
+	float	dot_prod;
+
+	dot_prod = vec3d_dot_product(v, record->reflected);
+	if (dot_prod < 0)
+		return (0);
+	return (pow(dot_prod, record->surf.shininess) * record->surf.k_specular);
+}
+
 		const t_light *light,
 		const t_data *vars)
 {
 	float			dist;
 	t_hit_record	hit_before_light;
 	t_ray3d			ray_to_light;
-	float			diffuse_intensity;
+	float			light_intensity;
 
 	ray_to_light = ray3d_from_two_points(hit_record->p, light->origin);
 	dist = vec3d_norm(vec3d_subtract(light->origin, hit_record->p));
 	if (raytrace_hit(&ray_to_light, vars, 1e-3, &hit_before_light))
 		if (hit_before_light.t < dist)
 			return (vec3d_origin());
-	diffuse_intensity = get_diffuse_intensity(ray_to_light.direction, hit_record);
-	diffuse_intensity *= light->ratio;
-	return (vec3d_scalar_mul(light->color, diffuse_intensity));
+	light_intensity = get_diffuse_intensity(ray_to_light.direction, hit_record);
+	light_intensity += get_specular_intensity(ray_to_light.direction, hit_record);
+	light_intensity *= light->ratio;
+	return (vec3d_scalar_mul(light->color, light_intensity));
+}
+
 }
 
 t_rgb	hit_color(
