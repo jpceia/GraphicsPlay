@@ -6,38 +6,25 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 15:00:21 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/20 17:07:07 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/22 13:10:17 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
-
-float	convert_scale(int i, float view_size, float screen_size)
-{
-	return (view_size * ((i + 0.5) / screen_size - 0.5));
-}
+#include "miniRT_bonus.h"
 
 void	raytrace_scenario(t_data *vars)
 {
-	t_camera	*cam;
-	t_ray3d		ray;
-	t_vec3d		v;
 	int			i;
 	int			j;
 
-	cam = vars->camera;
 	i = 0;
-	while (i < cam->pixels_height)
+	while (i < vars->camera->pixels_height)
 	{
 		j = 0;
-		while (j < cam->pixels_width)
+		while (j < vars->camera->pixels_width)
 		{
-			v = vec3d_create(
-					convert_scale(j, cam->view_width, cam->pixels_width),
-					-convert_scale(i, cam->view_height, cam->pixels_height),
-					1);
-			ray = ray3d_create(cam->origin, matrix_mul_vec3d(cam->basis, &v));
-			vars->buf[i * cam->pixels_width + j] = raytrace_single(&ray, vars);
+			vars->buf[i * vars->camera->pixels_width + j] = \
+					raytrace_pixel(i, j, N_ANTIALIAS, vars);
 			j++;
 		}
 		i++;

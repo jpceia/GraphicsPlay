@@ -16,6 +16,7 @@
 # include "miniRT.h"
 # include "libft.h"
 
+# define N_ANTIALIAS		3
 # define BRIGHTNESS_RATIO	2
 # ifdef OS_Linux
 #  define K_LEFT_ARROW	65361
@@ -80,6 +81,8 @@ t_object	*parse_cone_from_line(t_object *obj, char *line);
 /*
  * Raytracer (Core)
  */
+
+t_rgb		raytrace_pixel(int i, int j, int n, t_data *vars);
 
 t_bool		hit_triangle(const t_ray3d *ray, const t_triangle *triangle,
 				float t_min, t_hit_record *record);
