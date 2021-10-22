@@ -63,7 +63,7 @@ t_rgb	raytrace_single(const t_ray3d *primary_ray, const t_data *vars)
 {
 	t_hit_record	hit_record;
 
-	if (raytrace_hit(primary_ray, vars, 0, &hit_record))
+	if (raytrace_hit(primary_ray, vars, 1e-3, &hit_record))
 		return (hit_color(&hit_record, vars));
 	return (vars->ambient.color);
 }
