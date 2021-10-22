@@ -67,6 +67,7 @@ t_bool	raytrace_hit(const t_ray3d *ray, const t_data *vars,
 	{
 		if (vec3d_dot_product(ray->direction, record->normal) > 0)
 			record->normal = vec3d_scalar_mul(record->normal, -1);
+		record->reflected = ray3d_reflected(ray, record->normal).direction;
 	}
 	return (hit_anything);
 }
@@ -76,6 +77,6 @@ t_rgb	raytrace_single(const t_ray3d *primary_ray, const t_data *vars)
 	t_hit_record	hit_record;
 
 	if (raytrace_hit(primary_ray, vars, 0, &hit_record))
-		return (hit_color(NULL, &hit_record, vars));
+		return (hit_color(&hit_record, vars));
 	return (vars->ambient.color);
 }

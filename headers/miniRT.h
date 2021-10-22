@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 10:58:52 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/20 23:33:53 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/21 01:39:13 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,6 +259,7 @@ typedef struct s_hit_record
 {
 	t_vec3d			p;
 	t_vec3d			normal;
+	t_vec3d			reflected;
 	t_object		*obj;
 	t_rgb			color;
 	t_surf_props	surf;
@@ -266,7 +267,6 @@ typedef struct s_hit_record
 }	t_hit_record;
 
 t_rgb		hit_color(
-				const t_ray3d *reflected_ray,
 				const t_hit_record *hit_record,
 				const t_data *vars);
 void		raytrace_scenario(t_data *vars);

@@ -13,15 +13,16 @@
 #include "miniRT.h"
 #include <math.h>
 
-t_rgb	hit_light_contribution(const t_ray3d *reflected_ray,
-		const t_hit_record *hit_record, const t_light *light,
+
+t_rgb	hit_light_contribution(
+		const t_hit_record *hit_record,
+		const t_light *light,
 		const t_data *vars)
 {
 	t_hit_record	hit_before_light;
 	t_ray3d			ray_to_light;
 	float			diffuse_intensity;
 
-	(void)reflected_ray;
 	ray_to_light = ray3d_from_two_points(hit_record->p, light->origin);
 	if (raytrace_hit(&ray_to_light, vars, 1e-3, &hit_before_light))
 		if (hit_before_light.t < vec3d_norm(
@@ -34,8 +35,9 @@ t_rgb	hit_light_contribution(const t_ray3d *reflected_ray,
 	return (vec3d_scalar_mul(light->color, diffuse_intensity));
 }
 
-t_rgb	hit_color(const t_ray3d *reflected_ray,
-		const t_hit_record *hit_record, const t_data *vars)
+t_rgb	hit_color(
+		const t_hit_record *hit_record,
+		const t_data *vars)
 {
 	t_vec3d			color_shadow;
 	t_list			*lights;
@@ -46,7 +48,7 @@ t_rgb	hit_color(const t_ray3d *reflected_ray,
 	while (lights)
 	{
 		color_shadow = vec3d_add(color_shadow,
-				hit_light_contribution(reflected_ray,
+				hit_light_contribution(
 					hit_record, lights->content, vars));
 		lights = lights->next;
 	}
