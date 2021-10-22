@@ -18,6 +18,7 @@
 
 # define N_ANTIALIAS		3
 # define BRIGHTNESS_RATIO	2
+# define N_REFLECTIONS		2
 # ifdef OS_Linux
 #  define K_LEFT_ARROW	65361
 #  define K_RIGHT_ARROW	65363
@@ -81,6 +82,16 @@ t_object	*parse_cone_from_line(t_object *obj, char *line);
 /*
  * Raytracer (Core)
  */
+
+t_rgb		hit_color_bonus(
+				const t_hit_record *record,
+				const t_data *vars,
+				int n_reflections);
+
+t_rgb		raytrace_single_bonus(
+				const t_ray3d *ray,
+				const t_data *vars,
+				int n_reflections);
 
 t_rgb		raytrace_pixel(int i, int j, int n, t_data *vars);
 

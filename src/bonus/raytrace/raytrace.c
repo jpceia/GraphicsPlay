@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 15:00:21 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/22 13:10:17 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/22 19:35:31 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,12 @@ t_bool	raytrace_hit(const t_ray3d *ray, const t_data *vars,
 	return (hit_anything);
 }
 
-t_rgb	raytrace_single(const t_ray3d *primary_ray, const t_data *vars)
+t_rgb	raytrace_single_bonus(const t_ray3d *primary_ray,
+		const t_data *vars, int n_reflections)
 {
-	t_hit_record	hit_record;
+	t_hit_record	record;
 
-	if (raytrace_hit(primary_ray, vars, 1e-3, &hit_record))
-		return (hit_color(&hit_record, vars));
+	if (raytrace_hit(primary_ray, vars, 1e-3, &record))
+		return (hit_color_bonus(&record, vars, n_reflections));
 	return (vars->ambient.color);
 }
