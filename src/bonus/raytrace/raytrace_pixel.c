@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 13:07:42 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/22 13:07:57 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/22 23:12:53 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_rgb	raytrace_pixel_contribution(const t_vec2d *p, const t_data *vars)
 			-convert_scale(p->y, cam->view_height, cam->pixels_height),
 			1);
 	ray = ray3d_create(cam->origin, matrix_mul_vec3d(cam->basis, &v));
-	return (raytrace_single_bonus(&ray, vars, N_REFLECTIONS));
+	return (raytrace_single_bonus(&ray, vars, vars->n_reflections));
 }
 
 t_rgb	raytrace_pixel(int i, int j, int n, t_data *vars)

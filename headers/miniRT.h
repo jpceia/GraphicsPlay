@@ -184,6 +184,9 @@ typedef struct s_data
 	t_list	*lights;
 	t_list	*objects;
 	t_rgb	*buf;
+
+	int		n_reflections;
+	int		n_antialias;
 }	t_data;
 
 typedef struct s_args
@@ -192,6 +195,8 @@ typedef struct s_args
 	char	*title;
 	int		width;
 	int		height;
+	int		n_reflections;
+	int		n_antialias;
 }	t_args;
 
 /*

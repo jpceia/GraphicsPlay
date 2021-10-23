@@ -24,7 +24,7 @@ void	raytrace_scenario(t_data *vars)
 		while (j < vars->camera->pixels_width)
 		{
 			vars->buf[i * vars->camera->pixels_width + j] = \
-					raytrace_pixel(i, j, N_ANTIALIAS, vars);
+					raytrace_pixel(i, j, vars->n_antialias, vars);
 			j++;
 		}
 		i++;

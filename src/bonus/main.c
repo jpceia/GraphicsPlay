@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 04:07:55 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/08 08:57:35 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/22 23:33:22 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,10 @@ int	main(int argc, char **argv)
 	}
 	args.width = WIN_WIDTH;
 	args.height = WIN_HEIGHT;
-	args.title = "42 - MiniRT";
+	args.title = "42 - MiniRT Bonus";
 	args.fname = argv[1];
+	args.n_reflections = 3;
+	args.n_antialias = 3;
 	vars = ft_calloc(1, sizeof(t_data));
 	if (!vars)
 		clean_exit(NULL, "Error allocating memory", NULL, 1);

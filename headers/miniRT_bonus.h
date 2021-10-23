@@ -16,9 +16,8 @@
 # include "miniRT.h"
 # include "libft.h"
 
-# define N_ANTIALIAS		3
 # define BRIGHTNESS_RATIO	2
-# define N_REFLECTIONS		2
+
 # ifdef OS_Linux
 #  define K_LEFT_ARROW	65361
 #  define K_RIGHT_ARROW	65363

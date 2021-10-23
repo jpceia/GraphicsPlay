@@ -80,6 +80,8 @@ void	mlx_data_init(t_data *vars, const t_args *args)
 		clean_exit(vars, "Undefined camera", mlx_data_clean, 1);
 	vars->width = args->width;
 	vars->height = args->height;
+	vars->n_antialias = args->n_antialias;
+	vars->n_reflections = args->n_reflections;
 	vars->mlx = mlx_init();
 	vars->win = mlx_new_window(
 			vars->mlx, args->width, args->height, args->title);
