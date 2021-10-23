@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 15:00:21 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/22 19:35:31 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/22 23:12:00 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ t_bool	raytrace_hit(const t_ray3d *ray, const t_data *vars,
 	}
 	if (hit_anything)
 	{
+		record->normal = vec3d_normalize(vec3d_add(record->normal,
+					vec3d_scalar_mul(vec3d_random(), record->surf.k_wrinkle)));
 		if (vec3d_dot_product(ray->direction, record->normal) > 0)
 			record->normal = vec3d_scalar_mul(record->normal, -1);
 		record->reflected = ray3d_reflected(ray, record->normal).direction;
@@ -64,7 +66,7 @@ t_rgb	raytrace_single_bonus(const t_ray3d *primary_ray,
 {
 	t_hit_record	record;
 
-	if (raytrace_hit(primary_ray, vars, 1e-3, &record))
+	if (raytrace_hit(primary_ray, vars, 1e-2, &record))
 		return (hit_color_bonus(&record, vars, n_reflections));
 	return (vars->ambient.color);
 }

@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 10:58:52 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/20 21:34:00 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/22 23:09:59 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "libft.h"
 
 # define BRIGHTNESS_RATIO	2
+# define N_THREADS			16
 
 # ifdef OS_Linux
 #  define K_LEFT_ARROW	65361
@@ -39,6 +40,8 @@
 #  define K_W			13
 #  define K_S			1
 # endif
+
+t_vec3d		vec3d_random(void);
 
 /*
  * 3D Objects
