@@ -40,22 +40,22 @@ FLAGS_WARN		= -Wall -Wextra -Werror
 FLAGS_INC		= -I$(INC_DIR) -I$(LIBFT_DIR) -I$(MLX_INC_DIR)
 FLAGS_DEBUG		= -g
 FLAGS_OPT		= -O3
-FLAGS_LIBFT 	= -L$(LIBFT_DIR) -lft
+FLAGS_LIBFT		= -L$(LIBFT_DIR) -lft
 CFLAGS			= $(FLAGS_WARN) $(FLAGS_INC) $(FLAGS_OPT) $(FLAG_OS)
 LDFLAGS			= $(FLAGS_LIBFT) $(FLAGS_MLX) $(FLAGS_OPT) -lm
 
 $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) -c $< -o $@ $(CFLAGS)
 
-$(NAME): $(OBJS_MAND) $(OBJS_SHARED)
+$(NAME): $(OBJS_MAND)
 ifneq ($(OS), Linux)
 	$(MAKE) -C $(MLX_DIR)
 endif
 	$(MAKE) -C $(LIBFT_DIR)
 	$(CC) $^ -o $@ $(LDFLAGS)
 
-$(BONUS_NAME): $(OBJS_BONUS) $(OBJS_SHARED)
+$(BONUS_NAME): $(OBJS_BONUS)
 ifneq ($(OS), Linux)
 	$(MAKE) -C $(MLX_DIR)
 endif
