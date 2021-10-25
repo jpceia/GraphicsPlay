@@ -17,7 +17,6 @@
 # include "libft.h"
 
 # define BRIGHTNESS_RATIO	2
-# define N_THREADS			16
 
 # ifdef OS_Linux
 #  define K_LEFT_ARROW	65361

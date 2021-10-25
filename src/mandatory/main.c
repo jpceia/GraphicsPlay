@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 04:07:55 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/08 08:57:35 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/25 18:07:47 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 	{
-		perror("Please provide only one argument");
+		ft_putendl_error("Please provide only one argument");
 		exit(EXIT_FAILURE);
 	}
 	args.width = WIN_WIDTH;
@@ -34,7 +34,7 @@ int	main(int argc, char **argv)
 	args.fname = argv[1];
 	vars = ft_calloc(1, sizeof(t_data));
 	if (!vars)
-		clean_exit(NULL, "Error allocating memory", NULL, 1);
+		clean_exit(NULL, MALLOC_ERR, NULL, 1);
 	mlx_data_init(vars, &args);
 	mlx_data_update_image(vars);
 	mlx_hook(vars->win, KEY_PRESS, M_KEY_PRESS, key_press, vars);

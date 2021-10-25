@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 22:08:52 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/20 22:07:50 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/25 18:02:50 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,21 @@ t_object	*parse_triangle_from_line(t_object *obj, char *line)
 	obj->obj_type = TRIANGLE;
 	n = ft_strwc(line, ' ');
 	if (n < 5)
-		return (clean_exit(NULL, "Line with incorrect format", NULL, 0));
+		return (clean_exit(NULL, LINE_FMT_ERR, NULL, 0));
 	triangle = (t_triangle *)malloc(sizeof(*triangle));
 	if (!triangle)
-		return (clean_exit(NULL, "Error allocating memory", NULL, 0));
+		return (clean_exit(NULL, MALLOC_ERR, NULL, 0));
 	s_split = ft_split(line, ' ');
 	if (!s_split)
-		return (clean_exit(triangle, "Error spliting line", free, 0));
+		return (clean_exit(triangle, SPLIT_ERR, free, 0));
 	if (!parse_vec3d(&triangle->p1, s_split[1]))
-		return (clean_exit(triangle, "Error parsing vector", free, 0));
+		return (clean_exit(triangle, PARSE_VEC_ERR, free, 0));
 	if (!parse_vec3d(&triangle->p2, s_split[2]))
-		return (clean_exit(triangle, "Error parsing vector", free, 0));
+		return (clean_exit(triangle, PARSE_VEC_ERR, free, 0));
 	if (!parse_vec3d(&triangle->p3, s_split[3]))
-		return (clean_exit(triangle, "Error parsing vector", free, 0));
+		return (clean_exit(triangle, PARSE_VEC_ERR, free, 0));
 	if (!parse_color(obj, s_split + 4, n - 4))
-		return (clean_exit(triangle, "Error parsing color", free, 0));
+		return (clean_exit(triangle, PARSE_COLOR_ERR, free, 0));
 	ft_str_array_clear(s_split, n);
 	obj->data = triangle;
 	return (obj);

@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 14:47:48 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/16 22:20:56 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/25 18:09:33 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	mlx_data_clean(void *ptr)
 
 void	*clean_exit(void *ptr, char *msg, void (*del)(void *), int do_exit)
 {
-	perror(msg);
+	ft_putendl_error(msg);
 	if (del)
 		del(ptr);
 	if (do_exit)

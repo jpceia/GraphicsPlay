@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 10:58:52 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/21 22:26:44 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/25 18:05:05 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,16 @@
 # include "vec.h"
 # include "matrix.h"
 
-# define WIN_WIDTH		1920
-# define WIN_HEIGHT		1080
+
+# define MALLOC_ERR			"malloc(3) failed"
+# define LINE_FMT_ERR		"Line format error"
+# define SPLIT_ERR			"ft_split failed"
+# define PARSE_LINE_ERR		"Error parsing line"
+# define PARSE_VEC_ERR		"Error parsing vector"
+# define PARSE_RGB_ERR		"Error parsing RGB"
+# define PARSE_COLOR_ERR	"Error parsing color"
+# define PARSE_OBJ_ERR		"Error parsing object"
+# define UNKNOWN_OBJ_ERR	"Unkown object ype"
 
 # ifdef OS_Linux
 #  define K_LEFT_ARROW	65361

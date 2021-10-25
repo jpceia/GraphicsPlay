@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 10:48:30 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/20 23:51:13 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/25 17:52:57 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ static t_object	*parse_cone_from_line_aux(t_object *obj, char **s_split)
 	obj->obj_type = CONE;
 	cone = (t_cone *)malloc(sizeof(*cone));
 	if (!cone)
-		return (clean_exit(NULL, "Error allocating memory", NULL, 0));
+		return (clean_exit(NULL, MALLOC_ERR, NULL, 0));
 	if (!parse_vec3d(&cone->p, s_split[1]))
-		return (clean_exit(cone, "Error parsing vector", free, 0));
+		return (clean_exit(cone, PARSE_VEC_ERR, free, 0));
 	if (!parse_vec3d(&cone->direction, s_split[2]))
-		return (clean_exit(cone, "Error parsing vector", free, 0));
+		return (clean_exit(cone, PARSE_VEC_ERR, free, 0));
 	cone->direction = vec3d_normalize(cone->direction);
 	cone->radius = ft_atof(s_split[3]) / 2;
 	cone->height = ft_atof(s_split[4]);
