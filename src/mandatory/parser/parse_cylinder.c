@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 16:05:28 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/25 18:06:51 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/25 19:10:13 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ t_object	*parse_cylinder_from_line_aux(t_object *obj, char **s_split)
 {
 	t_cylinder	*cylinder;
 
-	obj->obj_type = CYLINDER;
 	cylinder = (t_cylinder *)malloc(sizeof(*cylinder));
 	if (!cylinder)
 		return (clean_exit(NULL, MALLOC_ERR, NULL, 0));
@@ -35,16 +34,20 @@ t_object	*parse_cylinder_from_line_aux(t_object *obj, char **s_split)
 
 t_object	*parse_cylinder_from_line(t_object *obj, char *line)
 {
+	t_object	*res;
 	char		**s_split;
 	int			n;
 
+	obj->obj_type = CYLINDER;
 	n = ft_strwc(line, ' ');
 	if (n != 6)
 		return (clean_exit(NULL, LINE_FMT_ERR, NULL, 0));
 	s_split = ft_split(line, ' ');
 	if (!s_split)
 		return (clean_exit(NULL, SPLIT_ERR, NULL, 0));
-	obj = parse_cylinder_from_line_aux(obj, s_split);
+	res = parse_cylinder_from_line_aux(obj, s_split);
 	ft_str_array_clear(s_split, n);
+	if (!res)
+		return (NULL);
 	return (obj);
 }

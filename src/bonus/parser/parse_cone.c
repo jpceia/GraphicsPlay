@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 10:48:30 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/25 17:52:57 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/25 19:22:35 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static t_object	*parse_cone_from_line_aux(t_object *obj, char **s_split)
 {
 	t_cone	*cone;
 
-	obj->obj_type = CONE;
 	cone = (t_cone *)malloc(sizeof(*cone));
 	if (!cone)
 		return (clean_exit(NULL, MALLOC_ERR, NULL, 0));
@@ -33,21 +32,22 @@ static t_object	*parse_cone_from_line_aux(t_object *obj, char **s_split)
 
 t_object	*parse_cone_from_line(t_object *obj, char *line)
 {
-	char	**s_split;
-	int		n;
+	t_object	*res;
+	char		**s_split;
+	int			n;
 
+	obj->obj_type = CONE;
 	n = ft_strwc(line, ' ');
 	if (n < 6)
-		return (clean_exit(NULL, "Line with incorrect format", NULL, 0));
+		return (clean_exit(NULL, LINE_FMT_ERR, NULL, 0));
 	s_split = ft_split(line, ' ');
 	if (!s_split)
-		return (clean_exit(NULL, "Error spliting line", NULL, 0));
-	obj = parse_cone_from_line_aux(obj, s_split);
-	if (!parse_color(obj, s_split + 5, n - 5))
-	{
-		ft_str_array_clear(s_split, n);
-		return (NULL);
-	}
+		return (clean_exit(NULL, SPLIT_ERR, NULL, 0));
+	res = parse_cone_from_line_aux(obj, s_split);
+	if (res)
+		res = parse_color(obj, s_split + 5, n - 5);
 	ft_str_array_clear(s_split, n);
+	if (!res)
+		return (NULL);
 	return (obj);
 }

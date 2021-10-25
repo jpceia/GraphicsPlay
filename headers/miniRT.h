@@ -26,7 +26,7 @@
 # define PARSE_RGB_ERR		"Error parsing RGB"
 # define PARSE_COLOR_ERR	"Error parsing color"
 # define PARSE_OBJ_ERR		"Error parsing object"
-# define UNKNOWN_OBJ_ERR	"Unkown object ype"
+# define UNKNOWN_OBJ_ERR	"Unkown object type"
 
 # ifdef OS_Linux
 #  define K_LEFT_ARROW	65361
