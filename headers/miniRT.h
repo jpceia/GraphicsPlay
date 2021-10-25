@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 10:58:52 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/25 18:05:05 by jceia            ###   ########.fr       */
+/*   Updated: 2021/10/25 19:46:17 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include "vec.h"
 # include "matrix.h"
 
+# define WIN_WIDTH			1920
+# define WIN_HEIGHT			1080
 
 # define MALLOC_ERR			"malloc(3) failed"
 # define LINE_FMT_ERR		"Line format error"
