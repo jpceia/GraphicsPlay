@@ -212,6 +212,7 @@ typedef struct s_args
  */
 int			check_file_extension(char *fname, char const *ext);
 t_data		*parse_data_from_file(t_data *vars, char *fname);
+t_data		*parse_data_item_from_line(t_data *vars, char *line);
 t_rgb		*parse_rgb(t_rgb *color, char *s);
 t_vec3d		*parse_vec3d(t_vec3d *p, char *s);
 t_data		*parse_ambient_from_line(t_data *vars, char *line);
