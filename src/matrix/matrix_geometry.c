@@ -3,28 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   matrix_geometry.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 07:16:53 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/13 12:54:52 by jceia            ###   ########.fr       */
+/*   Updated: 2022/01/09 20:57:37 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "matrix.h"
-
-t_matrix	*matrix_scaling3d(const t_vec3d *s)
-{
-	t_matrix	*m;
-
-	m = matrix_zeros(3, 3);
-	if (!m)
-		return (NULL);
-	m->data[0] = s->x;
-	m->data[4] = s->y;
-	m->data[8] = s->z;
-	return (m);
-}
 
 t_vec3d	matrix_mul_vec3d(t_matrix *m, const t_vec3d *p)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   matrix1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 16:17:16 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/13 10:13:52 by jceia            ###   ########.fr       */
+/*   Updated: 2022/01/09 20:59:30 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,24 +56,4 @@ t_matrix	*matrix_zeros(int nrows, int ncols)
 	while (idx < nrows * ncols)
 		m->data[idx++] = 0;
 	return (m);
-}
-
-float	matrix_at(t_matrix *A, int i, int j)
-{
-	if (!A)
-	{
-		ft_putstr_error("NULL ptr\n");
-		return (NAN);
-	}
-	if (i < 0 || i >= A->nrows)
-	{
-		ft_putstr_error("Row index outside range\n");
-		return (NAN);
-	}
-	if (j < 0 || j >= A->ncols)
-	{
-		ft_putstr_error("Column index outside range\n");
-		return (NAN);
-	}
-	return (A->data[i * A->ncols + j]);
 }
