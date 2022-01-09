@@ -6,10 +6,10 @@ OBJ_DIR		= obj
 SRCS		:= $(shell find $(SRC_DIR) -name "*.c" -type f)
 OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
-CC			= gcc
+CC			= clang
 RM			= rm -f
 
-CFLAGS		= -Wall -Wextra -Werror -I.
+CFLAGS		= -Wall -Wextra -Werror -I. -O3
 
 all:		$(NAME)
 

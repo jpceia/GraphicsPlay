@@ -11,7 +11,7 @@ OBJ_DIR			= obj
 SRCS			= $(shell find $(SRC_DIR) -name *.c -type f)
 OBJS			= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
-CC				= gcc
+CC				= clang
 RM				= rm -f
 
 OS				= $(shell uname)
