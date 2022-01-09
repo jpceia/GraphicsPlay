@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 04:07:55 by jceia             #+#    #+#             */
-/*   Updated: 2022/01/09 17:37:13 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/09 21:15:29 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 3)
 	{
-		ft_putendl_error("usage: ./miniRT [scene_file] [output_file]");
+		fprintf(stderr, "usage: ./miniRT [scene_file] [output_file]\n");
 		return (EXIT_FAILURE);
 	}
 	args.width = WIN_WIDTH;

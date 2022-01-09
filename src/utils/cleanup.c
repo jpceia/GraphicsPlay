@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 14:47:48 by jceia             #+#    #+#             */
-/*   Updated: 2022/01/09 17:38:44 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/09 21:15:51 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	data_clean(void *ptr)
 
 void	*clean_exit(void *ptr, char *msg, void (*del)(void *), int do_exit)
 {
-	ft_putendl_error(msg);
+	fprintf(stderr, "%s\n", msg);
 	if (del)
 		del(ptr);
 	if (do_exit)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 19:29:47 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/25 19:29:55 by jceia            ###   ########.fr       */
+/*   Updated: 2022/01/09 21:15:13 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_data	*parse_data_from_fd(t_data *vars, int fd)
 	}
 	if (err_msg)
 	{
-		ft_putendl_error(err_msg);
+		fprintf(stderr, "%s\n", err_msg);
 		return (NULL);
 	}
 	return (vars);

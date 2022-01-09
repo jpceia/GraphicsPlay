@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vec3D_3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 09:39:38 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/13 10:20:41 by jceia            ###   ########.fr       */
+/*   Updated: 2022/01/09 21:13:33 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ float	vec3d_angle(t_vec3d u, t_vec3d v)
 	norm_v = vec3d_norm(v);
 	if (norm_u == 0 || norm_v == 0)
 	{
-		ft_putstr_error("Vector with zero length\n");
+		fprintf(stderr, "Vector with zero length\n");
 		return (0);
 	}
 	return (dot_uv / norm_u / norm_v);

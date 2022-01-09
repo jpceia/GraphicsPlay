@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vec3D_1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/01 22:32:05 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/13 10:19:29 by jceia            ###   ########.fr       */
+/*   Updated: 2022/01/09 21:13:43 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,6 @@ float	vec3d_coord(t_vec3d p, t_coord coord)
 		return (p.y);
 	if (coord == COORD_Z)
 		return (p.z);
-	ft_putstr_error("Invalid coordinate\n");
+	fprintf(stderr, "Invalid coordinate\n");
 	return (0.0);
 }
