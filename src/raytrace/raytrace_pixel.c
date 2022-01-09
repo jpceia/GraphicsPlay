@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   raytrace_pixel.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 13:07:42 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/22 23:12:53 by jceia            ###   ########.fr       */
+/*   Updated: 2022/01/09 17:41:00 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT_bonus.h"
+#include "miniRT.h"
 
 float	convert_scale(float x, float view_size, float screen_size)
 {
@@ -29,7 +29,7 @@ t_rgb	raytrace_pixel_contribution(const t_vec2d *p, const t_data *vars)
 			-convert_scale(p->y, cam->view_height, cam->pixels_height),
 			1);
 	ray = ray3d_create(cam->origin, matrix_mul_vec3d(cam->basis, &v));
-	return (raytrace_single_bonus(&ray, vars, vars->n_reflections));
+	return (raytrace_single(&ray, vars, vars->n_reflections));
 }
 
 t_rgb	raytrace_pixel(int i, int j, int n, t_data *vars)

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cone.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 06:42:00 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/21 00:45:24 by jceia            ###   ########.fr       */
+/*   Updated: 2022/01/09 17:13:26 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT_bonus.h"
+#include "miniRT.h"
 #include <math.h>
 
 float	hit_cone_dist(const t_ray3d *ray, const t_cone *cone,

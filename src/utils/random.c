@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   random.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 13:06:49 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/22 23:03:02 by jceia            ###   ########.fr       */
+/*   Updated: 2022/01/09 17:10:06 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT_bonus.h"
+#include "miniRT.h"
 
 float	random_uniform(void)
 {

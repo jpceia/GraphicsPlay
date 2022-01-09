@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_triangle.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 22:08:52 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/25 19:20:35 by jceia            ###   ########.fr       */
+/*   Updated: 2022/01/09 17:11:01 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT_bonus.h"
+#include "miniRT.h"
 
 t_object	*parse_triangle_from_line_aux(t_object *obj, char **s_split)
 {

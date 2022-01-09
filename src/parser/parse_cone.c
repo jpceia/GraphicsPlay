@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cone.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 10:48:30 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/25 19:22:35 by jceia            ###   ########.fr       */
+/*   Updated: 2022/01/09 17:11:12 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT_bonus.h"
+#include "miniRT.h"
 
 static t_object	*parse_cone_from_line_aux(t_object *obj, char **s_split)
 {

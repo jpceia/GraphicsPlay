@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 14:47:48 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/25 18:09:33 by jceia            ###   ########.fr       */
+/*   Updated: 2022/01/09 17:38:44 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <mlx.h>
 #include <stdio.h>
 #include "miniRT.h"
 
@@ -22,24 +21,13 @@ void	object_clean(void *obj)
 	free(obj);
 }
 
-void	mlx_data_clean(void *ptr)
+void	data_clean(void *ptr)
 {
 	t_data	*vars;
 
 	if (!ptr)
 		return ;
 	vars = (t_data *)ptr;
-	if (vars->win)
-	{
-		mlx_destroy_window(vars->mlx, vars->win);
-		vars->win = NULL;
-	}
-	if (vars->mlx)
-	{
-		mlx_destroy_display(vars->mlx);
-		free(vars->mlx);
-		vars->mlx = NULL;
-	}
 	camera_clean(vars->camera);
 	ft_lstclear(&vars->lights, free);
 	ft_lstclear(&vars->objects, object_clean);
@@ -47,6 +35,11 @@ void	mlx_data_clean(void *ptr)
 	{
 		free(vars->buf);
 		vars->buf = NULL;
+	}
+	if (vars->file_name)
+	{
+		free(vars->file_name);
+		vars->file_name = NULL;
 	}
 	free(vars);
 }

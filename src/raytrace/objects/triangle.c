@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   triangle.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 17:42:53 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/21 00:46:04 by jceia            ###   ########.fr       */
+/*   Updated: 2022/01/09 17:13:34 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT_bonus.h"
+#include "miniRT.h"
 
 t_bool	hit_triangle(const t_ray3d *ray, const t_triangle *triangle,
 		float t_min, t_hit_record *record)

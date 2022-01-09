@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_color.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 21:05:04 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/20 23:37:12 by jceia            ###   ########.fr       */
+/*   Updated: 2022/01/09 17:10:23 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT_bonus.h"
+#include "miniRT.h"
 
 t_object	*parse_color(t_object *obj, char **s_split, int n)
 {

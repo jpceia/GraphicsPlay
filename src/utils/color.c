@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 02:53:52 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/21 01:42:47 by jceia            ###   ########.fr       */
+/*   Updated: 2022/01/09 17:10:13 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT_bonus.h"
+#include "miniRT.h"
 #include <math.h>
 
 int	create_trgb(t_rgb v)

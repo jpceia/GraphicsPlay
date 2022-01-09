@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 07:47:21 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/20 15:53:00 by jceia            ###   ########.fr       */
+/*   Updated: 2022/01/09 17:20:09 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	camera_set_basis(t_matrix **basis, t_vec3d direction)
 	if (direction.y == 1.0)
 		up_vec = vec3d_create(0.0, 0.0, 1.0);
 	else
-		up_vec = vec3d_create(0.0, -1.0, 0.0);
+		up_vec = vec3d_create(0.0, 1.0, 0.0);
 	v = vec3d_cross_product(direction, up_vec);
 	(*basis)->data[0] = v.x;
 	(*basis)->data[3] = v.y;

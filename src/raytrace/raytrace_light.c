@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   raytrace_light.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 15:02:28 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/22 19:35:21 by jceia            ###   ########.fr       */
+/*   Updated: 2022/01/09 17:41:17 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT_bonus.h"
+#include "miniRT.h"
 #include <math.h>
 
 float	get_diffuse_intensity(const t_vec3d v, const t_hit_record *record)
@@ -29,7 +29,7 @@ float	get_specular_intensity(const t_vec3d v, const t_hit_record *record)
 	return (pow(dot_prod, record->surf.shininess) * record->surf.k_specular);
 }
 
-t_rgb	hit_light_contribution_bonus(
+t_rgb	hit_light_contribution(
 		const t_hit_record *record,
 		const t_light *light,
 		const t_data *vars)
@@ -59,11 +59,11 @@ t_rgb	reflection_contribution(
 	t_ray3d	ray;
 
 	ray = ray3d_create(record->p, record->reflected);
-	color_shadow = raytrace_single_bonus(&ray, vars, n_reflections - 1);
+	color_shadow = raytrace_single(&ray, vars, n_reflections - 1);
 	return (vec3d_scalar_mul(color_shadow, record->surf.k_mirror));
 }
 
-t_rgb	hit_color_bonus(
+t_rgb	hit_color(
 		const t_hit_record *record,
 		const t_data *vars,
 		int n_reflections)
@@ -76,7 +76,7 @@ t_rgb	hit_color_bonus(
 			vars->ambient.color, record->surf.k_ambient * vars->ambient.ratio);
 	while (lights)
 	{
-		color_shadow = vec3d_add(color_shadow, hit_light_contribution_bonus(
+		color_shadow = vec3d_add(color_shadow, hit_light_contribution(
 					record, lights->content, vars));
 		lights = lights->next;
 	}

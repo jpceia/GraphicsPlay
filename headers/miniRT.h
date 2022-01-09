@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 10:58:52 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/25 19:46:17 by jceia            ###   ########.fr       */
+/*   Updated: 2022/01/09 17:41:23 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@
 # include "vec.h"
 # include "matrix.h"
 
-# define WIN_WIDTH			1920
-# define WIN_HEIGHT			1080
+# define WIN_WIDTH			1080
+# define WIN_HEIGHT			720
+
+# define BRIGHTNESS_RATIO	2
 
 # define MALLOC_ERR			"malloc(3) failed"
 # define LINE_FMT_ERR		"Line format error"
@@ -29,49 +31,6 @@
 # define PARSE_COLOR_ERR	"Error parsing color"
 # define PARSE_OBJ_ERR		"Error parsing object"
 # define UNKNOWN_OBJ_ERR	"Unkown object type"
-
-# ifdef OS_Linux
-#  define K_LEFT_ARROW	65361
-#  define K_RIGHT_ARROW	65363
-#  define K_UP_ARROW	65362
-#  define K_DOWN_ARROW	65364
-#  define K_ESC			65307
-#  define K_A			97
-#  define K_D			100
-#  define K_W			119
-#  define K_S			115
-# else
-#  define K_LEFT_ARROW	123
-#  define K_RIGHT_ARROW	124
-#  define K_UP_ARROW	126
-#  define K_DOWN_ARROW	125
-#  define K_ESC			53
-#  define K_A			0
-#  define K_D			2
-#  define K_W			13
-#  define K_S			1
-# endif
-
-/*
- * X11 Events
- */
-
-# define KEY_PRESS		02
-# define KEY_RELEASE	03
-# define BUTTON_PRESS	04
-# define BUTTON_RELEASE 05
-# define MOTION_NOTIFY	06
-# define DESTROY_NOTIFY	17
-
-/*
- * X11 Masks
- */
-# define M_NO_EVENT			0L
-# define M_KEY_PRESS		1L
-# define M_KEY_RELEASE		2L
-# define M_BUTTON_PRESS 	4L
-# define M_BUTTON_RELEASE	8L
-# define M_POINTER_MOTION	64L
 
 /*
  * 3D Ray
@@ -168,6 +127,31 @@ typedef struct s_cylinder
 	float	height;
 }	t_cylinder;
 
+typedef struct s_triangle
+{
+	t_vec3d	p1;
+	t_vec3d	p2;
+	t_vec3d	p3;
+	t_rgb	color;
+}	t_triangle;
+
+typedef struct s_disk
+{
+	t_vec3d	center;
+	t_vec3d	n;
+	float	radius;
+	t_rgb	color;
+}	t_disk;
+
+typedef struct s_cone
+{
+	t_vec3d	p;
+	t_vec3d	direction;
+	float	radius;
+	float	height;
+	t_rgb	color;
+}	t_cone;
+
 typedef struct s_object
 {
 	t_obj_type		obj_type;
@@ -178,15 +162,9 @@ typedef struct s_object
 
 typedef struct s_data
 {
-	void	*mlx;
-	void	*win;
-	void	*img;
-	char	*addr;
 	int		width;
 	int		height;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
+	char	*file_name;
 	t_ambient_light
 			ambient;
 	t_camera
@@ -201,7 +179,8 @@ typedef struct s_data
 
 typedef struct s_args
 {
-	char	*fname;
+	char	*scene_fname;
+	char	*output_fname;
 	char	*title;
 	int		width;
 	int		height;
@@ -216,6 +195,7 @@ int			check_file_extension(char *fname, char const *ext);
 t_data		*parse_data_from_file(t_data *vars, char *fname);
 t_data		*parse_data_item_from_line(t_data *vars, char *line);
 t_rgb		*parse_rgb(t_rgb *color, char *s);
+t_object	*parse_color(t_object *obj, char **s_split, int n);
 t_vec3d		*parse_vec3d(t_vec3d *p, char *s);
 t_data		*parse_ambient_from_line(t_data *vars, char *line);
 t_data		*parse_camera_from_line(t_data *vars, char *line);
@@ -224,22 +204,25 @@ t_data		*parse_object_from_line(t_data *vars, char *line);
 t_object	*parse_sphere_from_line(t_object *obj, char *line);
 t_object	*parse_plane_from_line(t_object *obj, char *line);
 t_object	*parse_cylinder_from_line(t_object *obj, char *line);
+t_object	*parse_triangle_from_line(t_object *obj, char *line);
+t_object	*parse_disk_from_line(t_object *obj, char *line);
+t_object	*parse_cone_from_line(t_object *obj, char *line);
 
 /*
- * MLX UTILS
+ * UTILS
  */
 
-void		plot_pixel(t_data *data, float x, float y, t_rgb color);
-void		update_image_from_buf(t_data *data);
-void		mlx_data_init(t_data *vars, const t_args *args);
-void		mlx_data_update_image(t_data *vars);
-int			key_press(int keycode, t_data *vars);
-int			exit_handle(t_data *vars);
+void		data_init(t_data *vars, const t_args *args);
+void		data_draw_image(t_data *vars);
+void 		create_bmp(const char *fname, int width, int height, t_rgb *pixels);
+
+t_vec3d		vec3d_random(void);
+
 
 /*
  * Clear
  */
-void		mlx_data_clean(void *vars);
+void		data_clean(void *vars);
 void		*clean_exit(void *ptr, char *msg, void (*del)(void *), int do_exit);
 
 /*
@@ -282,11 +265,19 @@ typedef struct s_hit_record
 	float			t;
 }	t_hit_record;
 
+void		raytrace_scenario(t_data *vars);
+		
 t_rgb		hit_color(
 				const t_hit_record *record,
-				const t_data *vars);
-void		raytrace_scenario(t_data *vars);
-t_rgb		raytrace_single(const t_ray3d *ray, const t_data *vars);
+				const t_data *vars,
+				int n_reflections);
+
+t_rgb		raytrace_single(
+				const t_ray3d *ray,
+				const t_data *vars,
+				int n_reflections);
+
+t_rgb		raytrace_pixel(int i, int j, int n, t_data *vars);
 
 t_bool		raytrace_hit(const t_ray3d *ray, const t_data *vars,
 				float t_min, t_hit_record *record);
@@ -300,5 +291,13 @@ t_bool		hit_plane(const t_ray3d *ray, const t_plane *plane,
 				float t_min, t_hit_record *record);
 t_bool		hit_cylinder(const t_ray3d *ray, const t_cylinder *cyclinder,
 				float t_min, t_hit_record *record);
+t_bool		hit_triangle(const t_ray3d *ray, const t_triangle *triangle,
+				float t_min, t_hit_record *record);
+t_bool		hit_disk(const t_ray3d *ray, const t_disk *disk,
+				float t_min, t_hit_record *record);
+t_bool		hit_cone(const t_ray3d *ray, const t_cone *cone,
+				float t_min, t_hit_record *record);
+
+
 
 #endif

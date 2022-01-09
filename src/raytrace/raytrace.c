@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   raytrace.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 15:00:21 by jceia             #+#    #+#             */
-/*   Updated: 2021/10/22 23:12:00 by jceia            ###   ########.fr       */
+/*   Updated: 2022/01/09 17:40:49 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT_bonus.h"
+#include "miniRT.h"
 
 void	raytrace_scenario(t_data *vars)
 {
@@ -61,12 +61,12 @@ t_bool	raytrace_hit(const t_ray3d *ray, const t_data *vars,
 	return (hit_anything);
 }
 
-t_rgb	raytrace_single_bonus(const t_ray3d *primary_ray,
+t_rgb	raytrace_single(const t_ray3d *primary_ray,
 		const t_data *vars, int n_reflections)
 {
 	t_hit_record	record;
 
 	if (raytrace_hit(primary_ray, vars, 1e-2, &record))
-		return (hit_color_bonus(&record, vars, n_reflections));
+		return (hit_color(&record, vars, n_reflections));
 	return (vars->ambient.color);
 }
