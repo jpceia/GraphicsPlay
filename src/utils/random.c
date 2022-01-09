@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 13:06:49 by jceia             #+#    #+#             */
-/*   Updated: 2022/01/09 17:10:06 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/09 21:02:02 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 float	random_uniform(void)
 {
-	return (((float)rand()) / RAND_MAX);
+	return (((float)rand()) / ((float)RAND_MAX));
 }
 
 t_vec3d	vec3d_random(void)
