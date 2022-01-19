@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 23:30:39 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/18 05:54:30 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/19 03:45:50 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ public:
     */
     bool hit(const rt::Ray<float, 3>& r, float t_min, float t_max, HitRecord& rec) const
     {
+        (void)t_max;
         rt::vector<float, 3> v = r.getOrigin() - this->center;
         float half_b = rt::dot(v, r.getDirection());
         float disc = half_b * half_b - rt::dot(v, v) + this->radius * this->radius;

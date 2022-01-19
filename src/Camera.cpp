@@ -6,13 +6,13 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 23:32:00 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/18 23:34:13 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/19 03:45:06 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Camera.hpp"
 
-Camera::Camera(const Camera& rhs) {} // set copy
+Camera::Camera(const Camera& rhs) { (void)rhs; } // set copy
 
 Camera& Camera::operator=(const Camera& rhs) { (void)rhs; return *this; }
 
@@ -21,6 +21,15 @@ Camera::Camera(const CameraArgs& args) :
     _direction(args.direction),
     _fov(args.fov)
 {
+    this->_direction = this->_direction.normalize();
+    // setup basis
+    rt::vector<float, 3> tmp_up;
+    if (this->_direction[1] == 1.0)
+        tmp_up[2] = 1.0;
+    else
+        tmp_up[1] = 1.0;
+    this->_right = rt::cross(this->_direction, tmp_up);
+    this->_up = rt::cross(this->_right, this->_direction);
 }
 
 Camera::~Camera() {}
@@ -31,16 +40,6 @@ void Camera::setup(int win_width, int win_height)
     this->pixels_height = win_height;
     this->view_width = 2 * std::tan(M_PI * this->_fov / 360);
     this->view_height = win_height * this->view_width / win_width;
-
-    this->_direction = this->_direction.normalize();
-    // setup basis
-    rt::vector<float, 3> tmp_up;
-    if (this->_direction[1] == 1.0)
-        tmp_up[2] = 1.0;
-    else
-        tmp_up[1] = 1.0;
-    this->_right = rt::cross(this->_direction, tmp_up);
-    this->_up = rt::cross(this->_right, this->_direction);
 }
 
 // Getters

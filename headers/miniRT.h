@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 10:58:52 by jceia             #+#    #+#             */
-/*   Updated: 2022/01/18 07:00:01 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/19 04:49:38 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,25 +39,7 @@ struct AmbientLight;
 #  define M_PI 3.14159265358979323846
 # endif
 
-# define WIN_WIDTH			1080
-# define WIN_HEIGHT			720
-
 # define BRIGHTNESS_RATIO	2
-
-# define MALLOC_ERR			"malloc(3) failed"
-# define LINE_FMT_ERR		"Line format error"
-# define SPLIT_ERR			"ft_split failed"
-# define PARSE_LINE_ERR		"Error parsing line"
-# define PARSE_VEC_ERR		"Error parsing vector"
-# define PARSE_RGB_ERR		"Error parsing RGB"
-# define PARSE_COLOR_ERR	"Error parsing color"
-# define PARSE_OBJ_ERR		"Error parsing object"
-# define UNKNOWN_OBJ_ERR	"Unkown object type"
-
-/*
- * Color
- */
-typedef rt::vector<float, 3>	t_rgb;
 
 /*
  * Parser
@@ -88,22 +70,5 @@ Cone*		parse_cone(std::stringstream& ss);
 void 		create_bmp(const std::string& fname, int width, int height, t_rgb *pixels);
 
 rt::vector<float, 3>	vec3d_random(void);
-
-
-void		raytrace_scenario(Scenario& vars);
-		
-t_rgb		hit_color(
-				const HitRecord& record,
-				const Scenario& vars,
-				int n_reflections);
-
-t_rgb		raytrace_single(
-				const rt::Ray<float, 3>& ray,
-				const Scenario& scenario,
-				int n_reflections);
-
-t_rgb		raytrace_pixel(int i, int j, int n, Scenario& vars);
-
-bool		raytrace_hit(const rt::Ray<float, 3>& ray, const Scenario& scenario, float t_min, HitRecord& rec);
 
 #endif

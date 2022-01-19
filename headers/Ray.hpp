@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 23:37:14 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/18 06:27:37 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/19 04:46:52 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,15 @@ private:
 public:
     
     Ray(vector<T, N> origin, vector<T, N> direction) : _origin(origin), _direction(direction) {}
-    Ray(const Ray& rhs) {}
+    Ray(const Ray& rhs) : _origin(rhs._origin), _direction(rhs._direction) {}
     virtual ~Ray() {}
 
-    Ray& operator=(const Ray& rhs) { (void)rhs; return *this; }
+    Ray& operator=(const Ray& rhs)
+    {
+        _origin = rhs._origin;
+        _direction = rhs._direction;
+        return *this;
+    }
 
     vector<T, N> getOrigin() const { return _origin; }
     vector<T, N> getDirection() const { return _direction; }
