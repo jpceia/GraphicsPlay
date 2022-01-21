@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 10:58:52 by jceia             #+#    #+#             */
-/*   Updated: 2022/01/19 04:49:38 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 10:31:03 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_rgb		parse_rgb(std::stringstream& ss);
 Material	parse_material(std::stringstream& ss);
 
 AmbientLight parse_ambient_light(std::stringstream& ss);
-Camera*		parse_camera(std::stringstream& ss);
+Camera		parse_camera(std::stringstream& ss);
 Light		parse_light(std::stringstream& ss);
 
 

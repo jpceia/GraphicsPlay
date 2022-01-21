@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 23:30:05 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/18 05:54:12 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 12:17:10 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ private:
     float radius;
 
     // non copyable
-    Disk(const Disk& rhs) : AHittable(rhs.getMaterial()) {}
+    Disk(const Disk& rhs) : AHittable(rhs.getName(), rhs.getMaterial()) {}
     Disk& operator=(const Disk& rhs) { (void)rhs; return *this; }
 
 public:
     Disk(const DiskArgs& args) :
-        AHittable(args.material),
+        AHittable("Disk", args.material),
         center(args.p),
         n(args.direction),
         radius(args.radius)
@@ -57,7 +57,6 @@ public:
         rec.p = r.getPointAt(rec.t);
         if ((this->center - rec.p).lengthSquared() > this->radius * this->radius)
             return (false);
-        this->setHitRecordMaterial(rec);
         return (true);
     }
 };

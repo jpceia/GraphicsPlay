@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 23:31:02 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/18 05:54:34 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 12:18:04 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ private:
     rt::vector<float, 3> p1, p2, p3;
 
     // non copyable
-    Triangle(const Triangle& rhs) : AHittable(rhs.getMaterial()) {}
+    Triangle(const Triangle& rhs) : AHittable(rhs.getName(), rhs.getMaterial()) {}
     Triangle& operator=(const Triangle& rhs) { (void)rhs; return *this; }
 
 public:
     Triangle(const TriangleArgs& args) :
-        AHittable(args.material),
+        AHittable("Triangle", args.material),
         p1(args.p1),
         p2(args.p2),
         p3(args.p3)
@@ -62,7 +62,6 @@ public:
         float y = rec.p.dot(v) / v.lengthSquared();
         if (x < 0 || y < 0 || x + y > 1)
             return (false);
-        this->setHitRecordMaterial(rec);
         return (true);
     }
 };

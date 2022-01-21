@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 23:30:15 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/18 05:59:18 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 12:17:36 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ private:
     rt::vector<float, 3> n;
 
     // non copyable
-    Plane(const Plane& rhs) : AHittable(rhs.getMaterial()) {}
+    Plane(const Plane& rhs) : AHittable(rhs.getName(), rhs.getMaterial()) {}
     Plane& operator=(const Plane& rhs) { (void)rhs; return *this; }
 
 public:
     Plane(const PlaneArgs& args) :
-        AHittable(args.material),
+        AHittable("Plane", args.material),
         p(args.p),
         n(args.normal)
     {}
@@ -63,7 +63,6 @@ public:
         if (rec.t < t_min || rec.t > t_max)
             return (false);
         rec.p = r.getPointAt(rec.t);
-        this->setHitRecordMaterial(rec);
         return (true);
     }
 };

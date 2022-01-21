@@ -6,32 +6,51 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 02:32:03 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/19 02:33:38 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 12:16:23 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hittable/AHittable.hpp"
 
 Material::Material() :
-    shininess(0.0f),
     ambient(1.0f),
-    diffusion(0.0f),
+    diffusion(1.0f),
     specular(0.0f),
+    shininess(0.0f),
     mirror(0.0f),
     wrinkle(0.0f)
 {
 }
 
-AHittable::AHittable(const AHittable& rhs) : _material(rhs.getMaterial()) {}
-AHittable& AHittable::operator=(const AHittable& rhs) { (void)rhs; return *this; }
-    
-AHittable::AHittable(const Material& material) : _material(material) {}
-    
-AHittable::~AHittable() {}
-
-Material AHittable::getMaterial() const { return this->_material; }
-
-void AHittable::setHitRecordMaterial(HitRecord& rec) const
+AHittable::AHittable(const AHittable& rhs) :
+    _name(rhs._name),
+    _material(rhs._material)
 {
-    rec.color = _material.color;
+}
+
+AHittable& AHittable::operator=(const AHittable& rhs)
+{
+    _name = rhs.getName();
+    _material = rhs.getMaterial();
+    return *this;
+}
+    
+AHittable::AHittable(const std::string &name, const Material& material) :
+    _name(name),
+    _material(material)
+{
+}
+    
+AHittable::~AHittable()
+{
+}
+
+Material AHittable::getMaterial() const
+{
+    return _material;
+}
+
+std::string AHittable::getName() const
+{
+    return _name;
 }

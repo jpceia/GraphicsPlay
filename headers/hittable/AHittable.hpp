@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 23:28:19 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/19 03:46:37 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 12:18:40 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ struct HitRecord;
 struct Material
 {
     rt::vector<float, 3> color;
-	float   shininess;
 	float	ambient;
 	float	diffusion;
 	float	specular;
+	float   shininess;
 	float	mirror;
 	float	wrinkle;
 
@@ -34,6 +34,7 @@ struct Material
 class AHittable
 {
 private:
+    std::string _name;
     Material _material;
 
 public:
@@ -41,7 +42,7 @@ public:
     AHittable(const AHittable& rhs);
     AHittable& operator=(const AHittable& rhs);
     
-    AHittable(const Material& material);
+    AHittable(const std::string& _name, const Material& material);
     
     virtual ~AHittable();
 
@@ -49,7 +50,7 @@ public:
 
     Material getMaterial() const;
 
-    void setHitRecordMaterial(HitRecord& rec) const;
+    std::string getName() const;
 };
 
 

@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 23:28:16 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/18 06:05:07 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 12:46:16 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ private:
 	float	height;
 
     // non copyable
-    Cone(const Cone& rhs) : AHittable(rhs.getMaterial()) {}
+    Cone(const Cone& rhs) : AHittable(rhs.getName(), rhs.getMaterial()) {}
     Cone& operator=(const Cone& rhs) { (void)rhs; return *this; }
 public:
     Cone(const ConeArgs& args) :
-        AHittable(args.material),
+        AHittable("Cone", args.material),
         p(args.p),
         direction(args.direction),
         radius(args.radius),
@@ -76,12 +76,14 @@ public:
         float			        v_dot_n = rt::dot(v, this->direction);
         float			        d_dot_n = rt::dot(r.getDirection(), this->direction);
 
-        float tmp1 = d_dot_n * this->radius / this->height;
-        float tmp2 = d_dot_n * (this->height - v_dot_n);
-        float tmp3 = (this->height - v_dot_n) * this->radius / this->height;
-	    float a = d_cross_n.lengthSquared() - tmp1 * tmp1;
-        float b = 2 * (rt::dot(d_cross_n, v_cross_n) + tmp2 * tmp2);
-        float c = v_cross_n.lengthSquared() - tmp3 * tmp3;
+        float tmp1 = this->radius / this->height;
+        tmp1 = tmp1 * tmp1;
+        float tmp2 = this->height - v_dot_n;
+	    float a = d_cross_n.lengthSquared();
+        a -= d_dot_n * d_dot_n * tmp1;
+        float b = 2 * rt::dot(d_cross_n, v_cross_n);
+        b += 2 * d_dot_n * tmp2 * tmp1;
+        float c = v_cross_n.lengthSquared() - tmp2 * tmp2 * tmp1;
 
         
         float   disc = b * b - 4 * a * c;
@@ -122,7 +124,6 @@ public:
         alpha *= std::pow(this->radius / this->height, 2) - 1;
         rec.normal += this->direction * alpha;
         rec.normal = rec.normal.normalize();
-        this->setHitRecordMaterial(rec);
         return (true);
     }
 };

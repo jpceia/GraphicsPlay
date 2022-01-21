@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 01:32:16 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/19 00:03:10 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 10:37:03 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,14 @@ private:
     rt::vector<float, 3> 	_up;
     rt::vector<float, 3> 	_right;
 	float					_fov;
-	int			pixels_width;
-	int			pixels_height;
-	float		view_width;
-	float		view_height;
+    float					_view_width;
 
-    // non copyable
+
+public:
+    Camera();
+    Camera(const CameraArgs& args);
     Camera(const Camera& rhs);
     Camera& operator=(const Camera& rhs);
-public:
-    Camera(const CameraArgs& args);
     virtual ~Camera();
 
     void setup(int win_width, int win_height);
@@ -50,11 +48,7 @@ public:
     rt::vector<float, 3> getUp() const;
     rt::vector<float, 3> getRight() const;
     float getFov() const;
-    int getPixelsWidth() const;
-    int getPixelsHeight() const;
     float getViewWidth() const;
-    float getViewHeight() const;
-
 };
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 23:30:39 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/19 03:45:50 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 12:17:51 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ private:
     float radius;
 
     // non copyable
-    Sphere(const Sphere& rhs) : AHittable(rhs.getMaterial()) {}
+    Sphere(const Sphere& rhs) : AHittable(rhs.getName(), rhs.getMaterial()) {}
     Sphere& operator=(const Sphere& rhs) { (void)rhs; return *this; }
 
 public:
     Sphere(const SphereArgs& args) :
-        AHittable(args.material),
+        AHittable("Sphere", args.material),
         center(args.center),
         radius(args.radius)
     {}
@@ -73,7 +73,6 @@ public:
             rec.t = -half_b - sqrt_disc;
         rec.p = r.getPointAt(rec.t);
         rec.normal = (rec.p - this->center).normalize();
-        this->setHitRecordMaterial(rec);
         return (true);
     }
 };

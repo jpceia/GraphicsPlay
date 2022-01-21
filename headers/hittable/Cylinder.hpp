@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 23:29:37 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/18 05:59:29 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 12:16:57 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ private:
     float height;
 
     // non copyable
-    Cylinder(const Cylinder& rhs) : AHittable(rhs.getMaterial()) {}
+    Cylinder(const Cylinder& rhs) : AHittable(rhs.getName(), rhs.getMaterial()) {}
     Cylinder& operator=(const Cylinder& rhs) { (void)rhs; return *this; }
 public:
     Cylinder(const CylinderArgs& args) :
-        AHittable(args.material),
+        AHittable("Cylinder", args.material),
         p(args.p),
         direction(args.direction),
         radius(args.radius),
@@ -110,7 +110,6 @@ public:
         rec.normal = rec.p - this->p;
         rec.normal -= this->direction * rt::dot(rec.normal, this->direction);
         rec.normal = rec.normal.normalize();
-        this->setHitRecordMaterial(rec);
         return (true);
     }
 };

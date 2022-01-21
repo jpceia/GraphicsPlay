@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 01:09:27 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/19 03:45:39 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 13:07:28 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ Scenario::Scenario(const ScenarioArgs& args) :
     _height(args.height),
     _antialias(args.n_antialias),
     _reflections(args.n_antialias),
-    
-    _camera(NULL),
     _buf(new rt::vector<float, 3>[args.width * args.height])
 {
 }
@@ -38,61 +36,51 @@ Scenario::~Scenario()
 {
     for (std::list<AHittable*>::iterator it = _hittables.begin(); it != _hittables.end(); ++it)
         delete *it;
-    delete _camera;
     delete[] _buf;
 }
 
 // Getters
 int Scenario::getWidth() const { return _width; }
 int Scenario::getHeight() const { return _height; }
-int Scenario::getViewWidth() const { return _camera->getViewWidth(); }
-int Scenario::getViewHeight() const { return _camera->getViewHeight(); }
-int Scenario::getScreenWidth() const { return _camera->getPixelsWidth(); }
-int Scenario::getScreenHeight() const { return _camera->getPixelsHeight(); }
+int Scenario::getViewWidth() const { return _camera.getViewWidth(); }
+int Scenario::getViewHeight() const { return _height * _camera.getViewWidth() / _height; }
 const AmbientLight& Scenario::getAmbientLight() const { return _ambient_light; }
-rt::vector<float, 3> Scenario::getCameraPosition() const { return _camera->getPosition(); }
+rt::vector<float, 3> Scenario::getCameraPosition() const { return _camera.getPosition(); }
 const std::list<AHittable*>& Scenario::getHittables() const { return _hittables; }
 const std::list<Light>& Scenario::getLights() const { return _lights; }
 // get buffer
 rt::vector<float, 3>* Scenario::getPixels() const { return _buf; }
-const Camera* Scenario::getCamera() const { return _camera; }
 
 // Setters
 void Scenario::setAmbientLight(const AmbientLight& ambient_light) { _ambient_light = ambient_light; }
+void Scenario::setCamera(const Camera& camera) { _camera = camera; }
 void Scenario::addLight(const Light& light) { _lights.push_back(light); }
 void Scenario::addHittable(AHittable* hittable) { _hittables.push_back(hittable); }
-void Scenario::setCamera(Camera* camera) {
-    if (_camera)
-        throw std::runtime_error("Camera already set");
-    _camera = camera;
-}
-void Scenario::setupCamera()
-{
-    if (!_camera)
-        throw std::runtime_error("Camera not set");
-    _camera->setup(this->getWidth(), this->getHeight());
-}
 void Scenario::setPixel(int i, int j, const rt::vector<float, 3>& color) { _buf[i * _width + j] = color; }
 
 void Scenario::draw(const std::string& fname)
 {
-    this->setupCamera();
-    for (int i = 0; i < this->getScreenHeight(); ++i)
-        for (int j = 0; j < this->getScreenWidth(); ++j)
+    for (int i = 0; i < _height; ++i)
+        for (int j = 0; j < _width; ++j)
             this->setPixel(i, j, _raytrace_pixel(i, j));
-    create_bmp(fname, _camera->getPixelsWidth(),  _camera->getPixelsHeight(), _buf);
+    create_bmp(fname, _width,  _height, _buf);
 }
 
 
 t_rgb	Scenario::_raytrace_pixel_contribution(int i, int j) const
 {
-	float x = convert_scale(i, this->getViewWidth(), this->getScreenWidth());
-	float y = convert_scale(j, this->getViewHeight(), this->getScreenHeight());
+	float view_width = _camera.getViewWidth();
+	float view_height = _height * view_width / _width;
+	float x = convert_scale(i, view_width, _width);
+	float y = convert_scale(j, view_height, _height);
+	rt::vector<float, 3>	e_x = _camera.getRight();
+	rt::vector<float, 3>	e_y = _camera.getUp();
+	rt::vector<float, 3>	e_z = _camera.getDirection();
 	rt::vector<float, 3> v; // multiply cam basis by (arr[0], arr[1], 1)
-	v[0] = _camera->getRight()[0] * x + _camera->getUp()[0] * y + _camera->getDirection()[0];
-	v[1] = _camera->getRight()[1] * x + _camera->getUp()[1] * y + _camera->getDirection()[1];
-	v[2] = _camera->getRight()[2] * x + _camera->getUp()[2] * y + _camera->getDirection()[2];
-	rt::Ray<float, 3> ray(_camera->getPosition(), v);
+	v[0] = e_x[0] * x + e_y[0] * y + e_z[0];
+	v[1] = e_x[1] * x + e_y[1] * y + e_z[1];
+	v[2] = e_x[2] * x + e_y[2] * y + e_z[2];
+	rt::Ray<float, 3> ray(_camera.getPosition(), v);
 	return (_raytrace_single(ray, _reflections)); // last arg is reflection depth
 }
 
@@ -121,7 +109,7 @@ t_rgb	Scenario::_hit_light_contribution(const HitRecord &rec, const Light& light
     const Material&   mat = rec.hittable->getMaterial();
 
 	rt::Ray<float, 3>	ray_to_light = rt::Ray<float, 3>(rec.p, light.getOrigin() - rec.p);
-	float dist = ray_to_light.getDirection().length();
+	float dist = (light.getOrigin() - rec.p).length();
 	if (_raytrace_hit(ray_to_light, 1e-3, hit_before_light))
 		if (hit_before_light.t < dist)
 			return (t_rgb());
@@ -153,7 +141,8 @@ t_rgb	Scenario::_hit_color(const HitRecord& rec, int n_reflections) const
 	rt::vector<float, 3> color_shadow = _ambient_light.color * mat.ambient * _ambient_light.ratio;
 	for (std::list<Light>::const_iterator it = _lights.begin(); it != _lights.end(); ++it)
 		color_shadow += _hit_light_contribution(rec, *it);
-	color_shadow = rt::elementwise_product(rec.color, color_shadow);
+	color_shadow = rt::elementwise_product(mat.color, color_shadow);
+	(void)n_reflections;
 	if (n_reflections > 0)
 		color_shadow += _reflection_contribution(rec, n_reflections);
 	return (color_shadow);
@@ -169,15 +158,17 @@ bool	Scenario::_raytrace_hit(const rt::Ray<float, 3> &ray, float t_min, HitRecor
 		AHittable *hittable = *it;
 		if (hittable->hit(ray, t_min, 100000.0f, hit_rec))
 		{
-			hit_anything = true;
-			hit_rec.hittable = hittable; // check this
-			if (hit_rec.t < rec.t)
+			if (!hit_anything || hit_rec.t < rec.t)
+			{
 				rec = hit_rec;
+				rec.hittable = hittable;
+				hit_anything = true;	
+			}
 		}
 	}
 	if (hit_anything)
 	{
-		//rec.normal = (vec3d_random() * rec.hittable->getMaterial().wrinkle).normalize();
+		//rec.normal = (vec3d_random() * rec.hittable->getMaterial().wrinkle).normalize(); // and random component
 		if (rt::dot(ray.getDirection(), rec.normal) > 0)
 			rec.normal *= -1; // -v is invalid ??
 		rec.reflected = ray.reflected(rec.normal);
