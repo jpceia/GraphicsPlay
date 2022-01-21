@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bmp.c                                              :+:      :+:    :+:   */
+/*   bmp.cpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 17:03:41 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/18 08:05:38 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 11:59:03 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <fstream>
 
 // creates an BMP file with W x H dimensions, from a given array of pixels
-void create_bmp(const std::string& fname, int width, int height, rt::vector<float, 3> *pixels)
+void create_bmp(const std::string& fname, int width, int height, t_rgb* pixels)
 {
 	// open file
 	std::ofstream file;
@@ -60,13 +60,16 @@ void create_bmp(const std::string& fname, int width, int height, rt::vector<floa
 	file.write((char*)header, 54);
 
 	// write pixels
+	unsigned char data[3];
 	for (int i = 0; i < width * height; i++)
 	{
-		unsigned char data[3] = {
-			static_cast<unsigned char>(255 * std::atan(fmaxf(pixels[i][0], 0) * BRIGHTNESS_RATIO) * 2 / M_PI),
-			static_cast<unsigned char>(255 * std::atan(fmaxf(pixels[i][1], 0) * BRIGHTNESS_RATIO) * 2 / M_PI),
-			static_cast<unsigned char>(255 * std::atan(fmaxf(pixels[i][2], 0) * BRIGHTNESS_RATIO) * 2 / M_PI)
-		};
+		t_rgb pixel = pixels[i];
+		pixel[0] = 255 * std::atan(fmaxf(pixel[0], 0) * BRIGHTNESS_RATIO) * 2 / M_PI;
+		pixel[1] = 255 * std::atan(fmaxf(pixel[1], 0) * BRIGHTNESS_RATIO) * 2 / M_PI;
+		pixel[2] = 255 * std::atan(fmaxf(pixel[2], 0) * BRIGHTNESS_RATIO) * 2 / M_PI;
+		data[0] = pixel[0];
+		data[1] = pixel[1];
+		data[2] = pixel[2];
 		file.write((char*)data, 3);
 	}
 
