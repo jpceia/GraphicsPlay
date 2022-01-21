@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 01:09:27 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 13:07:28 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 16:23:00 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ Scenario::Scenario(const ScenarioArgs& args) :
     _height(args.height),
     _antialias(args.n_antialias),
     _reflections(args.n_antialias),
-    _buf(new rt::vector<float, 3>[args.width * args.height])
+    _buf(new vec3f[args.width * args.height])
 {
 }
 // Destructor
@@ -45,18 +45,18 @@ int Scenario::getHeight() const { return _height; }
 int Scenario::getViewWidth() const { return _camera.getViewWidth(); }
 int Scenario::getViewHeight() const { return _height * _camera.getViewWidth() / _height; }
 const AmbientLight& Scenario::getAmbientLight() const { return _ambient_light; }
-rt::vector<float, 3> Scenario::getCameraPosition() const { return _camera.getPosition(); }
+vec3f Scenario::getCameraPosition() const { return _camera.getPosition(); }
 const std::list<AHittable*>& Scenario::getHittables() const { return _hittables; }
 const std::list<Light>& Scenario::getLights() const { return _lights; }
 // get buffer
-rt::vector<float, 3>* Scenario::getPixels() const { return _buf; }
+vec3f* Scenario::getPixels() const { return _buf; }
 
 // Setters
 void Scenario::setAmbientLight(const AmbientLight& ambient_light) { _ambient_light = ambient_light; }
 void Scenario::setCamera(const Camera& camera) { _camera = camera; }
 void Scenario::addLight(const Light& light) { _lights.push_back(light); }
 void Scenario::addHittable(AHittable* hittable) { _hittables.push_back(hittable); }
-void Scenario::setPixel(int i, int j, const rt::vector<float, 3>& color) { _buf[i * _width + j] = color; }
+void Scenario::setPixel(int i, int j, const vec3f& color) { _buf[i * _width + j] = color; }
 
 void Scenario::draw(const std::string& fname)
 {
@@ -67,16 +67,16 @@ void Scenario::draw(const std::string& fname)
 }
 
 
-t_rgb	Scenario::_raytrace_pixel_contribution(int i, int j) const
+vec3f	Scenario::_raytrace_pixel_contribution(int i, int j) const
 {
 	float view_width = _camera.getViewWidth();
 	float view_height = _height * view_width / _width;
 	float x = convert_scale(i, view_width, _width);
 	float y = convert_scale(j, view_height, _height);
-	rt::vector<float, 3>	e_x = _camera.getRight();
-	rt::vector<float, 3>	e_y = _camera.getUp();
-	rt::vector<float, 3>	e_z = _camera.getDirection();
-	rt::vector<float, 3> v; // multiply cam basis by (arr[0], arr[1], 1)
+	vec3f	e_x = _camera.getRight();
+	vec3f	e_y = _camera.getUp();
+	vec3f	e_z = _camera.getDirection();
+	vec3f v; // multiply cam basis by (arr[0], arr[1], 1)
 	v[0] = e_x[0] * x + e_y[0] * y + e_z[0];
 	v[1] = e_x[1] * x + e_y[1] * y + e_z[1];
 	v[2] = e_x[2] * x + e_y[2] * y + e_z[2];
@@ -84,9 +84,9 @@ t_rgb	Scenario::_raytrace_pixel_contribution(int i, int j) const
 	return (_raytrace_single(ray, _reflections)); // last arg is reflection depth
 }
 
-t_rgb	Scenario::_raytrace_pixel(int i, int j) const
+vec3f	Scenario::_raytrace_pixel(int i, int j) const
 {
-	t_rgb	color;
+	vec3f	color;
     int a, b;
 
 	for (int k = 0; k < _antialias; ++k)
@@ -103,7 +103,7 @@ t_rgb	Scenario::_raytrace_pixel(int i, int j) const
 }
 
 
-t_rgb	Scenario::_hit_light_contribution(const HitRecord &rec, const Light& light) const
+vec3f	Scenario::_hit_light_contribution(const HitRecord &rec, const Light& light) const
 {
 	HitRecord	hit_before_light;
     const Material&   mat = rec.hittable->getMaterial();
@@ -112,7 +112,7 @@ t_rgb	Scenario::_hit_light_contribution(const HitRecord &rec, const Light& light
 	float dist = (light.getOrigin() - rec.p).length();
 	if (_raytrace_hit(ray_to_light, 1e-3, hit_before_light))
 		if (hit_before_light.t < dist)
-			return (t_rgb());
+			return (vec3f());
     // Diffuse intensity
     float diffuse_intensity = rt::dot(ray_to_light.getDirection(), rec.normal) * mat.diffusion;
     diffuse_intensity = std::max(diffuse_intensity, 0.0f);
@@ -126,19 +126,19 @@ t_rgb	Scenario::_hit_light_contribution(const HitRecord &rec, const Light& light
 	return (light.getColor() * light_intensity);
 }
 
-t_rgb   Scenario::_reflection_contribution(const HitRecord& rec, int n_reflections) const
+vec3f   Scenario::_reflection_contribution(const HitRecord& rec, int n_reflections) const
 {
 	rt::Ray<float, 3>	ray(rec.p, rec.reflected);
     const Material&   mat = rec.hittable->getMaterial();
-	t_rgb	color_shadow = _raytrace_single(ray, n_reflections - 1);
+	vec3f	color_shadow = _raytrace_single(ray, n_reflections - 1);
 	return (color_shadow * mat.mirror);
 }
 
-t_rgb	Scenario::_hit_color(const HitRecord& rec, int n_reflections) const
+vec3f	Scenario::_hit_color(const HitRecord& rec, int n_reflections) const
 {
 	const Material& mat = rec.hittable->getMaterial();
 
-	rt::vector<float, 3> color_shadow = _ambient_light.color * mat.ambient * _ambient_light.ratio;
+	vec3f color_shadow = _ambient_light.color * mat.ambient * _ambient_light.ratio;
 	for (std::list<Light>::const_iterator it = _lights.begin(); it != _lights.end(); ++it)
 		color_shadow += _hit_light_contribution(rec, *it);
 	color_shadow = rt::elementwise_product(mat.color, color_shadow);
@@ -176,7 +176,7 @@ bool	Scenario::_raytrace_hit(const rt::Ray<float, 3> &ray, float t_min, HitRecor
 	return (hit_anything);
 }
 
-t_rgb	Scenario::_raytrace_single(const rt::Ray<float, 3>& primary_ray, int n_reflections) const
+vec3f	Scenario::_raytrace_single(const rt::Ray<float, 3>& primary_ray, int n_reflections) const
 {
 	HitRecord	rec;
 	

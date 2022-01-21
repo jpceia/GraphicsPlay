@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 10:58:52 by jceia             #+#    #+#             */
-/*   Updated: 2022/01/21 10:31:03 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 16:23:00 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,30 @@ struct AmbientLight;
 
 # define BRIGHTNESS_RATIO	2
 
+struct Deg2eqParams
+{
+    float a;
+    float b;
+    float c;
+};
+
+struct Range
+{
+    float min;
+    float max;
+
+    bool contains(float x) const;
+};
+
+bool deg2eq_solve(const Deg2eqParams& args, Range* rng);
+
+
 /*
  * Parser
  */
 void 		update_scenario_from_file(Scenario& scenario, const std::string& fname);
 void		parse_data_item_from_line(Scenario& scenario, const std::string& line);
-t_rgb		parse_rgb(std::stringstream& ss);
+vec3f		parse_rgb(std::stringstream& ss);
 Material	parse_material(std::stringstream& ss);
 
 AmbientLight parse_ambient_light(std::stringstream& ss);
@@ -67,8 +85,8 @@ Cone*		parse_cone(std::stringstream& ss);
  * UTILS
  */
 
-void 		create_bmp(const std::string& fname, int width, int height, t_rgb *pixels);
+void 		create_bmp(const std::string& fname, int width, int height, vec3f *pixels);
 
-rt::vector<float, 3>	vec3d_random(void);
+vec3f	vec3d_random(void);
 
 #endif

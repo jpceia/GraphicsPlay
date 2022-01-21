@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 23:30:05 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 15:17:24 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 16:22:13 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 
 struct DiskArgs
 {
-    rt::vector<float, 3> p;
-    rt::vector<float, 3> direction;
+    vec3f center;
+    vec3f normal;
     float radius;
     Material material;
 };
@@ -26,9 +26,9 @@ struct DiskArgs
 class Disk : public AHittable
 {
 private:
-    rt::vector<float, 3> center;
-    rt::vector<float, 3> n;
-    float radius;
+    vec3f _center;
+    vec3f _normal;
+    float _radius;
 
     // non copyable
     Disk(const Disk& rhs);

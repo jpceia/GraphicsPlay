@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 01:32:16 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 10:37:03 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 16:21:30 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,18 @@
 
 struct CameraArgs
 {
-	rt::vector<float, 3> 	origin;
-	rt::vector<float, 3> 	direction;
+	vec3f 	origin;
+	vec3f 	direction;
 	float					fov;
 };
 
 class Camera
 {
 private:
-	rt::vector<float, 3> 	_origin;
-	rt::vector<float, 3> 	_direction;
-    rt::vector<float, 3> 	_up;
-    rt::vector<float, 3> 	_right;
+	vec3f 	_origin;
+	vec3f 	_direction;
+    vec3f 	_up;
+    vec3f 	_right;
 	float					_fov;
     float					_view_width;
 
@@ -43,10 +43,10 @@ public:
     void setup(int win_width, int win_height);
 
     // Getters
-    rt::vector<float, 3> getPosition() const;
-    rt::vector<float, 3> getDirection() const;
-    rt::vector<float, 3> getUp() const;
-    rt::vector<float, 3> getRight() const;
+    vec3f getPosition() const;
+    vec3f getDirection() const;
+    vec3f getUp() const;
+    vec3f getRight() const;
     float getFov() const;
     float getViewWidth() const;
 };

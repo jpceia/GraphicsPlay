@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 23:30:39 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 15:07:51 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 16:22:17 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 struct SphereArgs
 {
-    rt::vector<float, 3>	center;
+    vec3f	center;
     float					radius;
     Material                material;
 };
@@ -26,8 +26,8 @@ struct SphereArgs
 class Sphere : public AHittable
 {
 private:
-    rt::vector<float, 3> center;
-    float radius;
+    vec3f _center;
+    float _radius;
 
     // non copyable
     Sphere(const Sphere& rhs);

@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 00:54:14 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 10:59:40 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 16:21:39 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ class AHittable;
  */
 struct HitRecord
 {
-	rt::vector<float, 3>    p;
-	rt::vector<float, 3>    normal;
-	rt::vector<float, 3>    reflected;
+	vec3f    p;
+	vec3f    normal;
+	vec3f    reflected;
     AHittable*              hittable;
 	float                   t;
 };

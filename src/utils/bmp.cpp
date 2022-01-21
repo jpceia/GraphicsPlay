@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 17:03:41 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 11:59:03 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 16:23:00 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <fstream>
 
 // creates an BMP file with W x H dimensions, from a given array of pixels
-void create_bmp(const std::string& fname, int width, int height, t_rgb* pixels)
+void create_bmp(const std::string& fname, int width, int height, vec3f* pixels)
 {
 	// open file
 	std::ofstream file;
@@ -63,7 +63,7 @@ void create_bmp(const std::string& fname, int width, int height, t_rgb* pixels)
 	unsigned char data[3];
 	for (int i = 0; i < width * height; i++)
 	{
-		t_rgb pixel = pixels[i];
+		vec3f pixel = pixels[i];
 		pixel[0] = 255 * std::atan(fmaxf(pixel[0], 0) * BRIGHTNESS_RATIO) * 2 / M_PI;
 		pixel[1] = 255 * std::atan(fmaxf(pixel[1], 0) * BRIGHTNESS_RATIO) * 2 / M_PI;
 		pixel[2] = 255 * std::atan(fmaxf(pixel[2], 0) * BRIGHTNESS_RATIO) * 2 / M_PI;

@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 15:08:05 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 15:19:15 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 16:22:27 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 Plane::Plane(const PlaneArgs& args) :
     AHittable("Plane", args.material),
     p(args.p),
-    n(args.normal)
+    _normal(args.normal)
 {}
 
 // non copyable
@@ -35,12 +35,12 @@ Plane& Plane::operator=(const Plane& rhs) { (void)rhs; return *this; }
 */
 bool Plane::hit(const rt::Ray<float, 3>& r, float t_min, float t_max, HitRecord& rec) const
 {
-    rec.normal = this->n;
-    float dot_prod = rt::dot(r.getDirection(), this->n);
+    rec.normal = _normal;
+    float dot_prod = rt::dot(r.getDirection(), _normal);
     if (dot_prod == 0)
         return (false);
-    rt::vector<float, 3> v = r.getOrigin() - this->p;
-    rec.t = -rt::dot(v, this->n) / dot_prod;
+    vec3f v = r.getOrigin() - this->p;
+    rec.t = -rt::dot(v, _normal) / dot_prod;
     if (rec.t < t_min || rec.t > t_max)
         return (false);
     rec.p = r.getPointAt(rec.t);

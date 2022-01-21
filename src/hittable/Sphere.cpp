@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 15:05:31 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 15:19:18 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 16:22:28 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 Sphere::Sphere(const SphereArgs& args) :
     AHittable("Sphere", args.material),
-    center(args.center),
-    radius(args.radius)
+    _center(args.center),
+    _radius(args.radius)
 {}
 
 Sphere::Sphere(const Sphere& rhs) :
@@ -25,8 +25,8 @@ Sphere::Sphere(const Sphere& rhs) :
 
 Sphere& Sphere::operator=(const Sphere& rhs)
 {
-    this->center = rhs.center;
-    this->radius = rhs.radius;
+    this->_center = rhs._center;
+    this->_radius = rhs._radius;
     return *this;
 }
 
@@ -48,9 +48,9 @@ Sphere& Sphere::operator=(const Sphere& rhs)
 bool Sphere::hit(const rt::Ray<float, 3>& r, float t_min, float t_max, HitRecord& rec) const
 {
     (void)t_max;
-    rt::vector<float, 3> v = r.getOrigin() - this->center;
+    vec3f v = r.getOrigin() - _center;
     float half_b = rt::dot(v, r.getDirection());
-    float disc = half_b * half_b - rt::dot(v, v) + this->radius * this->radius;
+    float disc = half_b * half_b - rt::dot(v, v) + _radius * _radius;
     if (disc < 0)
         return (false);
     float sqrt_disc = sqrt(disc);
@@ -61,6 +61,6 @@ bool Sphere::hit(const rt::Ray<float, 3>& r, float t_min, float t_max, HitRecord
     else
         rec.t = -half_b - sqrt_disc;
     rec.p = r.getPointAt(rec.t);
-    rec.normal = (rec.p - this->center).normalize();
+    rec.normal = (rec.p - _center).normalize();
     return (true);
 }

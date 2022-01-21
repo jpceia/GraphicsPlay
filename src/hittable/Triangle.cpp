@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 14:53:08 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 15:24:32 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 16:22:29 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,30 +15,31 @@
 Triangle& Triangle::operator=(const Triangle& rhs) { (void)rhs; return *this; }
 
 Triangle::Triangle(const TriangleArgs& args) :
-    AHittable("Triangle", args.material),
-    p1(args.p1),
-    p2(args.p2),
-    p3(args.p3)
-{}
+    AHittable("Triangle", args.material)
+{
+    _vertex[0] = args.vertex[0];
+    _vertex[1] = args.vertex[1];
+    _vertex[2] = args.vertex[2];
+}
 
 
 Triangle::Triangle(const Triangle& rhs) :
-    AHittable(rhs.getName(), rhs.getMaterial()),
-    p1(rhs.p1),
-    p2(rhs.p2),
-    p3(rhs.p3)
+    AHittable(rhs.getName(), rhs.getMaterial())
 {
+    _vertex[0] = rhs._vertex[0];
+    _vertex[1] = rhs._vertex[1];
+    _vertex[2] = rhs._vertex[2];
 }
 
 bool Triangle::hit(const rt::Ray<float, 3>& r, float t_min, float t_max, HitRecord& rec) const
 {
-    rt::vector<float, 3> u = this->p2 - this->p1;
-    rt::vector<float, 3> v = this->p3 - this->p1;
+    vec3f u = _vertex[1] - _vertex[0];
+    vec3f v = _vertex[2] - _vertex[0];
     rec.normal = rt::cross(u, v).normalize();
     float dot_prod = rt::dot(r.getDirection(), rec.normal);
     if (dot_prod == 0)
         return (false);
-    rt::vector<float, 3> w = r.getOrigin() - this->p1;
+    vec3f w = r.getOrigin() - _vertex[0];
     rec.t = -rt::dot(w, rec.normal) / dot_prod;
     if (rec.t < t_min || rec.t > t_max)
         return (false);

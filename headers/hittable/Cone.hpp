@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 23:28:16 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 15:15:21 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 16:25:15 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 
 struct ConeArgs
 {
-    rt::vector<float, 3> p;
-    rt::vector<float, 3> direction;
+    vec3f base;
+    vec3f direction;
     float radius;
     float height;
     Material material;
@@ -28,10 +28,10 @@ struct ConeArgs
 class Cone : public AHittable
 {
 private:
-    rt::vector<float, 3> p;
-    rt::vector<float, 3> direction;
-	float	radius;
-	float	height;
+    vec3f _base;
+    vec3f _direction;
+	float _radius;
+	float _height;
 
     // non copyable
     Cone(const Cone& rhs);
@@ -41,7 +41,7 @@ public:
     
     virtual ~Cone() {}
 
-    bool hit(const rt::Ray<float, 3>& r, float t_min, float t_max, HitRecord& rec) const;
+    bool hit(const Ray3f& r, float t_min, float t_max, HitRecord& rec) const;
 };
 
 #endif

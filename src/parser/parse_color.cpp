@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 21:05:04 by jceia             #+#    #+#             */
-/*   Updated: 2022/01/21 12:06:52 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 16:23:00 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 #include "hittable/AHittable.hpp"
 #include <sstream>
 
-t_rgb	parse_rgb(std::stringstream& ss)
+vec3f	parse_rgb(std::stringstream& ss)
 {
-	t_rgb	rgb;
+	vec3f	rgb;
 
 	ss >> rgb;
 	rgb /= 255.0f;

@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 23:32:00 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 10:37:16 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 16:22:21 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ Camera::Camera(const CameraArgs& args) :
 {
     this->_direction = this->_direction.normalize();
     // setup basis
-    rt::vector<float, 3> tmp_up;
+    vec3f tmp_up;
     if (this->_direction[1] == 1.0)
         tmp_up[2] = 1.0;
     else
@@ -58,10 +58,10 @@ Camera& Camera::operator=(const Camera& rhs)
 Camera::~Camera() {}
 
 // Getters
-rt::vector<float, 3> Camera::getPosition() const { return _origin; }
-rt::vector<float, 3> Camera::getDirection() const { return _direction; }
-rt::vector<float, 3> Camera::getUp() const { return _up; }
-rt::vector<float, 3> Camera::getRight() const { return _right; }
+vec3f Camera::getPosition() const { return _origin; }
+vec3f Camera::getDirection() const { return _direction; }
+vec3f Camera::getUp() const { return _up; }
+vec3f Camera::getRight() const { return _right; }
 
 float Camera::getFov() const { return _fov; }
 float Camera::getViewWidth() const { return _view_width; }

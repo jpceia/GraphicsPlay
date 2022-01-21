@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 23:37:14 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 11:15:53 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 16:19:15 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,7 @@ public:
 };
 
 } // namespace rt
+
+typedef rt::Ray<float, 3> Ray3f;
 
 #endif

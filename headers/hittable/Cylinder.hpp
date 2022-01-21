@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 23:29:37 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 15:16:39 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 16:20:43 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 
 struct CylinderArgs
 {
-    rt::vector<float, 3> p;
-    rt::vector<float, 3> direction;
+    vec3f base;
+    vec3f direction;
     float radius;
     float height;
     Material material;
@@ -29,10 +29,10 @@ struct CylinderArgs
 class Cylinder : public AHittable
 {
 private:
-    rt::vector<float, 3> p;
-    rt::vector<float, 3> direction;
-    float radius;
-    float height;
+    vec3f _base;
+    vec3f _direction;
+    float _radius;
+    float _height;
 
     // non copyable
     Cylinder(const Cylinder& rhs);

@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 23:30:15 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 15:18:41 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 16:22:16 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,16 @@
 
 struct PlaneArgs
 {
-    rt::vector<float, 3> p;
-    rt::vector<float, 3> normal;
+    vec3f p;
+    vec3f normal;
     Material material;
 };
 
 class Plane : public AHittable
 {
 private:
-    rt::vector<float, 3> p;
-    rt::vector<float, 3> n;
+    vec3f p;
+    vec3f _normal;
 
     // non copyable
     Plane(const Plane& rhs);

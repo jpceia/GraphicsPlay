@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 23:28:19 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 12:18:40 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 16:20:12 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ struct HitRecord;
 
 struct Material
 {
-    rt::vector<float, 3> color;
+    vec3f   color;
 	float	ambient;
 	float	diffusion;
 	float	specular;
@@ -46,7 +46,7 @@ public:
     
     virtual ~AHittable();
 
-    virtual bool hit(const rt::Ray<float, 3>& r, float t_min, float t_max, HitRecord& rec) const = 0;
+    virtual bool hit(const Ray3f& r, float t_min, float t_max, HitRecord& rec) const = 0;
 
     Material getMaterial() const;
 

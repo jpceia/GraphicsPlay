@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 23:31:02 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 15:21:31 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 16:22:18 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,14 @@
 
 struct TriangleArgs
 {
-    rt::vector<float, 3> p1;
-    rt::vector<float, 3> p2;
-    rt::vector<float, 3> p3;
+    vec3f vertex[3];
     Material material;
 };
 
 class Triangle : public AHittable
 {
 private:
-    rt::vector<float, 3> p1, p2, p3;
+    vec3f _vertex[3];
 
     // non copyable
     Triangle(const Triangle& rhs);

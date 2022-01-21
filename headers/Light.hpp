@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 01:29:44 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/19 00:49:03 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 16:21:47 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,16 @@
 
 struct  LightArgs
 {
-    rt::vector<float, 3>	origin; // position
-    rt::vector<float, 3>    color;
+    vec3f	origin; // position
+    vec3f    color;
     float			        ratio; // intensity
 };
 
 class Light
 {
-	rt::vector<float, 3> 	origin;
+	vec3f 	origin;
 	float	ratio;
-	rt::vector<float, 3>	color;
+	vec3f	color;
 
     Light() {}
 
@@ -60,9 +60,9 @@ public:
     virtual ~Light() {}
 
     // Getters
-    rt::vector<float, 3> getOrigin() const { return this->origin; }
+    vec3f getOrigin() const { return this->origin; }
     float getRatio() const { return this->ratio; }
-    rt::vector<float, 3> getColor() const { return this->color; }
+    vec3f getColor() const { return this->color; }
 };
 
 #endif

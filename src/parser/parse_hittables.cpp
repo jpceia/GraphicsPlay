@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 12:26:46 by jceia             #+#    #+#             */
-/*   Updated: 2022/01/19 00:00:55 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 16:24:16 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ Cone	*parse_cone(std::stringstream& ss)
 {
 	ConeArgs args;
 
-	ss >> args.p >> args.direction >> args.radius >> args.height;
+	ss >> args.base >> args.direction >> args.radius >> args.height;
 	args.direction = args.direction.normalize();
 	args.material = parse_material(ss);
 	return (new Cone(args));
@@ -53,7 +53,7 @@ Cylinder	*parse_cylinder(std::stringstream& ss)
 {
 	CylinderArgs	args;
 
-	ss >> args.p >> args.direction >> args.radius >> args.height;
+	ss >> args.base >> args.direction >> args.radius >> args.height;
 	args.material = parse_material(ss);
 	args.direction = args.direction.normalize();
 	return (new Cylinder(args));
@@ -63,7 +63,7 @@ Disk	*parse_disk(std::stringstream& ss)
 {
 	DiskArgs	args;
 
-	ss >> args.p >> args.direction >> args.radius;
+	ss >> args.center >> args.normal >> args.radius;
 	args.material = parse_material(ss);
 	return (new Disk(args));
 }
@@ -91,7 +91,7 @@ Triangle	*parse_triangle(std::stringstream& ss)
 {
 	TriangleArgs	args;
 
-	ss >> args.p1 >> args.p2 >> args.p3;
+	ss >> args.vertex[0] >> args.vertex[1] >> args.vertex[2];
 	args.material = parse_material(ss);
 	return (new Triangle(args));
 }

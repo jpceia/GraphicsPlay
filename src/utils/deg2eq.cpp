@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   random.cpp                                         :+:      :+:    :+:   */
+/*   deg2eq.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/22 13:06:49 by jceia             #+#    #+#             */
-/*   Updated: 2022/01/21 16:22:29 by jpceia           ###   ########.fr       */
+/*   Created: 2022/01/21 16:11:50 by jpceia            #+#    #+#             */
+/*   Updated: 2022/01/21 16:12:23 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-float	random_uniform()
+bool Range::contains(float x) const
 {
-	return (((float)rand()) / ((float)RAND_MAX));
+    return (x >= min && x <= max);
 }
 
-vec3f	vec3d_random()
+bool deg2eq_solve(const Deg2eqParams& args, Range* rng)
 {
-	vec3f	v;
-	v[0] = random_uniform() - 1;
-	v[1] = random_uniform() - 1;
-	v[2] = random_uniform() - 1;
-	return (v.normalize());
+    float disc = args.b * args.b - 4 * args.a * args.c;
+    if (disc < 0)
+        return (false);
+    float sqrt_disc = std::sqrt(disc);
+    rng->min = (-args.b - sqrt_disc) / (2 * args.a);
+    rng->max = (-args.b + sqrt_disc) / (2 * args.a);
+    return (true);
 }
