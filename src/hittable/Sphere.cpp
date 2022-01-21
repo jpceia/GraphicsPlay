@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 15:05:31 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 16:22:28 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 16:33:38 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ Sphere& Sphere::operator=(const Sphere& rhs)
 * t = (-b +- sqrt(b*b-4*a*c) / (2 * a)) = -h +- sqrt(disc)
 * disc = h * h - c
 */
-bool Sphere::hit(const rt::Ray<float, 3>& r, float t_min, float t_max, HitRecord& rec) const
+bool Sphere::hit(const Ray3f& r, float t_min, float t_max, HitRecord& rec) const
 {
     (void)t_max;
     vec3f v = r.getOrigin() - _center;

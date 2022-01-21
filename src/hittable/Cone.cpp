@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 15:11:44 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 16:27:11 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 16:33:38 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ Cone& Cone::operator=(const Cone& rhs)
  * <r(t) - p0, n> = <d * t + v, n> = t * <d,n> + <v, n> between 0 and H
  * with v = r0 - p0
  */
-bool Cone::hit(const rt::Ray<float, 3>& r, float t_min, float t_max, HitRecord& rec) const
+bool Cone::hit(const Ray3f& r, float t_min, float t_max, HitRecord& rec) const
 {
     (void) t_max;
     vec3f v = r.getOrigin() - _base;
@@ -72,14 +72,13 @@ bool Cone::hit(const rt::Ray<float, 3>& r, float t_min, float t_max, HitRecord& 
     float d_dot_n = rt::dot(r.getDirection(), _direction);
     Deg2eqParams params;
 
-    float tmp1 = _radius / _height;
-    tmp1 = tmp1 * tmp1;
-    float tmp2 = _height - v_dot_n;
+    float rh = _radius / _height;
+    float dh = _height - v_dot_n;
     params.a = d_cross_n.lengthSquared();
-    params.a -= d_dot_n * d_dot_n * tmp1;
+    params.a -= d_dot_n * d_dot_n * rh;
     params.b = 2 * rt::dot(d_cross_n, v_cross_n);
-    params.b += 2 * d_dot_n * tmp2 * tmp1;
-    params.c = v_cross_n.lengthSquared() - tmp2 * tmp2 * tmp1;
+    params.b += 2 * d_dot_n * dh * rh;
+    params.c = v_cross_n.lengthSquared() - dh * dh * rh;
 
     Range rng;
     if (!deg2eq_solve(params, &rng))

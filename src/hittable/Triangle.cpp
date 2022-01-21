@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 14:53:08 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 16:22:29 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 16:33:38 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ Triangle::Triangle(const Triangle& rhs) :
     _vertex[2] = rhs._vertex[2];
 }
 
-bool Triangle::hit(const rt::Ray<float, 3>& r, float t_min, float t_max, HitRecord& rec) const
+bool Triangle::hit(const Ray3f& r, float t_min, float t_max, HitRecord& rec) const
 {
     vec3f u = _vertex[1] - _vertex[0];
     vec3f v = _vertex[2] - _vertex[0];

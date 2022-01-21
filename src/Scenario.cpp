@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 01:09:27 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 16:23:00 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 16:33:49 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ vec3f	Scenario::_raytrace_pixel_contribution(int i, int j) const
 	v[0] = e_x[0] * x + e_y[0] * y + e_z[0];
 	v[1] = e_x[1] * x + e_y[1] * y + e_z[1];
 	v[2] = e_x[2] * x + e_y[2] * y + e_z[2];
-	rt::Ray<float, 3> ray(_camera.getPosition(), v);
+	Ray3f ray(_camera.getPosition(), v);
 	return (_raytrace_single(ray, _reflections)); // last arg is reflection depth
 }
 
@@ -108,7 +108,7 @@ vec3f	Scenario::_hit_light_contribution(const HitRecord &rec, const Light& light
 	HitRecord	hit_before_light;
     const Material&   mat = rec.hittable->getMaterial();
 
-	rt::Ray<float, 3>	ray_to_light = rt::Ray<float, 3>(rec.p, light.getOrigin() - rec.p);
+	Ray3f	ray_to_light = Ray3f(rec.p, light.getOrigin() - rec.p);
 	float dist = (light.getOrigin() - rec.p).length();
 	if (_raytrace_hit(ray_to_light, 1e-3, hit_before_light))
 		if (hit_before_light.t < dist)
@@ -128,7 +128,7 @@ vec3f	Scenario::_hit_light_contribution(const HitRecord &rec, const Light& light
 
 vec3f   Scenario::_reflection_contribution(const HitRecord& rec, int n_reflections) const
 {
-	rt::Ray<float, 3>	ray(rec.p, rec.reflected);
+	Ray3f	ray(rec.p, rec.reflected);
     const Material&   mat = rec.hittable->getMaterial();
 	vec3f	color_shadow = _raytrace_single(ray, n_reflections - 1);
 	return (color_shadow * mat.mirror);
@@ -148,7 +148,7 @@ vec3f	Scenario::_hit_color(const HitRecord& rec, int n_reflections) const
 	return (color_shadow);
 }
 
-bool	Scenario::_raytrace_hit(const rt::Ray<float, 3> &ray, float t_min, HitRecord& rec) const
+bool	Scenario::_raytrace_hit(const Ray3f &ray, float t_min, HitRecord& rec) const
 {
 	bool		hit_anything = false;
 	HitRecord	hit_rec;
@@ -176,7 +176,7 @@ bool	Scenario::_raytrace_hit(const rt::Ray<float, 3> &ray, float t_min, HitRecor
 	return (hit_anything);
 }
 
-vec3f	Scenario::_raytrace_single(const rt::Ray<float, 3>& primary_ray, int n_reflections) const
+vec3f	Scenario::_raytrace_single(const Ray3f& primary_ray, int n_reflections) const
 {
 	HitRecord	rec;
 	

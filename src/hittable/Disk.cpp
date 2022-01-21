@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 15:16:59 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 16:22:27 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 16:33:38 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ Disk::Disk(const DiskArgs& args) :
     _radius(args.radius)
 {}
 
-bool Disk::hit(const rt::Ray<float, 3>& r, float t_min, float t_max, HitRecord& rec) const
+bool Disk::hit(const Ray3f& r, float t_min, float t_max, HitRecord& rec) const
 {
     rec.normal = _normal;
     float dot_prod = rt::dot(r.getDirection(), _normal);

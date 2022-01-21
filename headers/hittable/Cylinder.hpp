@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 23:29:37 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 16:20:43 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 16:33:38 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ public:
     
     virtual ~Cylinder() {}
 
-    bool hit(const rt::Ray<float, 3>& r, float t_min, float t_max, HitRecord& rec) const;
+    bool hit(const Ray3f& r, float t_min, float t_max, HitRecord& rec) const;
 };
 
 # endif

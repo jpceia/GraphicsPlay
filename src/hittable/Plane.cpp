@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 15:08:05 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 16:22:27 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 16:34:50 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 Plane::Plane(const PlaneArgs& args) :
     AHittable("Plane", args.material),
-    p(args.p),
+    _point(args.point),
     _normal(args.normal)
 {}
 
@@ -33,13 +33,13 @@ Plane& Plane::operator=(const Plane& rhs) { (void)rhs; return *this; }
 *   t = - <v,n> / <d,n>
 * with v = r0 - p0
 */
-bool Plane::hit(const rt::Ray<float, 3>& r, float t_min, float t_max, HitRecord& rec) const
+bool Plane::hit(const Ray3f& r, float t_min, float t_max, HitRecord& rec) const
 {
     rec.normal = _normal;
     float dot_prod = rt::dot(r.getDirection(), _normal);
     if (dot_prod == 0)
         return (false);
-    vec3f v = r.getOrigin() - this->p;
+    vec3f v = r.getOrigin() - _point;
     rec.t = -rt::dot(v, _normal) / dot_prod;
     if (rec.t < t_min || rec.t > t_max)
         return (false);

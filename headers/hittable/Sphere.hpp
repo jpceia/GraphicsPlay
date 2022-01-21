@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 23:30:39 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 16:22:17 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 16:33:38 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 
 struct SphereArgs
 {
-    vec3f	center;
-    float					radius;
-    Material                material;
+    vec3f center;
+    float radius;
+    Material material;
 };
 
 class Sphere : public AHittable
@@ -36,7 +36,7 @@ private:
 public:
     Sphere(const SphereArgs& args);
     virtual ~Sphere() {}
-    bool hit(const rt::Ray<float, 3>& r, float t_min, float t_max, HitRecord& rec) const;
+    bool hit(const Ray3f& r, float t_min, float t_max, HitRecord& rec) const;
 };
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 01:33:57 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 16:23:00 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 16:33:38 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ private:
     vec3f _hit_light_contribution(const HitRecord &rec, const Light& light) const;
     vec3f _reflection_contribution(const HitRecord& rec, int n_reflections) const;
     vec3f _hit_color(const HitRecord& rec, int n_reflections) const;
-    vec3f _raytrace_single(const rt::Ray<float, 3>& primary_ray, int n_reflections) const;
+    vec3f _raytrace_single(const Ray3f& primary_ray, int n_reflections) const;
     vec3f _raytrace_pixel_contribution(int i, int j) const;
     vec3f _raytrace_pixel(int i, int j) const;
-    bool  _raytrace_hit(const rt::Ray<float, 3> &ray, float t_min, HitRecord& rec) const;
+    bool  _raytrace_hit(const Ray3f &ray, float t_min, HitRecord& rec) const;
 public:
     Scenario();
     Scenario(const ScenarioArgs& args);

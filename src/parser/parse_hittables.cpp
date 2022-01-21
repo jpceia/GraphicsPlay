@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 12:26:46 by jceia             #+#    #+#             */
-/*   Updated: 2022/01/21 16:24:16 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 16:34:30 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ Plane	*parse_plane(std::stringstream& ss)
 {
 	PlaneArgs args;
 
-	ss >> args.p >> args.normal;
+	ss >> args.point >> args.normal;
 	args.normal = args.normal.normalize();
 	args.material = parse_material(ss);
 	return (new Plane(args));

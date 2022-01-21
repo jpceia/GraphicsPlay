@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 15:15:33 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 16:28:25 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/21 16:33:38 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ Cylinder::Cylinder(const CylinderArgs& args) :
  * <r(t) - p0, n> = <d * t + v, n> = t * <d,n> + <v, n> between 0 and H
  * with v = r0 - p0
  */
-bool Cylinder::hit(const rt::Ray<float, 3>& r, float t_min, float t_max, HitRecord& rec) const
+bool Cylinder::hit(const Ray3f& r, float t_min, float t_max, HitRecord& rec) const
 {
     vec3f v = r.getOrigin() - _base;
     vec3f d_cross_n = rt::cross(r.getDirection(), _direction);
