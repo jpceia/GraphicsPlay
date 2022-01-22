@@ -106,8 +106,8 @@ vec3f	Scenario::_raytrace_pixel(int i, int j) const
 vec3f	Scenario::_hit_light_contribution(const HitRecord &rec, const Light& light) const
 {
     const Material& mat = rec.hittable->getMaterial();
-	Ray3f ray_to_light = Ray3f(rec.p, light.getOrigin() - rec.p);
-	float dist = (light.getOrigin() - rec.p).length();
+	Ray3f ray_to_light = Ray3f(rec.p, light.getPosition() - rec.p);
+	float dist = (light.getPosition() - rec.p).length();
 	HitRecord hit_before_light;
 	Range rng(1e-3, 1e10);
 	if (_raytrace_hit(ray_to_light, rng, hit_before_light))
@@ -122,7 +122,7 @@ vec3f	Scenario::_hit_light_contribution(const HitRecord &rec, const Light& light
         specular_intensity = 0;
     else
         specular_intensity = std::pow(specular_intensity, mat.shininess) * mat.specular;
-    float light_intensity = light.getRatio() * (diffuse_intensity + specular_intensity);
+    float light_intensity = light.getIntensity() * (diffuse_intensity + specular_intensity);
 	return (light.getColor() * light_intensity);
 }
 

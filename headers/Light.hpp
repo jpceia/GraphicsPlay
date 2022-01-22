@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 01:29:44 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/22 03:19:31 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/22 04:51:55 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,40 +17,40 @@
 
 struct  LightArgs
 {
-    vec3f	origin; // position
-    vec3f    color;
-    float			        ratio; // intensity
+    vec3f position;
+    float intensity;
+    vec3f color;
 };
 
 class Light
 {
-	vec3f 	origin;
-	float	ratio;
-	vec3f	color;
+	vec3f _position;
+	float _intensity;
+	vec3f _color;
 
     Light() {}
 
 public:
     // Constructors
     Light(const LightArgs& args) :
-        origin(args.origin),
-        ratio(args.ratio),
-        color(args.color)
+        _position(args.position),
+        _intensity(args.intensity),
+        _color(args.color)
     {
     }
 
     Light(const Light& rhs) :
-        origin(rhs.origin),
-        ratio(rhs.ratio),
-        color(rhs.color)
+        _position(rhs._position),
+        _intensity(rhs._intensity),
+        _color(rhs._color)
     {
     }
 
     Light& operator=(const Light& rhs)
     {
-        this->origin = rhs.origin;
-        this->ratio = rhs.ratio;
-        this->color = rhs.color;
+        _position = rhs._position;
+        _intensity = rhs._intensity;
+        _color = rhs._color;
         return *this;
     }
 
@@ -59,9 +59,9 @@ public:
     virtual ~Light() {}
 
     // Getters
-    vec3f getOrigin() const { return this->origin; }
-    float getRatio() const { return this->ratio; }
-    vec3f getColor() const { return this->color; }
+    vec3f getPosition() const { return _position; }
+    float getIntensity() const { return _intensity; }
+    vec3f getColor() const { return _color; }
 };
 
 #endif
