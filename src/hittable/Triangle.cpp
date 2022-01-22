@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 14:53:08 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 16:33:38 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/22 03:59:32 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,21 @@ Triangle::Triangle(const Triangle& rhs) :
     _vertex[2] = rhs._vertex[2];
 }
 
-bool Triangle::hit(const Ray3f& r, const Range& t_rng, HitRecord& rec) const
+bool Triangle::hit(const Ray3f& ray, const Range& t_rng, HitRecord& rec) const
 {
-    vec3f u = _vertex[1] - _vertex[0];
-    vec3f v = _vertex[2] - _vertex[0];
-    rec.normal = rt::cross(u, v).normalize();
-    float dot_prod = rt::dot(r.getDirection(), rec.normal);
+    vec3f u = _vertex[1] - _vertex[0]; // _u
+    vec3f v = _vertex[2] - _vertex[0]; // _v
+    rec.normal = rt::cross(u, v).normalize(); // _normal
+    float dot_prod = rt::dot(ray.getDirection(), rec.normal);
     if (dot_prod == 0)
         return (false);
-    vec3f w = r.getOrigin() - _vertex[0];
+    vec3f w = ray.getOrigin() - _vertex[0];
     rec.t = -rt::dot(w, rec.normal) / dot_prod;
     if (!t_rng.contains(rec.t))
         return (false);
-    rec.p = r.getPointAt(rec.t);
-    float x = rec.p.dot(u) / u.lengthSquared();
-    float y = rec.p.dot(v) / v.lengthSquared();
+    rec.p = ray.getPointAt(rec.t);
+    float x = rec.p.dot(u) / u.lengthSquared(); // _u_squared
+    float y = rec.p.dot(v) / v.lengthSquared(); // _v_squared
     if (x < 0 || y < 0 || x + y > 1)
         return (false);
     return (true);

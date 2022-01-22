@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 15:08:05 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/22 02:56:52 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/22 03:58:56 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,16 @@ Plane& Plane::operator=(const Plane& rhs)
 *   t = - <v,n> / <d,n>
 * with v = r0 - p0
 */
-bool Plane::hit(const Ray3f& r, const Range& t_rng, HitRecord& rec) const
+bool Plane::hit(const Ray3f& ray, const Range& t_rng, HitRecord& rec) const
 {
     rec.normal = _normal;
-    float dot_prod = rt::dot(r.getDirection(), _normal);
+    float dot_prod = rt::dot(ray.getDirection(), _normal);
     if (dot_prod == 0)
         return (false);
-    vec3f v = r.getOrigin() - _point;
+    vec3f v = ray.getOrigin() - _point;
     rec.t = -rt::dot(v, _normal) / dot_prod;
     if (!t_rng.contains(rec.t))
         return (false);
-    rec.p = r.getPointAt(rec.t);
+    rec.p = ray.getPointAt(rec.t);
     return (true);
 }

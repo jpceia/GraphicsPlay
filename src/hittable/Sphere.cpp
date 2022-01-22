@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 15:05:31 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/22 03:21:43 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/22 03:59:15 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ Sphere& Sphere::operator=(const Sphere& rhs)
 * t = (-b +- sqrt(b*b-4*a*c) / (2 * a)) = -h +- sqrt(disc)
 * disc = h * h - c
 */
-bool Sphere::hit(const Ray3f& r, const Range& t_rng, HitRecord& rec) const
+bool Sphere::hit(const Ray3f& ray, const Range& t_rng, HitRecord& rec) const
 {
-    vec3f v = r.getOrigin() - _center;
-    float half_b = rt::dot(v, r.getDirection());
+    vec3f v = ray.getOrigin() - _center;
+    float half_b = rt::dot(v, ray.getDirection());
     float disc = half_b * half_b - rt::dot(v, v) + _radius * _radius;
     if (disc < 0)
         return (false);
@@ -59,7 +59,7 @@ bool Sphere::hit(const Ray3f& r, const Range& t_rng, HitRecord& rec) const
         rec.t = -half_b + sqrt_disc;
     else
         rec.t = -half_b - sqrt_disc;
-    rec.p = r.getPointAt(rec.t);
+    rec.p = ray.getPointAt(rec.t);
     rec.normal = (rec.p - _center).normalize();
     return (true);
 }

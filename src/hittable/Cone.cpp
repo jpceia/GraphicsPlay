@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 15:11:44 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/22 03:14:55 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/22 03:59:06 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,13 @@ Cone& Cone::operator=(const Cone& rhs)
  * <r(t) - p0, n> = <d * t + v, n> = t * <d,n> + <v, n> between 0 and H
  * with v = r0 - p0
  */
-bool Cone::hit(const Ray3f& r, const Range& t_rng, HitRecord& rec) const
+bool Cone::hit(const Ray3f& ray, const Range& t_rng, HitRecord& rec) const
 {
-    vec3f v = r.getOrigin() - _base;
-    vec3f d_cross_n = rt::cross(r.getDirection(), _direction);
+    vec3f v = ray.getOrigin() - _base;
+    vec3f d_cross_n = rt::cross(ray.getDirection(), _direction);
     vec3f v_cross_n = rt::cross(v, _direction);
     float v_dot_n = rt::dot(v, _direction);
-    float d_dot_n = rt::dot(r.getDirection(), _direction);
+    float d_dot_n = rt::dot(ray.getDirection(), _direction);
     Deg2eqParams params;
 
     float rh = _radius / _height; // r_div_h
@@ -103,7 +103,7 @@ bool Cone::hit(const Ray3f& r, const Range& t_rng, HitRecord& rec) const
     * normal-vector-of-a-cone-pointing-outward
     */
     rec.t = t;
-    rec.p = r.getPointAt(t);
+    rec.p = ray.getPointAt(t);
     rec.normal = rec.p - _base;
     float alpha = rt::dot(rec.normal, _direction);
     alpha *= std::pow(_radius / _height, 2) - 1;

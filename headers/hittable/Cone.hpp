@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 23:28:16 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/22 03:15:10 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/22 03:56:47 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ public:
     
     virtual ~Cone() {}
 
-    bool hit(const Ray3f& r, const Range& t_rng, HitRecord& rec) const;
+    bool hit(const Ray3f& ray, const Range& t_rng, HitRecord& rec) const;
 };
 
 #endif

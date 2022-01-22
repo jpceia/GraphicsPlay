@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 23:28:19 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/22 03:18:15 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/22 03:56:43 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ public:
     
     virtual ~AHittable();
 
-    virtual bool hit(const Ray3f& r, const Range& t_rng, HitRecord& rec) const = 0;
+    virtual bool hit(const Ray3f& ray, const Range& t_rng, HitRecord& rec) const = 0;
 
     Material getMaterial() const;
 

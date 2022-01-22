@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 01:33:57 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/22 03:19:26 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/22 03:56:16 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ private:
     vec3f _raytrace_single(const Ray3f& primary_ray, int n_reflections) const;
     vec3f _raytrace_pixel_contribution(int i, int j) const;
     vec3f _raytrace_pixel(int i, int j) const;
-    bool  _raytrace_hit(const Ray3f &ray, float t_min, HitRecord& rec) const;
+    bool  _raytrace_hit(const Ray3f &ray, const Range& rng, HitRecord& rec) const;
 public:
     Scenario();
     Scenario(const ScenarioArgs& args);
