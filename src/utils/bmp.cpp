@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 17:03:41 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/22 03:37:32 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/22 05:03:41 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,9 @@ void create_bmp(const std::string& fname, int width, int height, vec3f* pixels)
 	for (int i = 0; i < width * height; i++)
 	{
 		vec3f pixel = pixels[i];
-		pixel[0] = 255 * std::atan(fmaxf(pixel[0], 0) * BRIGHTNESS_RATIO) * 2 / M_PI;
-		pixel[1] = 255 * std::atan(fmaxf(pixel[1], 0) * BRIGHTNESS_RATIO) * 2 / M_PI;
-		pixel[2] = 255 * std::atan(fmaxf(pixel[2], 0) * BRIGHTNESS_RATIO) * 2 / M_PI;
-		data[0] = pixel[0];
-		data[1] = pixel[1];
-		data[2] = pixel[2];
+		data[0] = 255 * std::min(pixel[0], 1.0f);
+		data[1] = 255 * std::min(pixel[1], 1.0f);
+		data[2] = 255 * std::min(pixel[2], 1.0f);
 		file.write((char*)data, 3);
 	}
 
