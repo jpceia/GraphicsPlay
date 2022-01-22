@@ -6,17 +6,31 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 23:28:19 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 16:20:12 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/22 03:18:15 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef AHITTABLE_HPP
 # define AHITTABLE_HPP
 
-#include "HitRecord.hpp"
-#include "Ray.hpp"
+# include "Vector.hpp"
+# include "Range.hpp"
+# include "Ray.hpp"
 
-struct HitRecord;
+//struct Range;
+//struct HitRecord;
+
+class AHittable;
+
+struct HitRecord
+{
+	vec3f   	p;
+	vec3f    	normal;
+	vec3f    	reflected;
+    AHittable*	hittable;
+	float		t;
+};
+
 
 struct Material
 {
