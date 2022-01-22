@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 12:29:55 by jceia             #+#    #+#             */
-/*   Updated: 2022/01/22 03:37:07 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/22 04:54:21 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ AmbientLight	parse_ambient_light(std::stringstream &ss)
 Camera parse_camera(std::stringstream &ss)
 {
 	CameraArgs args;
-	ss >> args.origin >> args.direction >> args.fov;
+	ss >> args.ref.position >> args.ref.forward >> args.fov;
 	return Camera(args);
 }
 
 Light parse_light(std::stringstream& ss)
 {
 	LightArgs args;
-	ss >> args.origin >> args.ratio;
+	ss >> args.position >> args.intensity;
 	if (!ss.eof())
 		args.color = parse_rgb(ss);
 	return Light(args);
