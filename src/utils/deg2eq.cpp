@@ -6,12 +6,12 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 16:11:50 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/22 03:13:15 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/22 05:19:58 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Range.hpp"
 #include <cmath>
+#include "Range.hpp"
 
 bool Range::contains(float x) const
 {
@@ -25,6 +25,8 @@ bool Range::intersects(const Range& r) const
 
 bool deg2eq_solve(const Deg2eqParams& args, Range* rng)
 {
+    if (args.a == 0)
+        return false;
     float disc = args.b * args.b - 4 * args.a * args.c;
     if (disc < 0)
         return (false);
