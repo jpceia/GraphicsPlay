@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 01:32:16 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 16:21:30 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/22 04:25:37 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ public:
     Camera(const Camera& rhs);
     Camera& operator=(const Camera& rhs);
     virtual ~Camera();
-
-    void setup(int win_width, int win_height);
 
     // Getters
     vec3f getPosition() const;
