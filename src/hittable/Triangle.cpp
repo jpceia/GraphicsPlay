@@ -31,7 +31,7 @@ Triangle::Triangle(const Triangle& rhs) :
     _vertex[2] = rhs._vertex[2];
 }
 
-bool Triangle::hit(const Ray3f& r, float t_min, float t_max, HitRecord& rec) const
+bool Triangle::hit(const Ray3f& r, const Range& t_rng, HitRecord& rec) const
 {
     vec3f u = _vertex[1] - _vertex[0];
     vec3f v = _vertex[2] - _vertex[0];
@@ -41,7 +41,7 @@ bool Triangle::hit(const Ray3f& r, float t_min, float t_max, HitRecord& rec) con
         return (false);
     vec3f w = r.getOrigin() - _vertex[0];
     rec.t = -rt::dot(w, rec.normal) / dot_prod;
-    if (rec.t < t_min || rec.t > t_max)
+    if (!t_rng.contains(rec.t))
         return (false);
     rec.p = r.getPointAt(rec.t);
     float x = rec.p.dot(u) / u.lengthSquared();

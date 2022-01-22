@@ -60,7 +60,7 @@ public:
     
     virtual ~AHittable();
 
-    virtual bool hit(const Ray3f& r, float t_min, float t_max, HitRecord& rec) const = 0;
+    virtual bool hit(const Ray3f& r, const Range& t_rng, HitRecord& rec) const = 0;
 
     Material getMaterial() const;
 

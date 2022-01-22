@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 01:29:44 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 16:21:47 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/22 03:19:31 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define LIGHT_HPP
 
 #include "Vector.hpp"
-#include "miniRT.h"
 
 struct  LightArgs
 {

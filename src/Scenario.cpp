@@ -150,18 +150,18 @@ vec3f	Scenario::_hit_color(const HitRecord& rec, int n_reflections) const
 
 bool	Scenario::_raytrace_hit(const Ray3f &ray, float t_min, HitRecord& rec) const
 {
-	bool		hit_anything = false;
-	HitRecord	hit_rec;
+	bool hit_anything = false;
+	Range rng(t_min, 1000000.0f);
 
 	for (std::list<AHittable *>::const_iterator it = _hittables.begin(); it != _hittables.end(); ++it)
 	{
-		AHittable *hittable = *it;
-		if (hittable->hit(ray, t_min, 100000.0f, hit_rec))
+		HitRecord hit_rec;
+		if ((*it)->hit(ray, rng, hit_rec))
 		{
 			if (!hit_anything || hit_rec.t < rec.t)
 			{
 				rec = hit_rec;
-				rec.hittable = hittable;
+				rec.hittable = *it;
 				hit_anything = true;	
 			}
 		}

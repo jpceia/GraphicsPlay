@@ -6,15 +6,21 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 16:11:50 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 16:12:23 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/22 03:13:15 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "Range.hpp"
+#include <cmath>
 
 bool Range::contains(float x) const
 {
     return (x >= min && x <= max);
+}
+
+bool Range::intersects(const Range& r) const
+{
+    return (contains(r.min) || contains(r.max) || r.contains(min) || r.contains(max));
 }
 
 bool deg2eq_solve(const Deg2eqParams& args, Range* rng)

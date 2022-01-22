@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 23:31:02 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 16:33:38 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/22 03:16:29 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 # define TRIANGLE_HPP
 
 # include "AHittable.hpp"
-# include "HitRecord.hpp"
-# include "Vector.hpp"
-# include "Ray.hpp"
 
 struct TriangleArgs
 {
@@ -36,7 +33,7 @@ private:
 public:
     Triangle(const TriangleArgs& args);
     virtual ~Triangle() {}
-    bool hit(const Ray3f& r, float t_min, float t_max, HitRecord& rec) const;
+    bool hit(const Ray3f& r, const Range& t_rng, HitRecord& rec) const;
 };
 
 #endif

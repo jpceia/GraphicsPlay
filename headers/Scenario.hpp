@@ -6,22 +6,18 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 01:33:57 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 16:33:38 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/22 03:19:26 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SCENARIO_HPP
 # define SCENARIO_HPP
 
-# include "miniRT.h"
-
 # include <iostream>
 # include <list>
 # include "hittable/AHittable.hpp"
 # include "Light.hpp"
 # include "Camera.hpp"
-
-
 
 struct AmbientLight
 {

@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 15:08:05 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 16:34:50 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/22 02:56:52 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,26 @@ Plane::Plane(const PlaneArgs& args) :
     AHittable("Plane", args.material),
     _point(args.point),
     _normal(args.normal)
-{}
+{
+}
 
 // non copyable
-Plane::Plane(const Plane& rhs) : AHittable(rhs.getName(), rhs.getMaterial()) {}
-Plane& Plane::operator=(const Plane& rhs) { (void)rhs; return *this; }
+Plane::Plane(const Plane& rhs) :
+    AHittable(rhs.getName(), rhs.getMaterial()),
+    _point(rhs._point),
+    _normal(rhs._normal)
+{
+}
+
+Plane& Plane::operator=(const Plane& rhs)
+{
+    if (this != &rhs)
+    {
+        _point = rhs._point;
+        _normal = rhs._normal;
+    }
+    return *this;
+}
 
 /*
 * Checks if a ray hits a plane
@@ -33,7 +48,7 @@ Plane& Plane::operator=(const Plane& rhs) { (void)rhs; return *this; }
 *   t = - <v,n> / <d,n>
 * with v = r0 - p0
 */
-bool Plane::hit(const Ray3f& r, float t_min, float t_max, HitRecord& rec) const
+bool Plane::hit(const Ray3f& r, const Range& t_rng, HitRecord& rec) const
 {
     rec.normal = _normal;
     float dot_prod = rt::dot(r.getDirection(), _normal);
@@ -41,7 +56,7 @@ bool Plane::hit(const Ray3f& r, float t_min, float t_max, HitRecord& rec) const
         return (false);
     vec3f v = r.getOrigin() - _point;
     rec.t = -rt::dot(v, _normal) / dot_prod;
-    if (rec.t < t_min || rec.t > t_max)
+    if (!t_rng.contains(rec.t))
         return (false);
     rec.p = r.getPointAt(rec.t);
     return (true);

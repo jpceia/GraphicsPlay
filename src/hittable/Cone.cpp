@@ -6,12 +6,11 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 15:11:44 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 16:33:38 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/22 03:14:55 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hittable/Cone.hpp"
-#include "miniRT.h"
 
 
 Cone::Cone(const ConeArgs& args) :
@@ -62,9 +61,8 @@ Cone& Cone::operator=(const Cone& rhs)
  * <r(t) - p0, n> = <d * t + v, n> = t * <d,n> + <v, n> between 0 and H
  * with v = r0 - p0
  */
-bool Cone::hit(const Ray3f& r, float t_min, float t_max, HitRecord& rec) const
+bool Cone::hit(const Ray3f& r, const Range& t_rng, HitRecord& rec) const
 {
-    (void) t_max;
     vec3f v = r.getOrigin() - _base;
     vec3f d_cross_n = rt::cross(r.getDirection(), _direction);
     vec3f v_cross_n = rt::cross(v, _direction);
@@ -72,8 +70,8 @@ bool Cone::hit(const Ray3f& r, float t_min, float t_max, HitRecord& rec) const
     float d_dot_n = rt::dot(r.getDirection(), _direction);
     Deg2eqParams params;
 
-    float rh = _radius / _height;
-    float dh = _height - v_dot_n;
+    float rh = _radius / _height; // r_div_h
+    float dh = _height - v_dot_n; // h_minus_v_dot_n
     params.a = d_cross_n.lengthSquared();
     params.a -= d_dot_n * d_dot_n * rh;
     params.b = 2 * rt::dot(d_cross_n, v_cross_n);
@@ -85,7 +83,7 @@ bool Cone::hit(const Ray3f& r, float t_min, float t_max, HitRecord& rec) const
         return false;
     float t = rng.max;
     float is_tmin = false;
-    if (rng.min >= t_min)
+    if (rng.min >= t_rng.min)
     {
         float h = v_dot_n + rng.min * d_dot_n;
         is_tmin = h >= 0 && h <= _height;

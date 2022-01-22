@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 15:05:31 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 16:33:38 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/22 03:21:43 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ Sphere::Sphere(const Sphere& rhs) :
 
 Sphere& Sphere::operator=(const Sphere& rhs)
 {
-    this->_center = rhs._center;
-    this->_radius = rhs._radius;
+    _center = rhs._center;
+    _radius = rhs._radius;
     return *this;
 }
 
@@ -45,18 +45,17 @@ Sphere& Sphere::operator=(const Sphere& rhs)
 * t = (-b +- sqrt(b*b-4*a*c) / (2 * a)) = -h +- sqrt(disc)
 * disc = h * h - c
 */
-bool Sphere::hit(const Ray3f& r, float t_min, float t_max, HitRecord& rec) const
+bool Sphere::hit(const Ray3f& r, const Range& t_rng, HitRecord& rec) const
 {
-    (void)t_max;
     vec3f v = r.getOrigin() - _center;
     float half_b = rt::dot(v, r.getDirection());
     float disc = half_b * half_b - rt::dot(v, v) + _radius * _radius;
     if (disc < 0)
         return (false);
     float sqrt_disc = sqrt(disc);
-    if (-half_b + sqrt_disc < t_min)
+    if (-half_b + sqrt_disc < t_rng.min)
         return (false);
-    if (-half_b - sqrt_disc < t_min)
+    if (-half_b - sqrt_disc < t_rng.min)
         rec.t = -half_b + sqrt_disc;
     else
         rec.t = -half_b - sqrt_disc;

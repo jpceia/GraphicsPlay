@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 10:58:52 by jceia             #+#    #+#             */
-/*   Updated: 2022/01/21 16:23:00 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/22 03:19:02 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,6 @@
 # include <iostream>
 # include <string>
 # include <sstream>
-# include "Vector.hpp"
-# include "Ray.hpp"
-# include "Scenario.hpp"
-# include "HitRecord.hpp"
 # include "hittable/AHittable.hpp"
 # include "hittable/Sphere.hpp"
 # include "hittable/Plane.hpp"
@@ -27,37 +23,14 @@
 # include "hittable/Cone.hpp"
 # include "hittable/Cylinder.hpp"
 # include "hittable/Disk.hpp"
-# include "Light.hpp"
-# include "Camera.hpp"
-
-class Scenario;
-class Light;
-struct AmbientLight;
+# include "Scenario.hpp"
 
 
 # ifndef M_PI
 #  define M_PI 3.14159265358979323846
 # endif
 
-# define BRIGHTNESS_RATIO	2
-
-struct Deg2eqParams
-{
-    float a;
-    float b;
-    float c;
-};
-
-struct Range
-{
-    float min;
-    float max;
-
-    bool contains(float x) const;
-};
-
-bool deg2eq_solve(const Deg2eqParams& args, Range* rng);
-
+# define BRIGHTNESS_RATIO	2.0
 
 /*
  * Parser

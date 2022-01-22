@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 23:29:37 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 16:33:38 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/22 03:15:59 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 # define CYLINDER_HPP
 
 # include "AHittable.hpp"
-# include "Vector.hpp"
+
+//struct Range;
 
 struct CylinderArgs
 {
@@ -42,7 +43,7 @@ public:
     
     virtual ~Cylinder() {}
 
-    bool hit(const Ray3f& r, float t_min, float t_max, HitRecord& rec) const;
+    bool hit(const Ray3f& r, const Range& t_rng, HitRecord& rec) const;
 };
 
 # endif

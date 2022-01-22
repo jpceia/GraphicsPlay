@@ -6,16 +6,13 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 15:15:33 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 16:33:38 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/22 03:18:22 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hittable/Cylinder.hpp"
 #include "miniRT.h"
 
-// non copyable
-Cylinder::Cylinder(const Cylinder& rhs) : AHittable(rhs.getName(), rhs.getMaterial()) {}
-Cylinder& Cylinder::operator=(const Cylinder& rhs) { (void)rhs; return *this; }
 
 Cylinder::Cylinder(const CylinderArgs& args) :
     AHittable("Cylinder", args.material),
@@ -23,7 +20,30 @@ Cylinder::Cylinder(const CylinderArgs& args) :
     _direction(args.direction),
     _radius(args.radius),
     _height(args.height)
-{}
+{
+}
+
+// non copyable
+Cylinder::Cylinder(const Cylinder& rhs) :
+    AHittable(rhs.getName(), rhs.getMaterial()),
+    _base(rhs._base),
+    _direction(rhs._direction),
+    _radius(rhs._radius),
+    _height(rhs._height)
+{
+}
+
+Cylinder& Cylinder::operator=(const Cylinder& rhs)
+{
+    if (this != &rhs)
+    {
+        _base = rhs._base;
+        _direction = rhs._direction;
+        _radius = rhs._radius;
+        _height = rhs._height;
+    }
+    return *this;
+}
 
 /*
  * Checks if a ray hits a cylinder
@@ -48,7 +68,7 @@ Cylinder::Cylinder(const CylinderArgs& args) :
  * <r(t) - p0, n> = <d * t + v, n> = t * <d,n> + <v, n> between 0 and H
  * with v = r0 - p0
  */
-bool Cylinder::hit(const Ray3f& r, float t_min, float t_max, HitRecord& rec) const
+bool Cylinder::hit(const Ray3f& r, const Range& t_rng, HitRecord& rec) const
 {
     vec3f v = r.getOrigin() - _base;
     vec3f d_cross_n = rt::cross(r.getDirection(), _direction);
@@ -61,13 +81,13 @@ bool Cylinder::hit(const Ray3f& r, float t_min, float t_max, HitRecord& rec) con
     Range rng;
     if (!deg2eq_solve(params, &rng))
         return (false);
-    if (rng.max < t_min || rng.min > t_max)
+    if (rng.max < t_rng.min || rng.min > t_rng.max)
         return (false);
     float v_dot_n = rt::dot(v, _direction);
     float d_dot_n = rt::dot(r.getDirection(), _direction);
     float t = rng.max;
     bool is_tmin = false;
-    if (rng.min >= t_min)
+    if (rng.min >= t_rng.min)
     {
         float h = v_dot_n + rng.min * d_dot_n;
         is_tmin = h >= 0 && h <= _height;
