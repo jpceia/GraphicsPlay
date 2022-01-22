@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_file.c                                       :+:      :+:    :+:   */
+/*   parse_file.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 19:29:47 by jceia             #+#    #+#             */
-/*   Updated: 2022/01/18 08:05:54 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/22 03:36:49 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sstream>
 #include <fstream>
 #include "Scenario.hpp"
-#include "miniRT.h"
+#include "miniRT.hpp"
 
 void	parse_data_item_from_line(Scenario& scenario, const std::string& line)
 {

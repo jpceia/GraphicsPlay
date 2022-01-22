@@ -6,12 +6,12 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 17:03:41 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 16:23:00 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/22 03:37:32 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
 #include <fstream>
+#include "miniRT.hpp"
 
 // creates an BMP file with W x H dimensions, from a given array of pixels
 void create_bmp(const std::string& fname, int width, int height, vec3f* pixels)

@@ -6,12 +6,11 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 15:15:33 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/22 03:18:22 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/22 04:03:07 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hittable/Cylinder.hpp"
-#include "miniRT.h"
 
 
 Cylinder::Cylinder(const CylinderArgs& args) :
@@ -68,10 +67,10 @@ Cylinder& Cylinder::operator=(const Cylinder& rhs)
  * <r(t) - p0, n> = <d * t + v, n> = t * <d,n> + <v, n> between 0 and H
  * with v = r0 - p0
  */
-bool Cylinder::hit(const Ray3f& r, const Range& t_rng, HitRecord& rec) const
+bool Cylinder::hit(const Ray3f& ray, const Range& t_rng, HitRecord& rec) const
 {
-    vec3f v = r.getOrigin() - _base;
-    vec3f d_cross_n = rt::cross(r.getDirection(), _direction);
+    vec3f v = ray.getOrigin() - _base;
+    vec3f d_cross_n = rt::cross(ray.getDirection(), _direction);
     vec3f v_cross_n = rt::cross(v, _direction);
     Deg2eqParams params;
     params.a = d_cross_n.lengthSquared();
@@ -84,7 +83,7 @@ bool Cylinder::hit(const Ray3f& r, const Range& t_rng, HitRecord& rec) const
     if (rng.max < t_rng.min || rng.min > t_rng.max)
         return (false);
     float v_dot_n = rt::dot(v, _direction);
-    float d_dot_n = rt::dot(r.getDirection(), _direction);
+    float d_dot_n = rt::dot(ray.getDirection(), _direction);
     float t = rng.max;
     bool is_tmin = false;
     if (rng.min >= t_rng.min)
@@ -101,7 +100,7 @@ bool Cylinder::hit(const Ray3f& r, const Range& t_rng, HitRecord& rec) const
             return false;
     }
     rec.t = t;
-    rec.p = r.getPointAt(rec.t);
+    rec.p = ray.getPointAt(rec.t);
     rec.normal = rec.p - _base;
     rec.normal -= _direction * rt::dot(rec.normal, _direction);
     rec.normal = rec.normal.normalize();

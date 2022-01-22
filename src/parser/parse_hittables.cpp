@@ -6,12 +6,12 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 12:26:46 by jceia             #+#    #+#             */
-/*   Updated: 2022/01/21 16:34:30 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/22 03:37:04 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sstream>
-#include "miniRT.h"
+#include "miniRT.hpp"
 #include "hittable/AHittable.hpp"
 #include "hittable/Cone.hpp"
 #include "hittable/Cylinder.hpp"

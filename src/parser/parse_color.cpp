@@ -6,11 +6,11 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 21:05:04 by jceia             #+#    #+#             */
-/*   Updated: 2022/01/21 16:23:00 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/22 03:36:44 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "miniRT.hpp"
 #include "hittable/AHittable.hpp"
 #include <sstream>
 

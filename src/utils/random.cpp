@@ -6,11 +6,11 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 13:06:49 by jceia             #+#    #+#             */
-/*   Updated: 2022/01/21 16:22:29 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/22 03:37:39 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "miniRT.hpp"
 
 float	random_uniform()
 {

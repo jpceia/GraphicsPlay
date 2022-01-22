@@ -6,11 +6,11 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 12:29:55 by jceia             #+#    #+#             */
-/*   Updated: 2022/01/21 11:24:39 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/22 03:37:07 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "miniRT.hpp"
 #include "Vector.hpp"
 #include "Camera.hpp"
 #include "Light.hpp"
