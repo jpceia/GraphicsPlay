@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 19:29:47 by jceia             #+#    #+#             */
-/*   Updated: 2022/01/22 03:36:49 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/02/12 12:29:44 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	parse_data_item_from_line(Scenario& scenario, const std::string& line)
 	std::string			type;
 
 	ss >> type;
+	if (type == "#") // comment
+		return ;
 	if (type == "A")
 		scenario.setAmbientLight(parse_ambient_light(ss));	
 	else if (type == "C")

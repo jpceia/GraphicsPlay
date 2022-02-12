@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 01:09:27 by jpceia            #+#    #+#             */
-/*   Updated: 2022/02/12 10:57:29 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/02/12 12:32:48 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,11 @@ vec3f* Scenario::getPixels() const { return _buf; }
 void Scenario::setAmbientLight(const AmbientLight& ambient_light) { _ambient_light = ambient_light; }
 void Scenario::setCamera(const Camera& camera) { _camera = camera; }
 void Scenario::addLight(const Light& light) { _lights.push_back(light); }
-void Scenario::addHittable(AHittable* hittable) { _hittables.push_back(hittable); }
+void Scenario::addHittable(AHittable* hittable)
+{
+	if (hittable)
+		_hittables.push_back(hittable);
+}
 void Scenario::setPixel(int i, int j, const vec3f& color) { _buf[i * _width + j] = color; }
 
 void Scenario::draw(const std::string& fname)
