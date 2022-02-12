@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 17:03:41 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/22 05:03:41 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/02/12 11:55:03 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ void create_bmp(const std::string& fname, int width, int height, vec3f* pixels)
 	for (int i = 0; i < width * height; i++)
 	{
 		vec3f pixel = pixels[i];
-		data[0] = 255 * std::min(pixel[0], 1.0f);
+		data[0] = 255 * std::min(pixel[2], 1.0f);
 		data[1] = 255 * std::min(pixel[1], 1.0f);
-		data[2] = 255 * std::min(pixel[2], 1.0f);
+		data[2] = 255 * std::min(pixel[0], 1.0f);
 		file.write((char*)data, 3);
 	}
 
