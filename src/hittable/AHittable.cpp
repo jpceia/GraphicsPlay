@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 02:32:03 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 12:16:23 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/02/12 09:42:29 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,9 @@ AHittable::AHittable(const AHittable& rhs) :
 
 AHittable& AHittable::operator=(const AHittable& rhs)
 {
-    _name = rhs.getName();
-    _material = rhs.getMaterial();
+    (void)rhs;
+    //_name = rhs.getName();
+    //_material = rhs.getMaterial();
     return *this;
 }
     

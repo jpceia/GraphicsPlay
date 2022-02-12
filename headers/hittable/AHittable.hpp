@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 23:28:19 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/22 03:56:43 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/02/12 09:41:45 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,14 @@ struct Material
 class AHittable
 {
 private:
-    std::string _name;
-    Material _material;
+    const std::string _name;
+    const Material _material;
+
+    // Non-assignable
+    AHittable& operator=(const AHittable& rhs);
 
 public:
-    // non copyable
     AHittable(const AHittable& rhs);
-    AHittable& operator=(const AHittable& rhs);
-    
     AHittable(const std::string& _name, const Material& material);
     
     virtual ~AHittable();
