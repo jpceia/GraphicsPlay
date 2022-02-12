@@ -6,52 +6,42 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 14:53:08 by jpceia            #+#    #+#             */
-/*   Updated: 2022/02/12 13:24:43 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/02/12 15:31:56 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hittable/Triangle.hpp"
 
-vec3f covector(const vec3f& v)
+static vec3f covector(const vec3f& v)
 {
     return v / v.lengthSquared();
 }
 
-Triangle& Triangle::operator=(const Triangle& rhs) { (void)rhs; return *this; }
-
 Triangle::Triangle(const TriangleArgs& args) :
-    AHittable("Triangle", args.material),
-    _base(args.vertex[0]),
+    APlaneSurface(
+        "Triangle",
+        args.material,
+        args.vertex[0],
+        rt::cross(
+            args.vertex[1] - args.vertex[0],
+            args.vertex[2] - args.vertex[0]
+        ).normalize()),
     _coedge1(covector(args.vertex[1] - args.vertex[0])),
-    _coedge2(covector(args.vertex[2] - args.vertex[0])),
-    _normal(rt::cross(_coedge1, _coedge2).normalize())
+    _coedge2(covector(args.vertex[2] - args.vertex[0]))
 {
 }
-
 
 Triangle::Triangle(const Triangle& rhs) :
-    AHittable(rhs.getName(), rhs.getMaterial()),
-    _base(rhs._base),
+    APlaneSurface(rhs),
     _coedge1(rhs._coedge1),
-    _coedge2(rhs._coedge2),
-    _normal(rhs._normal)
+    _coedge2(rhs._coedge2)
 {
 }
 
-bool Triangle::hit(const Ray3f& ray, const Range& t_rng, HitRecord& rec) const
+bool Triangle::_check_boundary(const vec3f& p) const
 {
-    float dot_prod = rt::dot(ray.getDirection(), _normal);
-    if (dot_prod == 0)
-        return false;
-    rec.t = -rt::dot(ray.getOrigin() - _base, _normal) / dot_prod;
-    if (!t_rng.contains(rec.t))
-        return false;
-    rec.p = ray.getPointAt(rec.t);
-    vec3f p = rec.p - _base;
-    float x = p.dot(_coedge1);
-    float y = p.dot(_coedge2);
-    if (x < 0 || y < 0 || x + y > 1)
-        return false;
-    rec.normal = _normal;
-    return true;
+    vec3f v = p - _base;
+    float x = v.dot(_coedge1);
+    float y = v.dot(_coedge2);
+    return !(x < 0 || y < 0 || x + y > 1);
 }

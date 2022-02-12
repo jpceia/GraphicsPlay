@@ -1,39 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Plane.hpp                                          :+:      :+:    :+:   */
+/*   APlaneSurface.hpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 23:30:15 by jpceia            #+#    #+#             */
-/*   Updated: 2022/02/12 15:17:10 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/02/12 15:19:19 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PLANE_HPP
-# define PLANE_HPP
+#ifndef APLANESURFACE_HPP
+# define APLANESURFACE_HPP
 
-# include "APlaneSurface.hpp"
+# include "AHittable.hpp"
 
-struct PlaneArgs
-{
-    vec3f point;
-    vec3f normal;
-    Material material;
-};
-
-class Plane : public APlaneSurface
+class APlaneSurface : public AHittable
 {
 private:
     // non-assignable
-    Plane& operator=(const Plane& rhs) { (void)rhs; return *this; };
+    APlaneSurface& operator=(const APlaneSurface& rhs) { (void)rhs; return *this; }
 
-    bool _check_boundary(const vec3f& p) const;
+    virtual bool _check_boundary(const vec3f& p) const = 0;
+
+protected:
+    const vec3f _base;
+    const vec3f _normal;
 
 public:
-    Plane(const Plane& rhs);
-    Plane(const PlaneArgs& args);
-    virtual ~Plane() {}
+    APlaneSurface(const APlaneSurface& rhs);
+    APlaneSurface(
+        const std::string& name,
+        const Material& mat,
+        const vec3f &base,
+        const vec3f &normal);
+    
+    virtual ~APlaneSurface() {}
+
+    bool hit(const Ray3f& ray, const Range& t_rng, HitRecord& rec) const;
 };
 
 #endif

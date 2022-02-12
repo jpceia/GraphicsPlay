@@ -6,14 +6,14 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 23:31:02 by jpceia            #+#    #+#             */
-/*   Updated: 2022/02/12 13:24:51 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/02/12 15:27:32 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TRIANGLE_HPP
 # define TRIANGLE_HPP
 
-# include "AHittable.hpp"
+# include "APlaneSurface.hpp"
 
 struct TriangleArgs
 {
@@ -21,22 +21,21 @@ struct TriangleArgs
     Material material;
 };
 
-class Triangle : public AHittable
+class Triangle : public APlaneSurface
 {
 private:
-    const vec3f _base;
     const vec3f _coedge1;
     const vec3f _coedge2;
-    const vec3f _normal;
 
-    // non copyable
-    Triangle(const Triangle& rhs);
-    Triangle& operator=(const Triangle& rhs);
+    // non-assignable
+    Triangle& operator=(const Triangle& rhs) { (void)rhs; return *this; };
+
+    bool _check_boundary(const vec3f& p) const;
 
 public:
     Triangle(const TriangleArgs& args);
+    Triangle(const Triangle& rhs);
     virtual ~Triangle() {}
-    bool hit(const Ray3f& ray, const Range& t_rng, HitRecord& rec) const;
 };
 
 #endif
