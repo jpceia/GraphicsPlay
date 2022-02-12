@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 15:15:33 by jpceia            #+#    #+#             */
-/*   Updated: 2022/02/12 13:50:22 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/02/12 14:31:06 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ Cylinder::Cylinder(const CylinderArgs& args) :
     AHittable("Cylinder", args.material),
     _base(args.base),
     _direction(args.direction),
-    _radius(args.radius),
+    _radius_sq(args.radius * args.radius),
     _height(args.height)
 {
 }
@@ -27,7 +27,7 @@ Cylinder::Cylinder(const Cylinder& rhs) :
     AHittable(rhs.getName(), rhs.getMaterial()),
     _base(rhs._base),
     _direction(rhs._direction),
-    _radius(rhs._radius),
+    _radius_sq(rhs._radius_sq),
     _height(rhs._height)
 {
 }
@@ -75,7 +75,7 @@ bool Cylinder::hit(const Ray3f& ray, const Range& t_rng, HitRecord& rec) const
     Deg2eqParams params;
     params.a = d_cross_n.lengthSquared();
     params.b = 2 * rt::dot(d_cross_n, v_cross_n);
-    params.c = v_cross_n.lengthSquared() - _radius * _radius;
+    params.c = v_cross_n.lengthSquared() - _radius_sq;
 
     Range rng;
     if (!deg2eq_solve(params, &rng))

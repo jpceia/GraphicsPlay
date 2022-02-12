@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 23:30:39 by jpceia            #+#    #+#             */
-/*   Updated: 2022/02/12 13:15:16 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/02/12 14:36:45 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ class Sphere : public AHittable
 {
 private:
     const vec3f _center;
-    const float _radius;
     const float _radius_sq;
 
     // non-assignable

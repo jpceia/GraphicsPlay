@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 15:05:31 by jpceia            #+#    #+#             */
-/*   Updated: 2022/02/12 13:31:16 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/02/12 14:36:37 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,12 @@
 Sphere::Sphere(const SphereArgs& args) :
     AHittable("Sphere", args.material),
     _center(args.center),
-    _radius(args.radius),
     _radius_sq(args.radius * args.radius)
 {}
 
 Sphere::Sphere(const Sphere& rhs) :
     AHittable(rhs.getName(), rhs.getMaterial()),
     _center(rhs._center),
-    _radius(rhs._radius),
     _radius_sq(rhs._radius_sq)
 {
 }

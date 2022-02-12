@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 15:11:44 by jpceia            #+#    #+#             */
-/*   Updated: 2022/02/12 13:05:15 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/02/12 14:36:22 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ Cone::Cone(const ConeArgs& args) :
     AHittable("Cone", args.material),
     _base(args.base),
     _direction(args.direction),
-    _radius(args.radius),
     _height(args.height),
     _radius_height_sq((args.radius * args.radius) / (args.height * args.height))
 {
@@ -27,7 +26,6 @@ Cone::Cone(const Cone& rhs) :
     AHittable(rhs.getName(), rhs.getMaterial()),
     _base(rhs._base),
     _direction(rhs._direction),
-    _radius(rhs._radius),
     _height(rhs._height),
     _radius_height_sq(rhs._radius_height_sq)
 {   
