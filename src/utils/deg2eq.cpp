@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 16:11:50 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/22 05:19:58 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/02/12 11:09:09 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,13 @@ bool Range::intersects(const Range& r) const
 bool deg2eq_solve(const Deg2eqParams& args, Range* rng)
 {
     if (args.a == 0)
-        return false;
+    {
+        if (args.b == 0)
+            return false;
+        rng->min = -args.c / args.b;
+        rng->max = rng->min;
+        return true;
+    }
     float disc = args.b * args.b - 4 * args.a * args.c;
     if (disc < 0)
         return (false);
