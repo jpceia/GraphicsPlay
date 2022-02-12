@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 23:30:15 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/22 03:57:15 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/02/12 13:11:51 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ struct PlaneArgs
 class Plane : public AHittable
 {
 private:
-    vec3f _point;
-    vec3f _normal;
+    const vec3f _point;
+    const vec3f _normal;
 
-    // non copyable
-    Plane(const Plane& rhs);
+    // non-assignable
     Plane& operator=(const Plane& rhs);
 
 public:
+    Plane(const Plane& rhs);
     Plane(const PlaneArgs& args);
     virtual ~Plane() {}
 

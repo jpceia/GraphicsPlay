@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 15:08:05 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/22 03:58:56 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/02/12 13:12:02 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,7 @@ Plane::Plane(const Plane& rhs) :
 
 Plane& Plane::operator=(const Plane& rhs)
 {
-    if (this != &rhs)
-    {
-        _point = rhs._point;
-        _normal = rhs._normal;
-    }
+    (void)rhs;
     return *this;
 }
 
