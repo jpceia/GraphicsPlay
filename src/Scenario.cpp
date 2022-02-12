@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 01:09:27 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/22 03:55:55 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/02/12 10:57:29 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ Scenario::Scenario(const ScenarioArgs& args) :
     _height(args.height),
     _antialias(args.n_antialias),
     _reflections(args.n_antialias),
-    _buf(new vec3f[args.width * args.height])
+    _buf(new vec3f[args.width * args.height]),
+	_rng(Range(1e-3, 1e10))
 {
 }
 // Destructor
@@ -109,8 +110,7 @@ vec3f	Scenario::_hit_light_contribution(const HitRecord &rec, const Light& light
 	Ray3f ray_to_light = Ray3f(rec.p, light.getPosition() - rec.p);
 	float dist = (light.getPosition() - rec.p).length();
 	HitRecord hit_before_light;
-	Range rng(1e-3, 1e10);
-	if (_raytrace_hit(ray_to_light, rng, hit_before_light))
+	if (_raytrace_hit(ray_to_light, _rng, hit_before_light))
 		if (hit_before_light.t < dist)
 			return (vec3f());
     // Diffuse intensity
@@ -181,9 +181,8 @@ bool	Scenario::_raytrace_hit(const Ray3f &ray, const Range& rng, HitRecord& rec)
 vec3f	Scenario::_raytrace_single(const Ray3f& primary_ray, int n_reflections) const
 {
 	HitRecord	rec;
-	Range rng(1e-3, 1e10);
-	
-	if (_raytrace_hit(primary_ray, rng, rec))
+
+	if (_raytrace_hit(primary_ray, _rng, rec))
 		return (_hit_color(rec, n_reflections));
 	return (_ambient_light.color);
 }

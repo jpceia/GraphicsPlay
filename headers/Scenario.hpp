@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 01:33:57 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/22 03:56:16 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/22 05:12:11 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,10 @@ private:
     int _reflections;
     AmbientLight _ambient_light;
     Camera _camera;
-    std::list<Light>    _lights;
+    std::list<Light> _lights;
     std::list<AHittable*> _hittables;
     vec3f *_buf;
+    Range _rng;
 
     Scenario(const Scenario& rhs);
     Scenario& operator=(const Scenario& rhs);
