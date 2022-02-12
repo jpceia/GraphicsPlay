@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 23:29:37 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/22 03:56:51 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/02/12 10:54:29 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,9 @@ private:
     // non copyable
     Cylinder(const Cylinder& rhs);
     Cylinder& operator=(const Cylinder& rhs);
+
+    bool _valid_hit(float t, float dot_base, float dot_direction) const;
+
 public:
     Cylinder(const CylinderArgs& args);
     

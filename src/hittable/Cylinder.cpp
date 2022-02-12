@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 15:15:33 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/22 04:03:07 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/02/12 11:00:37 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,12 @@ Cylinder& Cylinder::operator=(const Cylinder& rhs)
     return *this;
 }
 
+bool Cylinder::_valid_hit(float t, float dot_base, float dot_direction) const
+{
+    float h = dot_base + t * dot_direction;
+    return (h >= 0.0f && h <= _height);
+}
+
 /*
  * Checks if a ray hits a cylinder
  * The equation of a cylinder is:
@@ -79,27 +85,17 @@ bool Cylinder::hit(const Ray3f& ray, const Range& t_rng, HitRecord& rec) const
 
     Range rng;
     if (!deg2eq_solve(params, &rng))
-        return (false);
-    if (rng.max < t_rng.min || rng.min > t_rng.max)
-        return (false);
+        return false;
+    if (rng.min > t_rng.max || rng.max < t_rng.min)
+        return false;
     float v_dot_n = rt::dot(v, _direction);
     float d_dot_n = rt::dot(ray.getDirection(), _direction);
-    float t = rng.max;
-    bool is_tmin = false;
-    if (rng.min >= t_rng.min)
-    {
-        float h = v_dot_n + rng.min * d_dot_n;
-        is_tmin = h >= 0 && h <= _height;
-    }
-    if (is_tmin)
-        t = rng.min;
+    if (rng.min >= t_rng.min && _valid_hit(rng.min, v_dot_n, d_dot_n))
+        rec.t = rng.min;
+    else if (rng.max <= t_rng.max && _valid_hit(rng.max, v_dot_n, d_dot_n))
+        rec.t = rng.max;
     else
-    {
-        float h = v_dot_n + t * d_dot_n;
-        if (h < 0 || h > _height)
-            return false;
-    }
-    rec.t = t;
+        return false;
     rec.p = ray.getPointAt(rec.t);
     rec.normal = rec.p - _base;
     rec.normal -= _direction * rt::dot(rec.normal, _direction);
