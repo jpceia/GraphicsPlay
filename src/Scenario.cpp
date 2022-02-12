@@ -117,11 +117,15 @@ vec3f	Scenario::_hit_light_contribution(const HitRecord &rec, const Light& light
     float diffuse_intensity = rt::dot(ray_to_light.getDirection(), rec.normal) * mat.diffusion;
     diffuse_intensity = std::max(diffuse_intensity, 0.0f);
     // Specular intensity
-    float specular_intensity = rt::dot(ray_to_light.getDirection(), rec.reflected);
-	if (specular_intensity < 0)
-        specular_intensity = 0;
-    else
-        specular_intensity = std::pow(specular_intensity, mat.shininess) * mat.specular;
+    float specular_intensity = 0;
+	if (mat.specular > 0)
+	{
+		specular_intensity = rt::dot(ray_to_light.getDirection(), rec.reflected);
+		if (specular_intensity < 0)
+			specular_intensity = 0;
+		else
+			specular_intensity = std::pow(specular_intensity, mat.shininess) * mat.specular;	
+	}
     float light_intensity = light.getIntensity() * (diffuse_intensity + specular_intensity);
 	return (light.getColor() * light_intensity);
 }
