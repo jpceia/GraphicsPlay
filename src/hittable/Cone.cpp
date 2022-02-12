@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 15:11:44 by jpceia            #+#    #+#             */
-/*   Updated: 2022/02/12 11:46:01 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/02/12 13:05:15 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ Cone::Cone(const ConeArgs& args) :
     _base(args.base),
     _direction(args.direction),
     _radius(args.radius),
-    _height(args.height)
+    _height(args.height),
+    _radius_height_sq((args.radius * args.radius) / (args.height * args.height))
 {
 }
 
@@ -27,7 +28,8 @@ Cone::Cone(const Cone& rhs) :
     _base(rhs._base),
     _direction(rhs._direction),
     _radius(rhs._radius),
-    _height(rhs._height)
+    _height(rhs._height),
+    _radius_height_sq(rhs._radius_height_sq)
 {   
 }
 
@@ -72,20 +74,12 @@ bool Cone::hit(const Ray3f& ray, const Range& t_rng, HitRecord& rec) const
     vec3f v_cross_n = rt::cross(v, _direction);
     float v_dot_n = rt::dot(v, _direction);
     float d_dot_n = rt::dot(ray.getDirection(), _direction);
-    Deg2eqParams params;
 
-    float radius_height_ratio = _radius / _height;
-    float tmp;
-    // a
-    tmp = d_dot_n * radius_height_ratio;
-    params.a = d_cross_n.lengthSquared() - tmp * tmp;
-    
-    // b
-    params.b = 2 * rt::dot(d_cross_n, v_cross_n) + 2 * d_dot_n * (_height - v_dot_n) * radius_height_ratio * radius_height_ratio;
-    
-    // c
-    tmp = (_height - v_dot_n) * radius_height_ratio;
-    params.c = v_cross_n.lengthSquared() - tmp * tmp;
+    Deg2eqParams params;
+    float h = _height - v_dot_n;
+    params.a = d_cross_n.lengthSquared() - d_dot_n * d_dot_n * _radius_height_sq;
+    params.b = 2 * rt::dot(d_cross_n, v_cross_n) + 2 * d_dot_n * h * _radius_height_sq;
+    params.c = v_cross_n.lengthSquared() - h * h * _radius_height_sq;
 
     Range rng;
     if (!deg2eq_solve(params, &rng))
@@ -100,7 +94,7 @@ bool Cone::hit(const Ray3f& ray, const Range& t_rng, HitRecord& rec) const
         return false;
     rec.p = ray.getPointAt(rec.t);
     rec.normal = _base - rec.p;
-    float alpha = rt::dot(rec.normal, _direction) * (radius_height_ratio * radius_height_ratio - 1);
+    float alpha = rt::dot(rec.normal, _direction) * (_radius_height_sq - 1);
     rec.normal += _direction * alpha;
     rec.normal = rec.normal.normalize();
     return true;

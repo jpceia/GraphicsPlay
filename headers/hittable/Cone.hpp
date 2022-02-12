@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 23:28:16 by jpceia            #+#    #+#             */
-/*   Updated: 2022/02/12 10:20:23 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/02/12 13:01:23 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,11 @@ struct ConeArgs
 class Cone : public AHittable
 {
 private:
-    vec3f _base;
-    vec3f _direction;
-	float _radius;
-	float _height;
+    const vec3f _base;
+    const vec3f _direction;
+	const float _radius;
+	const float _height;
+    const float _radius_height_sq;
 
     // non-assignable
     Cone& operator=(const Cone& rhs);
