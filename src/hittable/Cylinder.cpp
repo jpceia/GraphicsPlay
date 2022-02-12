@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 15:15:33 by jpceia            #+#    #+#             */
-/*   Updated: 2022/02/12 13:06:13 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/02/12 13:50:22 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,7 @@ Cylinder::Cylinder(const Cylinder& rhs) :
 
 Cylinder& Cylinder::operator=(const Cylinder& rhs)
 {
-    if (this != &rhs)
-    {
-        _base = rhs._base;
-        _direction = rhs._direction;
-        _radius = rhs._radius;
-        _height = rhs._height;
-    }
+    (void)rhs;
     return *this;
 }
 

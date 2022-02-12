@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 23:29:37 by jpceia            #+#    #+#             */
-/*   Updated: 2022/02/12 13:05:47 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/02/12 13:44:42 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,19 @@ struct CylinderArgs
 class Cylinder : public AHittable
 {
 private:
-    vec3f _base;
-    vec3f _direction;
-    float _radius;
-    float _height;
+    const vec3f _base;
+    const vec3f _direction;
+    const float _radius;
+    const float _height;
 
-    // non copyable
-    Cylinder(const Cylinder& rhs);
+    // non-assignable
     Cylinder& operator=(const Cylinder& rhs);
 
     bool _valid_hit(float t, float dot_base, float dot_direction) const;
 
 public:
     Cylinder(const CylinderArgs& args);
+    Cylinder(const Cylinder& rhs);
     
     virtual ~Cylinder() {}
 
