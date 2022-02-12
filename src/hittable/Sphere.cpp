@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 15:05:31 by jpceia            #+#    #+#             */
-/*   Updated: 2022/02/12 13:06:39 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/02/12 13:31:16 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,21 @@
 Sphere::Sphere(const SphereArgs& args) :
     AHittable("Sphere", args.material),
     _center(args.center),
-    _radius(args.radius)
+    _radius(args.radius),
+    _radius_sq(args.radius * args.radius)
 {}
 
 Sphere::Sphere(const Sphere& rhs) :
-    AHittable(rhs.getName(), rhs.getMaterial())
+    AHittable(rhs.getName(), rhs.getMaterial()),
+    _center(rhs._center),
+    _radius(rhs._radius),
+    _radius_sq(rhs._radius_sq)
 {
 }
 
 Sphere& Sphere::operator=(const Sphere& rhs)
 {
-    _center = rhs._center;
-    _radius = rhs._radius;
+    (void)rhs;
     return *this;
 }
 
@@ -48,17 +51,23 @@ Sphere& Sphere::operator=(const Sphere& rhs)
 bool Sphere::hit(const Ray3f& ray, const Range& t_rng, HitRecord& rec) const
 {
     vec3f v = ray.getOrigin() - _center;
-    float half_b = rt::dot(v, ray.getDirection());
-    float disc = half_b * half_b - rt::dot(v, v) + _radius * _radius;
-    if (disc < 0)
-        return (false);
-    float sqrt_disc = sqrt(disc);
-    if (-half_b + sqrt_disc < t_rng.min)
-        return (false);
-    if (-half_b - sqrt_disc < t_rng.min)
-        rec.t = -half_b + sqrt_disc;
+
+    Deg2eqParams params;
+    params.a = 1.0f;
+    params.b = 2.0f * rt::dot(v, ray.getDirection());
+    params.c = rt::dot(v, v) - _radius_sq;
+
+    Range rng;
+    if (!deg2eq_solve(params, &rng))
+        return false;
+    if (rng.min > t_rng.max || rng.max < t_rng.min)
+        return false;
+    if (rng.min >= t_rng.min)
+        rec.t = rng.min;
+    else if (rng.max <= t_rng.max)
+        rec.t = rng.max;
     else
-        rec.t = -half_b - sqrt_disc;
+        return false;
     rec.p = ray.getPointAt(rec.t);
     rec.normal = (rec.p - _center).normalize();
     return (true);

@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 23:30:39 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/22 03:57:18 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/02/12 13:15:16 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,16 @@ struct SphereArgs
 class Sphere : public AHittable
 {
 private:
-    vec3f _center;
-    float _radius;
+    const vec3f _center;
+    const float _radius;
+    const float _radius_sq;
 
-    // non copyable
-    Sphere(const Sphere& rhs);
+    // non-assignable
     Sphere& operator=(const Sphere& rhs);
 
 public:
     Sphere(const SphereArgs& args);
+    Sphere(const Sphere& rhs);
     virtual ~Sphere() {}
     bool hit(const Ray3f& ray, const Range& t_rng, HitRecord& rec) const;
 };
