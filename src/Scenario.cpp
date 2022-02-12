@@ -68,12 +68,12 @@ void Scenario::draw(const std::string& fname)
 }
 
 
-vec3f	Scenario::_raytrace_pixel_contribution(int i, int j) const
+vec3f	Scenario::_raytrace_pixel_contribution(float a, float b) const
 {
 	float view_width = _camera.getViewWidth();
 	float view_height = _height * view_width / _width;
-	float x = convert_scale(i, view_width, _width);
-	float y = convert_scale(j, view_height, _height);
+	float x = convert_scale(a, view_width, _width);
+	float y = convert_scale(b, view_height, _height);
 	vec3f e_x = _camera.getRight();
 	vec3f e_y = _camera.getUp();
 	vec3f e_z = _camera.getDirection();
@@ -88,7 +88,7 @@ vec3f	Scenario::_raytrace_pixel_contribution(int i, int j) const
 vec3f	Scenario::_raytrace_pixel(int i, int j) const
 {
 	vec3f	color;
-    int a, b;
+    float a, b;
 
 	for (int k = 0; k < _antialias; ++k)
 	{

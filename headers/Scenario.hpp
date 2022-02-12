@@ -55,7 +55,7 @@ private:
     vec3f _reflection_contribution(const HitRecord& rec, int n_reflections) const;
     vec3f _hit_color(const HitRecord& rec, int n_reflections) const;
     vec3f _raytrace_single(const Ray3f& primary_ray, int n_reflections) const;
-    vec3f _raytrace_pixel_contribution(int i, int j) const;
+    vec3f _raytrace_pixel_contribution(float a, float b) const;
     vec3f _raytrace_pixel(int i, int j) const;
     bool  _raytrace_hit(const Ray3f &ray, const Range& rng, HitRecord& rec) const;
 public:
