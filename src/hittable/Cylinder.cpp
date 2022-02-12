@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 15:15:33 by jpceia            #+#    #+#             */
-/*   Updated: 2022/02/12 14:31:06 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/02/12 14:48:23 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,12 @@ bool Cylinder::_valid_hit(float t, float dot_base, float dot_direction) const
 {
     float h = dot_base + t * dot_direction;
     return (h >= 0.0f && h <= _height);
+}
+
+vec3f Cylinder::_get_normal(const vec3f& p) const
+{
+    vec3f n = p - _base;
+    return n - _direction * rt::dot(n, _direction);
 }
 
 /*
@@ -91,8 +97,6 @@ bool Cylinder::hit(const Ray3f& ray, const Range& t_rng, HitRecord& rec) const
     else
         return false;
     rec.p = ray.getPointAt(rec.t);
-    rec.normal = rec.p - _base;
-    rec.normal -= _direction * rt::dot(rec.normal, _direction);
-    rec.normal = rec.normal.normalize();
+    rec.normal = _get_normal(rec.p).normalize();;
     return true;
 }

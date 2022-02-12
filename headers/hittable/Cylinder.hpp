@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 23:29:37 by jpceia            #+#    #+#             */
-/*   Updated: 2022/02/12 14:30:35 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/02/12 14:45:04 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ private:
     Cylinder& operator=(const Cylinder& rhs);
 
     bool _valid_hit(float t, float dot_base, float dot_direction) const;
+
+    vec3f _get_normal(const vec3f& p) const;
 
 public:
     Cylinder(const CylinderArgs& args);

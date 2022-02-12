@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 15:05:31 by jpceia            #+#    #+#             */
-/*   Updated: 2022/02/12 14:36:37 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/02/12 14:49:40 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@ Sphere& Sphere::operator=(const Sphere& rhs)
 {
     (void)rhs;
     return *this;
+}
+
+vec3f Sphere::_get_normal(const vec3f& p) const
+{
+    return p - _center;
 }
 
 /*
@@ -67,6 +72,6 @@ bool Sphere::hit(const Ray3f& ray, const Range& t_rng, HitRecord& rec) const
     else
         return false;
     rec.p = ray.getPointAt(rec.t);
-    rec.normal = (rec.p - _center).normalize();
-    return (true);
+    rec.normal = _get_normal(rec.p).normalize();
+    return true;
 }

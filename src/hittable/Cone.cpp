@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 15:11:44 by jpceia            #+#    #+#             */
-/*   Updated: 2022/02/12 14:36:22 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/02/12 14:48:50 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,13 @@ bool Cone::_valid_hit(float t, float dot_base, float dot_direction) const
 {
     float h = dot_base + t * dot_direction;
     return (h >= 0.0f && h <= _height);
+}
+
+vec3f Cone::_get_normal(const vec3f& p) const
+{
+    vec3f n = _base - p;
+    float alpha = rt::dot(n, _direction) * (_radius_height_sq - 1);
+    return n + _direction * alpha;
 }
 
 /*
@@ -91,9 +98,6 @@ bool Cone::hit(const Ray3f& ray, const Range& t_rng, HitRecord& rec) const
     else
         return false;
     rec.p = ray.getPointAt(rec.t);
-    rec.normal = _base - rec.p;
-    float alpha = rt::dot(rec.normal, _direction) * (_radius_height_sq - 1);
-    rec.normal += _direction * alpha;
-    rec.normal = rec.normal.normalize();
+    rec.normal = _get_normal(rec.p).normalize();;
     return true;
 }

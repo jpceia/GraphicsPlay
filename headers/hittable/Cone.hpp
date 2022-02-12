@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 23:28:16 by jpceia            #+#    #+#             */
-/*   Updated: 2022/02/12 14:37:05 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/02/12 14:44:44 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ private:
     Cone& operator=(const Cone& rhs);
 
     bool _valid_hit(float t, float dot_base, float dot_direction) const;
+
+    vec3f _get_normal(const vec3f& p) const;
     
 public:
     Cone(const Cone& rhs);

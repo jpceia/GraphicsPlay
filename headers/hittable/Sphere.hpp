@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 23:30:39 by jpceia            #+#    #+#             */
-/*   Updated: 2022/02/12 14:36:45 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/02/12 14:45:21 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ private:
 
     // non-assignable
     Sphere& operator=(const Sphere& rhs);
+
+    vec3f _get_normal(const vec3f& p) const;
 
 public:
     Sphere(const SphereArgs& args);
