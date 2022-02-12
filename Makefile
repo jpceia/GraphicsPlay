@@ -1,4 +1,4 @@
-NAME			= miniRT
+NAME			= ray_tracer
 
 INC_DIR			= headers
 
