@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   miniRT.h                                           :+:      :+:    :+:   */
+/*   miniRT.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 10:58:52 by jceia             #+#    #+#             */
-/*   Updated: 2022/01/22 03:19:02 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/02/12 15:48:11 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include "hittable/Cone.hpp"
 # include "hittable/Cylinder.hpp"
 # include "hittable/Disk.hpp"
+# include "hittable/Parallelogram.hpp"
 # include "Scenario.hpp"
 
 
@@ -52,6 +53,7 @@ Cylinder*	parse_cylinder(std::stringstream& ss);
 Triangle*	parse_triangle(std::stringstream& ss);
 Disk*		parse_disk(std::stringstream& ss);
 Cone*		parse_cone(std::stringstream& ss);
+Parallelogram*	parse_parallelogram(std::stringstream& ss);
 
 
 /*

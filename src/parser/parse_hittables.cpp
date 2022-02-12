@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 12:26:46 by jceia             #+#    #+#             */
-/*   Updated: 2022/02/12 12:29:27 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/02/12 15:48:25 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include "hittable/Plane.hpp"
 #include "hittable/Sphere.hpp"
 #include "hittable/Triangle.hpp"
+#include "hittable/Parallelogram.hpp"
 
 
 AHittable *parse_hittable(const std::string& type, std::stringstream& ss)
@@ -29,6 +30,8 @@ AHittable *parse_hittable(const std::string& type, std::stringstream& ss)
 		return (parse_plane(ss));
 	else if (type == "cy")
 		return (parse_cylinder(ss));
+	else if (type == "pa")
+	    return (parse_parallelogram(ss));
 	else if (type == "tr")
 		return (parse_triangle(ss));
 	else if (type == "di")
@@ -87,11 +90,20 @@ Sphere	*parse_sphere(std::stringstream& ss)
 	return (new Sphere(args));
 }
 
-Triangle	*parse_triangle(std::stringstream& ss)
+Triangle *parse_triangle(std::stringstream& ss)
 {
 	TriangleArgs	args;
 
 	ss >> args.vertex[0] >> args.vertex[1] >> args.vertex[2];
 	args.material = parse_material(ss);
 	return (new Triangle(args));
+}
+
+Parallelogram	*parse_parallelogram(std::stringstream& ss)
+{
+	ParallelogramArgs	args;
+
+	ss >> args.vertex[0] >> args.vertex[1] >> args.vertex[2];
+	args.material = parse_material(ss);
+	return (new Parallelogram(args));
 }
