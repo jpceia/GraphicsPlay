@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 23:28:16 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/22 03:56:47 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/02/12 10:20:23 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,13 @@ private:
 	float _radius;
 	float _height;
 
-    // non copyable
-    Cone(const Cone& rhs);
+    // non-assignable
     Cone& operator=(const Cone& rhs);
+
+    bool _valid_hit(float t, float dot_base, float dot_direction) const;
+    
 public:
+    Cone(const Cone& rhs);
     Cone(const ConeArgs& args);
     
     virtual ~Cone() {}

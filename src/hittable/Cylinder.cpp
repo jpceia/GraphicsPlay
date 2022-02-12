@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 15:15:33 by jpceia            #+#    #+#             */
-/*   Updated: 2022/02/12 11:00:37 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/02/12 11:45:49 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,5 @@ bool Cylinder::hit(const Ray3f& ray, const Range& t_rng, HitRecord& rec) const
     rec.normal = rec.p - _base;
     rec.normal -= _direction * rt::dot(rec.normal, _direction);
     rec.normal = rec.normal.normalize();
-    return (true);
+    return true;
 }
