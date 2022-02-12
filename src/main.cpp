@@ -24,7 +24,7 @@ int	main(int argc, char **argv)
 	}
 	args.width = 1080;
 	args.height = 720;
-	args.title = "MiniRT";
+	args.title = "ray tracer";
 	args.n_reflections = 3;
 	args.n_antialias = 2;
 	Scenario scenario(args);
