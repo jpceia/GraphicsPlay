@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 18:20:40 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/21 16:23:56 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/01/22 04:51:28 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,9 +228,9 @@ public:
         return *this;
     }
 
-    static vector normalize(const vector& v)
+    vector normalize() const
     {
-        vector result(v);
+        vector result(*this);
         result.normalize();
         return result;
     }
