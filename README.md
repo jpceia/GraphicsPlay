@@ -2,7 +2,7 @@
 
 ![alt text](https://github.com/jpceia/ray_tracer/blob/master/examples/cube.bmp?raw=true)
 
-Simple c++ raytracer, built from scratch.
+Simple c++ raytracer, built from scratch using only C++98 Standard Library.
 
 Takes a config file (.rt) and generates a BMP image.
 
