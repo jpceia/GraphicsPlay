@@ -17,7 +17,7 @@ OS				= $(shell uname)
 ifeq ($(OS), Linux)
 	FLAG_OS		= -DOS_Linux
 endif
-FLAGS_WARN		= -Wall -Wextra -Werror
+FLAGS_WARN		= -Wall -Wextra -Werror -pedantic-errors
 FLAGS_INC		= -MD -I$(INC_DIR) -I$(LIBFT_DIR)
 FLAGS_DEBUG		= -g
 FLAGS_OPT		= -O3
