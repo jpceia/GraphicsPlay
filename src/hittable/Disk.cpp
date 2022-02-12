@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 15:16:59 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/22 04:04:26 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/02/12 13:36:51 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ Disk::Disk(const DiskArgs& args) :
     AHittable("Disk", args.material),
     _center(args.center),
     _normal(args.normal),
-    _radius(args.radius)
+    _radius(args.radius),
+    _radius_sq(args.radius * args.radius)
 {
 }
 
@@ -26,18 +27,14 @@ Disk::Disk(const Disk& rhs) :
     AHittable(rhs.getName(), rhs.getMaterial()),
     _center(rhs._center),
     _normal(rhs._normal),
-    _radius(rhs._radius)
+    _radius(rhs._radius),
+    _radius_sq(rhs._radius_sq)
 {
 }
 
 Disk& Disk::operator=(const Disk& rhs)
 {
-    if (this != &rhs)
-    {
-        _center = rhs._center;
-        _normal = rhs._normal;
-        _radius = rhs._radius;
-    }
+    (void)rhs;
     return *this;
 }
 
@@ -53,5 +50,5 @@ bool Disk::hit(const Ray3f& ray, const Range& t_rng, HitRecord& rec) const
     if (!t_rng.contains(rec.t))
         return false;
     rec.p = ray.getPointAt(rec.t);
-    return (_center - rec.p).lengthSquared() <= _radius * _radius; // radius_2
+    return (_center - rec.p).lengthSquared() <= _radius_sq;
 }

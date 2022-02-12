@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 23:30:05 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/22 03:57:06 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/02/12 13:11:17 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,17 @@ struct DiskArgs
 class Disk : public AHittable
 {
 private:
-    vec3f _center;
-    vec3f _normal;
-    float _radius;
+    const vec3f _center;
+    const vec3f _normal;
+    const float _radius;
+    const float _radius_sq;
 
-    // non copyable
-    Disk(const Disk& rhs);
+    // non-assignable
     Disk& operator=(const Disk& rhs);
 
 public:
     Disk(const DiskArgs& args);
+    Disk(const Disk& rhs);
 
     virtual ~Disk() {}
 
