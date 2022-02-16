@@ -27,7 +27,6 @@ struct AmbientLight
 
 struct ScenarioArgs
 {
-    std::string title;
 	int		width;
 	int		height;
 	int		n_reflections;
