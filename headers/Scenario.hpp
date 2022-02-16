@@ -82,6 +82,7 @@ public:
     void addLight(const Light& light);
     void addHittable(AHittable* hittable);
     void setPixel(int i, int j, const vec3f& color);
+    const vec3f& getPixel(int i, int j) const;
 
     void draw(const std::string& fname);
 };

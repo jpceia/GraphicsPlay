@@ -61,7 +61,8 @@ void Scenario::addHittable(AHittable* hittable)
 	if (hittable)
 		_hittables.push_back(hittable);
 }
-void Scenario::setPixel(int i, int j, const vec3f& color) { _buf[i * _width + j] = color; }
+inline void Scenario::setPixel(int i, int j, const vec3f& color) { _buf[i * _width + j] = color; }
+inline const vec3f& Scenario::getPixel(int i, int j) const { return _buf[i * _width + j]; }
 
 void Scenario::draw(const std::string& fname)
 {
