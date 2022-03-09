@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 18:20:40 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/22 04:51:28 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/02/16 02:46:23 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -327,5 +327,6 @@ std::stringstream& operator>>(std::stringstream& is, rt::vector<T, N>& v)
 }
 
 typedef rt::vector<float, 3>	vec3f;
+typedef rt::vector<float, 2>	vec2f;
 
 #endif
