@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   Scenario.cpp                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/19 01:09:27 by jpceia            #+#    #+#             */
-/*   Updated: 2022/02/12 12:32:48 by jpceia           ###   ########.fr       */
-/*                                                                            */
+/*																			*/
+/*														:::	  ::::::::   */
+/*   Scenario.cpp									   :+:	  :+:	:+:   */
+/*													+:+ +:+		 +:+	 */
+/*   By: jpceia <joao.p.ceia@gmail.com>			 +#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2022/01/19 01:09:27 by jpceia			#+#	#+#			 */
+/*   Updated: 2022/02/16 03:00:56 by jpceia		   ###   ########.fr	   */
+/*																			*/
 /* ************************************************************************** */
 
 #include "Scenario.hpp"
@@ -24,20 +24,20 @@ Scenario& Scenario::operator=(const Scenario& rhs) { (void)rhs; return *this; }
 
 Scenario::Scenario() {}
 Scenario::Scenario(const ScenarioArgs& args) :
-    _width(args.width),
-    _height(args.height),
-    _antialias(args.n_antialias),
-    _reflections(args.n_antialias),
-    _buf(new vec3f[args.width * args.height]),
+	_width(args.width),
+	_height(args.height),
+	_antialias(args.n_antialias),
+	_reflections(args.n_antialias),
+	_buf(new vec3f[args.width * args.height]),
 	_rng(Range(1e-3, 1e10))
 {
 }
 // Destructor
 Scenario::~Scenario()
 {
-    for (std::list<AHittable*>::iterator it = _hittables.begin(); it != _hittables.end(); ++it)
-        delete *it;
-    delete[] _buf;
+	for (std::list<AHittable*>::iterator it = _hittables.begin(); it != _hittables.end(); ++it)
+		delete *it;
+	delete[] _buf;
 }
 
 // Getters
@@ -64,12 +64,65 @@ void Scenario::addHittable(AHittable* hittable)
 inline void Scenario::setPixel(int i, int j, const vec3f& color) { _buf[i * _width + j] = color; }
 inline const vec3f& Scenario::getPixel(int i, int j) const { return _buf[i * _width + j]; }
 
+vec3f getBufPixel(const vec3f* buf, int width, int i, int j)
+{
+    return (buf[i * width + j]);
+}
+
+float getBufGradient(const vec3f* buf, int width, int height, int i, int j)
+{
+    vec3f a, b;
+    if (j == 0)
+        a = getBufPixel(buf, width, i, j + 1) - getBufPixel(buf, width, i, j);
+    else if (j == width - 1)
+        a = getBufPixel(buf, width, i, j) - getBufPixel(buf, width, i, j - 1);
+    else
+        a = (getBufPixel(buf, width, i, j + 1) - getBufPixel(buf, width, i, j - 1)) * 0.5f;
+    if (i == 0)
+        b = getBufPixel(buf, width, i + 1, j) - getBufPixel(buf, width, i, j);
+    else if (i == height - 1)
+        b = getBufPixel(buf, width, i, j) - getBufPixel(buf, width, i - 1, j);
+    else
+        b = (getBufPixel(buf, width, i + 1, j) - getBufPixel(buf, width, i - 1, j)) * 0.5f;
+    return (a.lengthSquared() + b.lengthSquared());
+}
+
+float Scenario::_buf_gradient(int i, int j) const
+{
+	return getBufGradient(_buf, _width, _height, i, j);
+}
+
 void Scenario::draw(const std::string& fname)
 {
-    for (int i = 0; i < _height; ++i)
-        for (int j = 0; j < _width; ++j)
-            this->setPixel(i, j, _raytrace_pixel(i, j));
-    create_bmp(fname, _width,  _height, _buf);
+	// Initial aliased image
+	for (int i = 0; i < _height; ++i)
+		for (int j = 0; j < _width; ++j)
+            this->setPixel(i, j, _raytrace_pixel(i, j, 1));
+
+	// Anti-aliasing
+    vec3f *tmp = new vec3f[_width * _height];
+	int count = 0;
+	for (int i = 0; i < _height; ++i)
+	{
+		for (int j = 0; j < _width; ++j)
+		{
+			float grad = _buf_gradient(i, j);
+			if (grad > 1e-4)
+			{
+                vec3f color;
+                color = _raytrace_pixel(i, j, grad > 1e-2 ? 3 : 2);
+                tmp[i * _width + j] = color;
+				++count;
+			}
+            else
+                tmp[i * _width + j] = this->getPixel(i, j);
+		}
+	}
+	std::cout << "Antialiased points: " << count << std::endl;
+	std::cout << "Total points: " << _width * _height << std::endl;
+	std::cout << "Ratio: " << (float)count / (_width * _height) << std::endl;
+	create_bmp(fname, _width,  _height, tmp);
+    delete[] tmp;
 }
 
 
@@ -90,39 +143,40 @@ vec3f	Scenario::_raytrace_pixel_contribution(float a, float b) const
 	return (_raytrace_single(ray, _reflections)); // last arg is reflection depth
 }
 
-vec3f	Scenario::_raytrace_pixel(int i, int j) const
+vec3f	Scenario::_raytrace_pixel(int i, int j, int antialias) const
 {
 	vec3f	color;
-    float a, b;
+	float a, b;
 
-	for (int k = 0; k < _antialias; ++k)
+	antialias = antialias > 0 ? antialias : _antialias;
+
+	for (int k = 0; k < antialias; ++k)
 	{
-		a = (float)j + ((0.5 + k) / _antialias);
-		for (int l = 0; l < _antialias; ++l)
+		a = (float)j + ((0.5 + k) / antialias);
+		for (int l = 0; l < antialias; ++l)
 		{
-			b = (float)i + ((0.5 + l) / _antialias);
+			b = (float)i + ((0.5 + l) / antialias);
 			color += _raytrace_pixel_contribution(a, b);
 		}
 	}
-	color /= (_antialias * _antialias);
-	return (color);
+	return color / (antialias * antialias);
 }
 
 
 vec3f	Scenario::_hit_light_contribution(const HitRecord &rec, const Light& light) const
 {
-    const Material& mat = rec.hittable->getMaterial();
+	const Material& mat = rec.hittable->getMaterial();
 	Ray3f ray_to_light = Ray3f(rec.p, light.getPosition() - rec.p);
 	float dist = (light.getPosition() - rec.p).length();
 	HitRecord hit_before_light;
 	if (_raytrace_hit(ray_to_light, _rng, hit_before_light))
 		if (hit_before_light.t < dist)
 			return (vec3f());
-    // Diffuse intensity
-    float diffuse_intensity = rt::dot(ray_to_light.getDirection(), rec.normal) * mat.diffusion;
-    diffuse_intensity = std::max(diffuse_intensity, 0.0f);
-    // Specular intensity
-    float specular_intensity = 0;
+	// Diffuse intensity
+	float diffuse_intensity = rt::dot(ray_to_light.getDirection(), rec.normal) * mat.diffusion;
+	diffuse_intensity = std::max(diffuse_intensity, 0.0f);
+	// Specular intensity
+	float specular_intensity = 0;
 	if (mat.specular > 0)
 	{
 		specular_intensity = rt::dot(ray_to_light.getDirection(), rec.reflected);
@@ -131,13 +185,13 @@ vec3f	Scenario::_hit_light_contribution(const HitRecord &rec, const Light& light
 		else
 			specular_intensity = std::pow(specular_intensity, mat.shininess) * mat.specular;	
 	}
-    float light_intensity = light.getIntensity() * (diffuse_intensity + specular_intensity);
+	float light_intensity = light.getIntensity() * (diffuse_intensity + specular_intensity);
 	return (light.getColor() * light_intensity);
 }
 
 vec3f   Scenario::_reflection_contribution(const HitRecord& rec, int n_reflections) const
 {
-    const Material& mat = rec.hittable->getMaterial();
+	const Material& mat = rec.hittable->getMaterial();
 	Ray3f ray(rec.p, rec.reflected);
 	vec3f color_shadow = _raytrace_single(ray, n_reflections - 1);
 	return (color_shadow * mat.mirror);

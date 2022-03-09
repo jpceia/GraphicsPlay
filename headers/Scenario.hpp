@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 01:33:57 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/22 05:12:11 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/02/16 03:52:07 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,9 @@ private:
     vec3f _hit_color(const HitRecord& rec, int n_reflections) const;
     vec3f _raytrace_single(const Ray3f& primary_ray, int n_reflections) const;
     vec3f _raytrace_pixel_contribution(float a, float b) const;
-    vec3f _raytrace_pixel(int i, int j) const;
+    vec3f _raytrace_pixel(int i, int j, int antialias = 0) const;
     bool  _raytrace_hit(const Ray3f &ray, const Range& rng, HitRecord& rec) const;
+    float _buf_gradient(int i, int j) const;
 public:
     Scenario();
     Scenario(const ScenarioArgs& args);
