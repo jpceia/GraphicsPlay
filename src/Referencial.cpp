@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 04:36:12 by jpceia            #+#    #+#             */
-/*   Updated: 2022/01/22 05:04:18 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/03/11 16:19:00 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ Referencial& Referencial::operator=(const Referencial& rhs)
     return *this;
 }
 
-// Getters
+// ----------------------------------------------------------------------------
+//                                  Getters
+// ----------------------------------------------------------------------------
+
 vec3f Referencial::getPosition() const { return _position; }
 vec3f Referencial::getForward() const { return _forward; }
 vec3f Referencial::getUp() const { return _up; }

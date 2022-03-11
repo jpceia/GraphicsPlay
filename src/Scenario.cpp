@@ -19,10 +19,21 @@ float	convert_scale(float x, float view_size, float screen_size)
 }
 
 
-Scenario::Scenario(const Scenario& rhs) { (void)rhs; } // set copy
-Scenario& Scenario::operator=(const Scenario& rhs) { (void)rhs; return *this; }
+Scenario::Scenario(const Scenario& rhs)
+{
+    (void)rhs;
+} // set copy
 
-Scenario::Scenario() {}
+Scenario& Scenario::operator=(const Scenario& rhs)
+{
+    (void)rhs;
+    return *this;
+}
+
+Scenario::Scenario()
+{
+}
+
 Scenario::Scenario(const ScenarioArgs& args) :
     _width(args.width),
     _height(args.height),
@@ -32,37 +43,95 @@ Scenario::Scenario(const ScenarioArgs& args) :
 	_rng(Range(1e-3, 1e10))
 {
 }
+
 // Destructor
 Scenario::~Scenario()
 {
-    for (std::list<AHittable*>::iterator it = _hittables.begin(); it != _hittables.end(); ++it)
+    for (std::list<AHittable*>::iterator it = _hittables.begin();
+        it != _hittables.end(); ++it)
         delete *it;
     delete[] _buf;
 }
 
-// Getters
-int Scenario::getWidth() const { return _width; }
-int Scenario::getHeight() const { return _height; }
-int Scenario::getViewWidth() const { return _camera.getViewWidth(); }
-int Scenario::getViewHeight() const { return _height * _camera.getViewWidth() / _height; }
-const AmbientLight& Scenario::getAmbientLight() const { return _ambient_light; }
-vec3f Scenario::getCameraPosition() const { return _camera.getPosition(); }
-const std::list<AHittable*>& Scenario::getHittables() const { return _hittables; }
-const std::list<Light>& Scenario::getLights() const { return _lights; }
-// get buffer
-vec3f* Scenario::getPixels() const { return _buf; }
+// ----------------------------------------------------------------------------
+//                                  Getters
+// ----------------------------------------------------------------------------
 
-// Setters
-void Scenario::setAmbientLight(const AmbientLight& ambient_light) { _ambient_light = ambient_light; }
+int Scenario::getWidth() const
+{
+    return _width;
+}
+
+int Scenario::getHeight() const
+{
+    return _height;
+}
+
+int Scenario::getViewWidth() const
+{
+    return _camera.getViewWidth();
+}
+
+int Scenario::getViewHeight() const
+{
+    return _height * _camera.getViewWidth() / _height;
+}
+
+const AmbientLight& Scenario::getAmbientLight() const
+{
+    return _ambient_light;
+}
+
+vec3f Scenario::getCameraPosition() const
+{
+    return _camera.getPosition();
+}
+
+const std::list<AHittable*>& Scenario::getHittables() const
+{
+    return _hittables;
+}
+
+const std::list<Light>& Scenario::getLights() const
+{
+    return _lights;
+}
+
+// get buffer
+vec3f* Scenario::getPixels() const
+{
+    return _buf;
+}
+
+// ----------------------------------------------------------------------------
+//                                  Setters
+// ----------------------------------------------------------------------------
+void Scenario::setAmbientLight(const AmbientLight& ambient_light)
+{
+    _ambient_light = ambient_light;
+}
+
 void Scenario::setCamera(const Camera& camera) { _camera = camera; }
-void Scenario::addLight(const Light& light) { _lights.push_back(light); }
+
+void Scenario::addLight(const Light& light)
+{
+    _lights.push_back(light);
+}
+
 void Scenario::addHittable(AHittable* hittable)
 {
 	if (hittable)
 		_hittables.push_back(hittable);
 }
-inline void Scenario::setPixel(int i, int j, const vec3f& color) { _buf[i * _width + j] = color; }
-inline const vec3f& Scenario::getPixel(int i, int j) const { return _buf[i * _width + j]; }
+inline void Scenario::setPixel(int i, int j, const vec3f& color)
+{
+    _buf[i * _width + j] = color;
+}
+
+inline const vec3f& Scenario::getPixel(int i, int j) const
+{
+    return _buf[i * _width + j];
+}
 
 void Scenario::draw(const std::string& fname)
 {
