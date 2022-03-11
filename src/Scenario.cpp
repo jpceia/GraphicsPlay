@@ -6,12 +6,14 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 01:09:27 by jpceia            #+#    #+#             */
-/*   Updated: 2022/02/12 12:32:48 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/03/11 16:21:45 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Scenario.hpp"
 #include "miniRT.hpp"
+#include "task/WorkManager.hpp"
+#include <vector>
 
 float	convert_scale(float x, float view_size, float screen_size)
 {
@@ -133,11 +135,38 @@ inline const vec3f& Scenario::getPixel(int i, int j) const
     return _buf[i * _width + j];
 }
 
+class DrawPixelTask : public Task
+{
+public:
+    DrawPixelTask(Scenario& scenario, Mutex& mutex, int i, int j) :
+        _scenario(scenario), _mutex(mutex), _i(i), _j(j) {}
+    void run()
+    {
+        vec3f color = _scenario.raytrace_pixel(_i, _j);
+        {
+            LockGuard lock(_mutex);
+            _scenario.setPixel(_i, _j, color);
+        }
+    }
+
+public:
+    Scenario& _scenario;
+    Mutex& _mutex;
+    int _i;
+    int _j;
+};
+
 void Scenario::draw(const std::string& fname)
 {
+	Mutex mutex;
+	WorkManager manager(NUM_THREADS);
+
     for (int i = 0; i < _height; ++i)
         for (int j = 0; j < _width; ++j)
-            this->setPixel(i, j, _raytrace_pixel(i, j));
+            manager.push_task(new DrawPixelTask(*this, mutex, i, j));
+    manager.push_task(NULL);
+    manager.init();
+    manager.wait();
     create_bmp(fname, _width,  _height, _buf);
 }
 
@@ -159,7 +188,7 @@ vec3f	Scenario::_raytrace_pixel_contribution(float a, float b) const
 	return (_raytrace_single(ray, _reflections)); // last arg is reflection depth
 }
 
-vec3f	Scenario::_raytrace_pixel(int i, int j) const
+vec3f	Scenario::raytrace_pixel(int i, int j) const
 {
 	vec3f	color;
     float a, b;

@@ -6,12 +6,14 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 10:58:52 by jceia             #+#    #+#             */
-/*   Updated: 2022/02/12 15:48:11 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/03/09 22:20:48 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
+
+# define NUM_THREADS 8
 
 # include <iostream>
 # include <string>
