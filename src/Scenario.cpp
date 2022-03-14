@@ -6,13 +6,14 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 01:09:27 by jpceia            #+#    #+#             */
-/*   Updated: 2022/03/11 16:21:45 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/03/11 17:51:48 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Scenario.hpp"
 #include "miniRT.hpp"
 #include "task/WorkManager.hpp"
+#include "task/DrawPixelTask.hpp"
 #include <vector>
 
 float	convert_scale(float x, float view_size, float screen_size)
@@ -125,7 +126,8 @@ void Scenario::addHittable(AHittable* hittable)
 	if (hittable)
 		_hittables.push_back(hittable);
 }
-inline void Scenario::setPixel(int i, int j, const vec3f& color)
+
+void Scenario::setPixel(int i, int j, const vec3f& color)
 {
     _buf[i * _width + j] = color;
 }
@@ -135,26 +137,21 @@ inline const vec3f& Scenario::getPixel(int i, int j) const
     return _buf[i * _width + j];
 }
 
-class DrawPixelTask : public Task
+static void matrix_gradient(const vec3f* m, int width, int height, vec3f* grad)
 {
-public:
-    DrawPixelTask(Scenario& scenario, Mutex& mutex, int i, int j) :
-        _scenario(scenario), _mutex(mutex), _i(i), _j(j) {}
-    void run()
+    // top row
+    for (int i = 0; i < width; ++i)
+        grad[i] = m[i + 1] - m[i];
+    // bottom row
+    for (int i = 0; i < width; ++i)
+        grad[i + width * (height - 1)] = m[i + width * (height - 1)] - m[i + width * (height - 2)];
+    // middle rows
+    for (int j = 1; j < height - 1; ++j)
     {
-        vec3f color = _scenario.raytrace_pixel(_i, _j);
-        {
-            LockGuard lock(_mutex);
-            _scenario.setPixel(_i, _j, color);
-        }
-    }
-
-public:
-    Scenario& _scenario;
-    Mutex& _mutex;
-    int _i;
-    int _j;
-};
+        for (int i = 0; i < width; ++i)
+            grad[i + width * j] = m[i + width * (j + 1)] - m[i + width * (j - 1)];
+    }   
+}
 
 void Scenario::draw(const std::string& fname)
 {
@@ -169,7 +166,6 @@ void Scenario::draw(const std::string& fname)
     manager.wait();
     create_bmp(fname, _width,  _height, _buf);
 }
-
 
 vec3f	Scenario::_raytrace_pixel_contribution(float a, float b) const
 {
