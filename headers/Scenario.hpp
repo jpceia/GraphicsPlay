@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 01:33:57 by jpceia            #+#    #+#             */
-/*   Updated: 2022/03/09 22:36:36 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/03/14 12:53:00 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ public:
     // Destructor
     ~Scenario();
 
-    vec3f raytrace_pixel(int i, int j) const;
+    vec3f raytrace_pixel(int i, int j, int antialias = 1) const;
 
     // Getters
     int getWidth() const;

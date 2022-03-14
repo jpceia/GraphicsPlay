@@ -6,12 +6,13 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 01:09:27 by jpceia            #+#    #+#             */
-/*   Updated: 2022/03/11 17:51:48 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/03/14 13:41:44 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Scenario.hpp"
 #include "miniRT.hpp"
+#include "gradient.hpp"
 #include "task/WorkManager.hpp"
 #include "task/DrawPixelTask.hpp"
 #include <vector>
@@ -184,22 +185,23 @@ vec3f	Scenario::_raytrace_pixel_contribution(float a, float b) const
 	return (_raytrace_single(ray, _reflections)); // last arg is reflection depth
 }
 
-vec3f	Scenario::raytrace_pixel(int i, int j) const
+vec3f	Scenario::raytrace_pixel(int i, int j, int antialias) const
 {
 	vec3f	color;
     float a, b;
 
-	for (int k = 0; k < _antialias; ++k)
+	antialias = antialias ? antialias : _antialias;
+	for (int k = 0; k < antialias; ++k)
 	{
-		a = (float)j + ((0.5 + k) / _antialias);
-		for (int l = 0; l < _antialias; ++l)
+		a = (float)j + ((0.5 + k) / antialias);
+		for (int l = 0; l < antialias; ++l)
 		{
-			b = (float)i + ((0.5 + l) / _antialias);
+			b = (float)i + ((0.5 + l) / antialias);
 			color += _raytrace_pixel_contribution(a, b);
 		}
 	}
-	color /= (_antialias * _antialias);
-	return (color);
+	color /= (antialias * antialias);
+	return color;
 }
 
 
