@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 16:36:08 by jpceia            #+#    #+#             */
-/*   Updated: 2022/03/11 16:38:52 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/03/14 12:51:18 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@
 class DrawPixelTask : public Task
 {
 public:
-    DrawPixelTask(Scenario& scenario, Mutex& mutex, int i, int j);
+    DrawPixelTask(Scenario& scenario, Mutex& mutex,
+        int i, int j, int antialias = 1);
     void run();
 
 public:
@@ -28,6 +29,7 @@ public:
     Mutex& _mutex;
     int _i;
     int _j;
+    int _antialias;
 };
 
 #endif
