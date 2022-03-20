@@ -229,7 +229,7 @@ void Scenario::draw(const std::string& fname)
     for (int i = 0; i < _height; ++i)
         for (int j = 0; j < _width; ++j)
             if (grad[i * _width + j] > epsilon)
-                manager.push_task(new DrawPixelTask(*this, mutex, i, j));
+                manager.push_task(new DrawPixelTask(*this, mutex, i, j, _antialias));
     manager.push_task(NULL);
     manager.init();
     manager.wait();
