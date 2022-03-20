@@ -6,7 +6,7 @@
 /*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 01:09:27 by jpceia            #+#    #+#             */
-/*   Updated: 2022/03/20 12:18:36 by jpceia           ###   ########.fr       */
+/*   Updated: 2022/03/20 12:41:35 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,52 +160,31 @@ void Scenario::draw(const std::string& fname)
     {
         for (int j = 0; j < _width; ++j)
         {
-            if (i % N == 0)
+            int i0 = (i / N) * N;
+            int i1 = i0 + N;
+            int j0 = (j / N) * N;
+            int j1 = j0 + N;
+            
+            vec3f c0 = this->getPixel(i0, j0);
+            vec3f c1 = this->getPixel(i0, j1);
+            vec3f c2 = this->getPixel(i1, j0);
+            vec3f c3 = this->getPixel(i1, j1);
+            
+            float grad = 0;
+            grad += (c0 - c1).lengthSquared() * (i - i0) * (i - i0);
+            grad += (c2 - c3).lengthSquared() * (j - j0) * (j - j1);
+            grad /= (N * N);
+            if (grad > epsilon) // recalculate
+                manager.push_task(new DrawPixelTask(*this, mutex, i, j, 1));
+            else // interpolate
             {
-                if (j % N == 0)
-                    continue ;
-                // else
-                int j0 = (j / N) * N;
-                int j1 = j0 + N;
-                vec3f c0 = this->getPixel(i, j0);
-                vec3f c1 = this->getPixel(i, j1);
-                if ((c0 - c1).lengthSquared() > epsilon) // recalculate
-                    manager.push_task(new DrawPixelTask(*this, mutex, i, j, 1));
-                else // interpolate
-                    this->setPixel(i, j, (c0 * (j1 - j) + c1 * (j - j0)) / (float)N);
-            }
-            else if (j % N == 0)
-            {
-                int i0 = (i / N) * N;
-                int i1 = i0 + N;
-                vec3f c0 = this->getPixel(i0, j);
-                vec3f c1 = this->getPixel(i1, j);
-                if ((c0 - c1).lengthSquared() > epsilon) // recalculate
-                    manager.push_task(new DrawPixelTask(*this, mutex, i, j, 1));
-                else // interpolate
-                    this->setPixel(i, j, (c0 * (i1 - i) + c1 * (i - i0)) / (float)N);
-            }
-            else
-            {
-                int i0 = (i / N) * N;
-                int i1 = i0 + N;
-                int j0 = (j / N) * N;
-                int j1 = j0 + N;
-                vec3f c0 = this->getPixel(i0, j0);
-                vec3f c1 = this->getPixel(i0, j1);
-                vec3f c2 = this->getPixel(i1, j0);
-                vec3f c3 = this->getPixel(i1, j1);
-                if ((c0 - c1).lengthSquared() + (c2 - c3).lengthSquared() > epsilon) // recalculate
-                    manager.push_task(new DrawPixelTask(*this, mutex, i, j, 1));
-                else // interpolate
-                {
-                    vec3f color;
-                    color += c0 * (i1 - i) * (j1 - j);
-                    color += c1 * (i1 - i) * (j - j0);
-                    color += c2 * (i - i0) * (j1 - j);
-                    color += c3 * (i - i0) * (j - j0);
-                    this->setPixel(i, j, color / (float)(N * N));
-                }
+                vec3f color;
+                color += c0 * (i1 - i) * (j1 - j);
+                color += c1 * (i1 - i) * (j - j0);
+                color += c2 * (i - i0) * (j1 - j);
+                color += c3 * (i - i0) * (j - j0);
+                color /= (N * N);
+                this->setPixel(i, j, color);
             }
         }
     }
